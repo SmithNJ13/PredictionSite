@@ -30,7 +30,7 @@ const NavBar = () => {
       <div className="NavLinks">
         <NavLink className="profile" style={styling} to={route}>{link}</NavLink>
         <div>|</div>
-        <NavLink className="register" style={styling} to="/register">Register</NavLink>
+        <NavLink className="register" style={styling} to="/login">Login</NavLink>
       </div>
     </div>
     </>
