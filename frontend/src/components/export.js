@@ -1,0 +1,4 @@
+export {default as TeamBanner} from "./TeamBanner/index.jsx"
+export {default as NavBar} from "./NavBar/index.jsx"
+export {default as ProfileBanner} from "./ProfileBanner/index.jsx"
+export {default as PredictionTable} from "./PredictionTable/index.jsx"

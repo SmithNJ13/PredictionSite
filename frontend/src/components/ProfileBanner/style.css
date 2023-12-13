@@ -1,0 +1,37 @@
+#ProfileBox {
+    margin: 1%;
+    padding: 10px;
+    background-color: #ff5c5c;
+    max-width: 1267px;
+    max-height: 1064px;
+    min-width: 1267px;
+    max-height: 1267px;
+}
+#UserInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.UserIcon {
+    margin-top: 20px;
+    margin-left: 50px;
+    max-width: 230px;
+    max-height: 230px;
+}
+.UserName {
+    margin-left: 25px;
+}
+.UserNet {
+    margin-left: 5px;
+    color: ivory;
+}
+#PredictionInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.Header {
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: underline;
+}

@@ -1,0 +1,20 @@
+#NavBar {
+    max-width: 150px;
+    max-height: 20px;
+    min-width: 150px;
+    min-height: 20px;
+    margin-left: 5px;
+}
+.NavLinks {
+    display: flex;
+    position: absolute;
+    flex-direction: row;
+    max-width: 150px;
+    max-height: 20px;
+    min-width: 150px;
+    min-height: 20px;
+    gap: 5px;
+}
+.profile:hover, .register:hover {
+    font-weight: bold;
+}
