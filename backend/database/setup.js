@@ -1,7 +1,7 @@
 require("dotenv").config()
 const {MongoClient, ServerApiVersion} = require("mongodb")
 
-const url = "mongodb+srv://tango:YKQN5OLIwhXrimEf@cluster0.l5uydq7.mongodb.net/?retryWrites=true&w=majority"
+const url = process.env.DB_URL
 console.log(url)
 
 const client = new MongoClient(url, {
