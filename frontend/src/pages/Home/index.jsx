@@ -26,17 +26,7 @@ const HomePage = () => {
     
 
   return (
-    <div id="mainBody">
-      <div id="matchCard">
-        <div className="TeamOne">
           <TeamBanner icon={ArsenalIcon} name={Arsenal}/>
-        </div>
-        <p className="text">V</p>
-        <div className="TeamTwo">
-          <TeamBanner icon={icon} name={opponent}/>
-        </div>
-      </div>
-    </div>
   )
 }
 

@@ -7,14 +7,6 @@
 html {
     background-color: var(--bgColour);
 }
-#matchCard {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 25px;
-    gap: 125px;
-}
 .text {
     font-size: 100px;
     color: black;
