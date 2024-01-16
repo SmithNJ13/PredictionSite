@@ -34,11 +34,27 @@ axios(url)
         console.error('Error fetching data:', error);
     });
 
+    const seedUsers = async () => {
+        try{
+            await client.connect()
+            await client.db("database").collection("users").drop()
+            await client.db("database").collection("users").insertOne({
+                _id: 0,
+                username: "Admin",
+                email: "Admin@Admin.com",
+                password: "yP96XKfPLR"
+                
+            })
+            console.log("USERS SEEDED!")
+            await client.close()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const seedDB = async (matchesArray) => {
         try {
             await client.connect();
-            console.log("Awaiting seed...");
-    
             await client.db("database").collection("statistics").createIndex({ date: 1, opponent: 1 }, { unique: true });
     
             for (const match of matchesArray) {
@@ -54,16 +70,15 @@ axios(url)
                     if (insertError.code !== 11000) {
                         console.error('Error inserting match:', insertError);
                     } else {
-                        console.log(`Match for ${match.date} - ${match.opponent} already exists, skipping.`);
                     }
                 }
             }
-    
-            console.log("DB seeded!");
+            console.log("MATCHES SEEDED!")
             await client.close();
         } catch (error) {
             console.error('Error connecting to the database:', error);
         }
     };
     
+    seedUsers()
     seedDB(premierLeagueMatches);
