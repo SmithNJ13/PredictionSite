@@ -6,16 +6,18 @@ import "./style.css"
 const HomePage = () => {
     const Arsenal = "Arsenal"
     const ArsenalIcon = "https://upload.wikimedia.org/wikipedia/hif/8/82/Arsenal_FC.png?20150520165111"
-    const NewcastleIcon = "https://resources.premierleague.com/premierleague/badges/t4.png"
     const [opponent, setOpponent] = useState("")
     const [icon, setIcon] = useState("")
+    const [colour, setColour] = useState("")
 
     async function getTeams() {
         try {
           const response = await axios.get("http://localhost:8080/")
           const data = response.data
-          setOpponent(data.opponent)
+          setOpponent(data.motd[0].opponent)
           setIcon(data.icon)
+          setColour(data.colour)
+          console.log(data)
         } catch (error) {
           console.log("Error fetching data: ", error)
         }
@@ -29,11 +31,11 @@ const HomePage = () => {
   return (
     <>
     <div className="matches">
-      <TeamBanner icon={ArsenalIcon} name={Arsenal}/>
+      <TeamBanner icon={ArsenalIcon} name={Arsenal} colour="#EF0107"/>
       <div className="text">
         <p>V</p>
       </div>
-      <TeamBanner icon={NewcastleIcon} name={"Newcastle"}/>
+      <TeamBanner icon={icon} name={opponent} colour={colour}/>
     </div>
     </>
   )

@@ -3,7 +3,7 @@ const MatchController = require("../controllers/matches")
 
 const MatchRouter = Router()
 
-MatchRouter.get("/", MatchController.index)
-MatchRouter.get("/motd", MatchController.getOne)
+MatchRouter.get("/", MatchController.getOne)
+MatchRouter.get("/matches", MatchController.index)
 
 module.exports = MatchRouter

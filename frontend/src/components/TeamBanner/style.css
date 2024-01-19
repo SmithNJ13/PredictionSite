@@ -9,10 +9,8 @@
 
 #panel {
     position: relative;
-    background-color: #FF5C5C;
     width: 370px;
     height: 500px;
-    border: solid #FF5C5C;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -71,5 +69,6 @@ p {
     padding: none;
     width: 370px;
     transform: rotate(180deg);
-    top: -7.25px;
+    top: -8.7925px;
+    left: -0.615px;
 }

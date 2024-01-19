@@ -1,11 +1,11 @@
 import "./style.css"
 import { Triangle } from "react-shapes"
 
-const TeamBanner = ({ icon, name }) => {
+const TeamBanner = ({ icon, name, colour }) => {
   return (
     <>
       <div id="teamBannerWrapper">
-        <div id="panel">
+        <div id="panel" style={{backgroundColor: colour, border: `1px solid ${colour}`}}>
           <img id="teamIcon" src={icon} alt="Team Icon"></img>
           <h1 id="teamName">{name}</h1>
           <p>xG:</p>
@@ -15,7 +15,7 @@ const TeamBanner = ({ icon, name }) => {
           </div>
         </div>
       <div className="shape">
-        <Triangle width={370} height={100} fill={{color: "#FF5C5C"}}/>
+        <Triangle width={369} height={100} fill={{color: colour}}/>
       </div>
       </div>
     </>
