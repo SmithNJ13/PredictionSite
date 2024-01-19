@@ -16,6 +16,17 @@ class Match {
         const all = await response.toArray()
         return all;
     }
+
+    static async getByDate(date) {
+        await client.connect()
+        const response = await client.db("database").collection("matches").find({date: date})
+        const motd = await response.toArray()
+        if(motd.length <= 0) {
+            return "No matches today!"
+        } else {
+            return motd
+        }
+    }
 }
 
 module.exports = Match

@@ -1,8 +1,8 @@
 const { Router } = require("express")
-const userController = require("../controllers/users")
+const predictionController = require("../controllers/predictions")
 
 const predictionRouter = Router()
 
-predictionRouter.get("/", userController.index)
+predictionRouter.get("/", predictionController.index)
 
 module.exports = predictionRouter

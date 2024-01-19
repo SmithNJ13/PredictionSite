@@ -1,7 +1,7 @@
 const client = require("../database/setup")
 const { ObjectId } = require("mongodb")
 
-class Match {
+class Prediction {
     constructor(data) {
         this.id = data.id
         this.userID = data.userID
@@ -18,4 +18,4 @@ class Match {
     }
 }
 
-module.exports = Match
+module.exports = Prediction
