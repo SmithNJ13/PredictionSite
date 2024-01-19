@@ -10,13 +10,13 @@ const TeamBanner = ({ icon, name }) => {
           <h1 id="teamName">{name}</h1>
           <p>xG:</p>
           <div id="inputArea">
-            <input id="xG" type="value" placeholder="null"></input>
+            <input id="xG" type="value" placeholder="0.0"></input>
             <button id="button">✔️</button>
           </div>
         </div>
-      </div>
       <div className="shape">
-        <Triangle width={300} height={300} fill={{color: "green"}}/>
+        <Triangle width={370} height={100} fill={{color: "#FF5C5C"}}/>
+      </div>
       </div>
     </>
   );

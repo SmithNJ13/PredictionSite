@@ -46,7 +46,7 @@ axios(url)
                 
             })
             console.log("USERS SEEDED!")
-            await client.close()
+            seedDB(premierLeagueMatches);
         } catch (error) {
             console.log(error)
         }
@@ -81,4 +81,3 @@ axios(url)
     };
     
     seedUsers()
-    seedDB(premierLeagueMatches);

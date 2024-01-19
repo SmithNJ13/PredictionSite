@@ -1,5 +1,75 @@
-.shape {
+#teamBannerWrapper {
     position: relative;
-    left: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2.5%;
+}
+
+#panel {
+    position: relative;
+    background-color: #FF5C5C;
+    width: 370px;
+    height: 500px;
+    border: solid #FF5C5C;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#teamIcon {
+    position: relative;
+    top: -10%;
+    width: 164px;
+    height: 170px;
+}
+
+#teamName {
+    position: relative;
+    font-size: 30px;
+    font-weight: bold;
+    top: -10%;
+}
+
+p {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#xG {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 1px solid black;
+    border-radius: 5px;
+    top: -10%;
+}
+
+#button {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+    top: -10%;
+}
+
+#inputArea {
+    display: flex;
+    align-items: center;
+}
+
+.shape {
+    background-color: transparent;
+    position: relative;
+    margin: none;
+    padding: none;
+    width: 370px;
     transform: rotate(180deg);
+    top: -7.25px;
 }

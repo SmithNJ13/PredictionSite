@@ -11,3 +11,16 @@ html {
     font-size: 100px;
     color: black;
 }
+.matches {
+    position: relative;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+}
+.text p {
+    position: relative;
+    top: 25vh;
+    font-size: 60px;
+    font-weight: bold;
+}

@@ -14,6 +14,7 @@ const day = String(currentDate.getDate()).padStart(2, "0")
 const formattedDate = `2023-12-05`
 
 const MatchRoutes = require("./routers/MatchRoutes")
+const UserRoutes = require("./routers/UserRoutes")
 
 app.use(cors())
 app.use(express.json())
@@ -23,5 +24,6 @@ app.get("/", (req, res) => {
     res.send("Hello!")
 })
 app.use("/matches", MatchRoutes)
+app.use("/users", UserRoutes)
 
 module.exports = app
