@@ -1,7 +1,14 @@
 import "./style.css"
 import { Triangle } from "react-shapes"
+import { useState } from "react"
 
-const TeamBanner = ({ icon, name, colour }) => {
+const TeamBanner = ({ team, icon, name, colour }) => {
+
+  const [pxG, setpxG] = useState(0.0)
+  
+  const handleClick = () => {
+    console.log("xG value", pxG)
+  }
   return (
     <>
       <div id="teamBannerWrapper">
@@ -10,8 +17,8 @@ const TeamBanner = ({ icon, name, colour }) => {
           <h1 id="teamName">{name}</h1>
           <p>xG:</p>
           <div id="inputArea">
-            <input id="xG" type="value" placeholder="0.0"></input>
-            <button id="button">✔️</button>
+            <input id="xG" type="number" placeholder="0.0" value={pxG} onChange={(e) => setpxG(parseFloat(e.target.value))}/>
+            <button id="button" onClick={handleClick}>✔️</button>
           </div>
         </div>
       <div className="shape">

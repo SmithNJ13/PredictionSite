@@ -15,7 +15,7 @@ app.use(express.json())
 
 
 app.use("/", MatchRoutes)
+app.use("/", PredictionRoutes)
 app.use("/users", UserRoutes)
-app.use("/predictions", PredictionRoutes)
 
 module.exports = app

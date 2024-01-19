@@ -31,11 +31,11 @@ const HomePage = () => {
   return (
     <>
     <div className="matches">
-      <TeamBanner icon={ArsenalIcon} name={Arsenal} colour="#EF0107"/>
+      <TeamBanner team={1} icon={ArsenalIcon} name={Arsenal} colour="#EF0107"/>
       <div className="text">
         <p>V</p>
       </div>
-      <TeamBanner icon={icon} name={opponent} colour={colour}/>
+      <TeamBanner team={2} icon={icon} name={opponent} colour={colour}/>
     </div>
     </>
   )

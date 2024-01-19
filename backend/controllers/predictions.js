@@ -9,4 +9,15 @@ const index = async(req, res) => {
     }
 }
 
-module.exports = {index}
+const create = async(req, res) => {
+    try {
+        const data = req.body
+        console.log(data)
+        const prediction = await Prediction.create(data)
+        res.status(201).send({data: prediction})
+    } catch (error) {
+        res.status(400).send({error: error})
+    }
+}
+
+module.exports = {index, create}

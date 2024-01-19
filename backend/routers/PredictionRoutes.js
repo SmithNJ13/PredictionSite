@@ -3,6 +3,7 @@ const predictionController = require("../controllers/predictions")
 
 const predictionRouter = Router()
 
-predictionRouter.get("/", predictionController.index)
+predictionRouter.post("/", predictionController.create)
+predictionRouter.get("/predictions", predictionController.index)
 
 module.exports = predictionRouter
