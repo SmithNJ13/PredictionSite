@@ -11,10 +11,11 @@ const year = currentDate.getFullYear()
 const month = String(currentDate.getMonth() + 1).padStart(2, "0")
 const day = String(currentDate.getDate()).padStart(2, "0")  
 // const formattedDate = `${year}-${month}-${day}`
-const formattedDate = `2023-12-05`
+const formattedDate = `2023-12-28`
 
 const MatchRoutes = require("./routers/MatchRoutes")
-const UserRoutes = require("./routers/UserRoutes")
+const UserRoutes = require("./routers/UserRoutes") 
+const PredictionRoutes = require("./routers/PredictionRoutes")
 
 app.use(cors())
 app.use(express.json())
@@ -25,5 +26,6 @@ app.get("/", (req, res) => {
 })
 app.use("/matches", MatchRoutes)
 app.use("/users", UserRoutes)
+app.use("/predictions", PredictionRoutes)
 
 module.exports = app

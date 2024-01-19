@@ -6,7 +6,7 @@ const cheerio = require("cheerio")
 const premierLeagueMatches = [];
 
 axios(url)
-    .then(response => {
+.then(response => {
         const HTML = response.data;
         const $ = cheerio.load(HTML);
 
@@ -46,6 +46,24 @@ axios(url)
                 
             })
             console.log("USERS SEEDED!")
+            seedPredictions()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const seedPredictions = async () => {
+        try{
+            await client.connect()
+            await client.db("database").collection("predictions").drop()
+            await client.db("database").collection("predictions").insertOne({
+                _id: 0,
+                userID: 1,
+                matchID: 3,
+                pxG: 2.1,
+                pxGA: 0.4
+            })
+            console.log("PREDICTIONS SEEDED!")
             seedDB(premierLeagueMatches);
         } catch (error) {
             console.log(error)
@@ -55,17 +73,20 @@ axios(url)
     const seedDB = async (matchesArray) => {
         try {
             await client.connect();
-            await client.db("database").collection("statistics").createIndex({ date: 1, opponent: 1 }, { unique: true });
-    
+            await client.db("database").collection("matches").createIndex({ date: 1, opponent: 1 }, { unique: true });
+
+            let ID = 0;
             for (const match of matchesArray) {
                 try {
-                    await client.db("database").collection("statistics").insertOne({
+                    await client.db("database").collection("matches").insertOne({
+                        _id: ID,
                         date: match.date,
                         opponent: match.opponent,
                         xG: parseFloat(match.xG),
                         xGA: parseFloat(match.xGA)
                     });
                     console.log(`Inserted match for ${match.date} - ${match.opponent}`);
+                    ID++;
                 } catch (insertError) {
                     if (insertError.code !== 11000) {
                         console.error('Error inserting match:', insertError);
@@ -73,6 +94,7 @@ axios(url)
                     }
                 }
             }
+            // await client.db("database").collection("matches").deleteMany({})
             console.log("MATCHES SEEDED!")
             await client.close();
         } catch (error) {

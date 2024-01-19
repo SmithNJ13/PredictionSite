@@ -3,9 +3,9 @@ const client = require("../database/setup")
 
 class User {
     constructor(data) {
-        this.id = data._id,
-        this.username = data.username,
-        this.email = data.email,
+        this.id = data._id
+        this.username = data.username
+        this.email = data.email
         this.password = data.password
     }
 

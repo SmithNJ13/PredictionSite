@@ -3,16 +3,16 @@ const { ObjectId } = require("mongodb")
 
 class Match {
     constructor(data) {
-        this.id = data._id
-        this.date = data.date
-        this.opponent = data.opponent
-        this.xG = data.xG
-        this.xGA = data.xGA
+        this.id = data.id
+        this.userID = data.userID
+        this.matchID = data.matchID
+        this.pxG = data.pxG
+        this.pxGA = data.pxGA
     }
 
     static async getAll() {
         await client.connect()
-        const response = await client.db("database").collection("matches").find({})
+        const response = await client.db("database").collection("predictions").find({})
         const all = await response.toArray()
         return all;
     }
