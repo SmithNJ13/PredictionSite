@@ -10,7 +10,7 @@ const HomePage = () => {
   const [opponent, setOpponent] = useState("");
   const [icon, setIcon] = useState("");
   const [colour, setColour] = useState("");
-  const [matchID, setMatchID] = useState(""); // Make sure to define setMatchID
+  const [matchID, setMatchID] = useState("");
 
   async function getTeams() {
     try {
@@ -22,7 +22,7 @@ const HomePage = () => {
         setOpponent(data.motd[0].opponent);
         setIcon(data.icon);
         setColour(data.colour);
-        setMatchID(data.motd[0]._id); // Set matchID
+        setMatchID(data.motd[0]._id);
       } else {
         console.log("No matches of the day (motd) found.");
       }

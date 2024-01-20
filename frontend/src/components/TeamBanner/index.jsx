@@ -7,8 +7,17 @@ const TeamBanner = ({ team, matchID, icon, name, colour }) => {
   const [buttonClicked, setButtonClicked] = useState(false);
 
   const handleClick = async () => {
-    console.log(`xG value for ${team === 2 ? "pxGA" : "pxG"}`, pxG);
+    console.log(`xG value for ${team === 2 ? "Team2" : "Team1"}`, pxG);
     setButtonClicked(true);
+
+    if(team === 1) {
+      console.log("Team 1 button disabled")
+    }
+    if(team === 2) {
+      console.log("Team 2 button disabled")
+
+    }
+
     try {
       const response = await fetch("http://localhost:8080/" , {
         method: "POST",
@@ -49,6 +58,7 @@ const TeamBanner = ({ team, matchID, icon, name, colour }) => {
               placeholder="0.0"
               value={pxG}
               onChange={(e) => setPxG(parseFloat(e.target.value))}
+              disabled={buttonClicked}
             />
             <button
               id="button"

@@ -20,6 +20,7 @@ class Prediction {
     static async create({id, userID, matchID, pxG, pxGA}) {
         try {
             await client.connect()
+            // const response = await client.db("database").collection("predictions").deleteMany({})
             const response = await client.db("database").collection("predictions").insertOne({
                 _id: id,
                 userID: userID,

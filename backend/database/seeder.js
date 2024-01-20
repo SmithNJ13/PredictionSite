@@ -18,15 +18,13 @@ axios(url)
                 const xgFor = $(compElement).closest("tr").find("td.right[data-stat='xg_for']").text().trim();
                 const xgAgainst = $(compElement).closest("tr").find("td.right[data-stat='xg_against']").text().trim();
 
-                if (xgFor !== "" || xgAgainst !== "") {
-                    const matchInfo = {
-                        date: matchDate,
-                        opponent: opponent,
-                        xG: xgFor,
-                        xGA: xgAgainst
-                    };
-                    premierLeagueMatches.push(matchInfo);
-                }
+                const matchInfo = {
+                    date: matchDate,
+                    opponent: opponent,
+                    xG: xgFor,
+                    xGA: xgAgainst
+                };
+                premierLeagueMatches.push(matchInfo);
             }
         });
     })
