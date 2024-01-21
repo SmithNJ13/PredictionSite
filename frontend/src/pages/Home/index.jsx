@@ -11,6 +11,8 @@ const HomePage = () => {
   const [colour, setColour] = useState("");
   const [matchID, setMatchID] = useState("");
   const [inactive, setInactive] = useState([])
+  const [pxGArsenal, setpxGArsenal] = useState(0.0)
+  const [pxGOpponent, setpxGOpponent] = useState(0.0)
 
   async function getTeams() {
     try {
@@ -33,6 +35,30 @@ const HomePage = () => {
     }
   }
 
+  async function postPrediction(matchID, pxGArsenal, pxGOpponent) {
+    try {
+      const response = await fetch("http://localhost:8080/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userID: 1,
+          matchID: matchID,
+          pxG: pxGArsenal,
+          pxGA: pxGOpponent
+        })
+      })
+      if(!response.ok) {
+        console.log("Failed to create prediction", response.status)
+      } else {
+        console.log("Prediction created successfully")
+      }
+    } catch (error) {
+      console.log("Error making API call: ", error)
+    }
+  }
+
   const handleInactive = (name) => {
     setInactive((prevInactive) => [...prevInactive, name])
   }
@@ -44,6 +70,8 @@ const HomePage = () => {
   useEffect(() => {
     if(inactive.length === 2) {
       console.log("Both buttons have been disabled")
+      console.log(`The pxG for Arsenal is: ${pxGArsenal} and the pxG for ${opponent} is: ${pxGOpponent}`)
+      postPrediction(matchID, pxGArsenal, pxGOpponent)
     }
   }, [inactive])
 
@@ -55,6 +83,8 @@ const HomePage = () => {
           name={"Arsenal"}
           colour={"#EF0107"}
           inactive={handleInactive}
+          pxG={pxGArsenal}
+          setpxG={setpxGArsenal}
         />
         <div className="text">
           <p>V</p>
@@ -64,6 +94,8 @@ const HomePage = () => {
           name={opponent}
           colour={colour}
           inactive={handleInactive}
+          pxG={pxGOpponent}
+          setpxG={setpxGOpponent}
         />
       </div>
     </>

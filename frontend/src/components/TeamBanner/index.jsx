@@ -2,7 +2,7 @@ import "./style.css";
 import { Triangle } from "react-shapes";
 import { useState } from "react";
 
-const TeamBanner = ({ icon, name, colour, inactive }) => {
+const TeamBanner = ({ icon, name, colour, inactive, pxG, setpxG }) => {
   const [clicked, setClicked] = useState(false)
 
   const handleClick = async () => {
@@ -19,7 +19,7 @@ const TeamBanner = ({ icon, name, colour, inactive }) => {
           <h1 id="teamName">{name}</h1>
           <p>xG:</p>
           <div id="inputArea">
-            <input id="xG" type="number" placeholder="0.0"/>
+            <input id="xG" type="number" placeholder="0.0" value={isNaN(pxG) || pxG === undefined ? "" : pxG} onChange={(e) => setpxG(parseFloat(e.target.value))} disabled={clicked}/>
             <button id="button" onClick={handleClick} disabled={clicked}>✔️</button>
           </div>
         </div>
