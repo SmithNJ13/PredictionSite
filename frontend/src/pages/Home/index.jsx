@@ -4,13 +4,13 @@ import axios from "axios";
 import "./style.css";
 
 const HomePage = () => {
-  const Arsenal = "Arsenal";
   const ArsenalIcon =
     "https://upload.wikimedia.org/wikipedia/hif/8/82/Arsenal_FC.png?20150520165111";
   const [opponent, setOpponent] = useState("");
   const [icon, setIcon] = useState("");
   const [colour, setColour] = useState("");
   const [matchID, setMatchID] = useState("");
+  const [inactive, setInactive] = useState([])
 
   async function getTeams() {
     try {
@@ -33,29 +33,37 @@ const HomePage = () => {
     }
   }
 
+  const handleInactive = (name) => {
+    setInactive((prevInactive) => [...prevInactive, name])
+  }
+
   useEffect(() => {
     getTeams();
   }, []);
+
+  useEffect(() => {
+    if(inactive.length === 2) {
+      console.log("Both buttons have been disabled")
+    }
+  }, [inactive])
 
   return (
     <>
       <div className="matches">
         <TeamBanner
-          team={1}
-          matchID={matchID} // Pass matchID to TeamBanner
           icon={ArsenalIcon}
-          name={Arsenal}
-          colour="#EF0107"
+          name={"Arsenal"}
+          colour={"#EF0107"}
+          inactive={handleInactive}
         />
         <div className="text">
           <p>V</p>
         </div>
         <TeamBanner
-          team={2}
-          matchID={matchID} // Pass matchID to TeamBanner
           icon={icon}
           name={opponent}
           colour={colour}
+          inactive={handleInactive}
         />
       </div>
     </>

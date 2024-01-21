@@ -5,8 +5,8 @@ const currentDate = new Date()
 const year = currentDate.getFullYear()
 const month = String(currentDate.getMonth() + 1).padStart(2, "0")
 const day = String(currentDate.getDate()).padStart(2, "0")  
-const date = `${year}-${month}-${day}`
-// const date = `2024-01-02`
+// const date = `${year}-${month}-${day}`
+const date = `2024-01-20`
 
 const index = async(req, res) => {
     try{
@@ -21,27 +21,25 @@ const index = async(req, res) => {
 const getOne = async (req, res) => {
     try {
         const motd = await Match.getByDate(date);
-
-        if (motd && motd.length > 0) {
-            const opponentName = motd[0].opponent;
-            const matchingTeam = teams.find((team) => team.name === opponentName);
-
-            if (matchingTeam) {
+        console.log("MotD: ", motd)
+        if(motd) {
+            const opponent = motd[0].opponent
+            const filter = teams.find((team) => team.name === opponent)
+            if(filter) {
                 const response = {
                     motd: motd,
-                    icon: matchingTeam.icon,
-                    colour: matchingTeam.primary
-                };
-
-                res.status(200).send(response);
+                    icon: filter.icon,
+                    colour: filter.primary
+                }
+                res.status(200).send(response)
             } else {
-                res.status(404).send({ Error: "Team not found in teams.json" });
+                res.status(500).send(`No teams found with name ${opponent}`)
             }
         } else {
-            res.status(404).send({ Error: "Match not found for the given date" });
+            res.status(500).send(`No Arsenal EPL games are on this date: ${date}`)
         }
     } catch (error) {
-        res.status(500).send({ Error: error.message });
+        res.status(500).send({Error: error})
     }
 }
 

@@ -12,17 +12,17 @@ class Match {
 
     static async getAll() {
         await client.connect()
-        const response = await client.db("database").collection("matches").find({})
+        const response = client.db("database").collection("matches").find({})
         const all = await response.toArray()
         return all;
     }
 
     static async getByDate(date) {
         await client.connect()
-        const response = await client.db("database").collection("matches").find({date: date})
+        const response = client.db("database").collection("matches").find({date: date})
         const motd = await response.toArray()
         if(motd.length <= 0) {
-            return "No matches today!"
+            return false
         } else {
             return motd
         }
