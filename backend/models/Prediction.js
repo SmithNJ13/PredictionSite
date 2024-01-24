@@ -21,12 +21,12 @@ class Prediction {
         try {
             await client.connect()
             // const response = await client.db("database").collection("predictions").deleteMany({})
-            const response = await client.db("database").collection("predictions").insertOne({
+            const response = await client.db("database").collection("predictions").insertOne({ 
                 _id: id,
                 userID: userID,
                 matchID: matchID,
-                pxG: pxG,
-                pxGA: pxGA
+                pxG: pxG === null ? 0.0 : pxG,
+                pxGA: pxGA === null ? 0.0 : pxGA
             })
             return response
         } catch (error) {

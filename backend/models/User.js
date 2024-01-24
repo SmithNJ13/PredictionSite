@@ -1,20 +1,55 @@
-const {ObjectID} = require("mongodb")
-const client = require("../database/setup")
+const { ObjectID } = require("mongodb");
+const client = require("../database/setup");
 
 class User {
-    constructor(data) {
-        this.id = data._id
-        this.username = data.username
-        this.email = data.email
-        this.password = data.password
+  constructor(data) {
+    this.id = data._id;
+    this.username = data.username;
+    this.email = data.email;
+    this.password = data.password;
+  }
+
+  static async getAll() {
+    await client.connect();
+    const response = await client.db("database").collection("users").find({});
+    const all = await response.toArray();
+    return all;
+  }
+
+  static async create({ username, email, password }) {
+    await client.connect();
+
+    const existingUser = await client
+      .db("database")
+      .collection("users")
+      .findOne({ email: email });
+
+    if (existingUser) {
+      return ({message: "A user with this email already exists"});
     }
 
-    static async getAll() {
-        await client.connect()
-        const response = await client.db("database").collection("users").find({})
-        const all = await response.toArray()
-        return all;
+    const maxIdResponse = await client
+      .db("database")
+      .collection("users")
+      .find({})
+      .sort({ _id: -1 })
+      .limit(1)
+      .toArray();
+    let maxId = -1;
+    if (maxIdResponse.length > 0) {
+      maxId = maxIdResponse[0]._id;
     }
+    const nextId = maxId + 1;
+
+    const response = await client.db("database").collection("users").insertOne({
+      _id: nextId,
+      username: username,
+      email: email,
+      password: password,
+    });
+
+    return `User created: ${response}`;
+  }
 }
 
-module.exports = User
+module.exports = User;

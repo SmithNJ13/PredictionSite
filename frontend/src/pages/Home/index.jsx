@@ -15,7 +15,7 @@ const HomePage = () => {
   const [pxGOpponent, setpxGOpponent] = useState(0.0)
 
   async function getTeams() {
-    try {
+    try { 
       const response = await axios.get("http://localhost:8080/");
       const data = response.data;
 
@@ -69,7 +69,6 @@ const HomePage = () => {
 
   useEffect(() => {
     if(inactive.length === 2) {
-      console.log("Both buttons have been disabled")
       console.log(`The pxG for Arsenal is: ${pxGArsenal} and the pxG for ${opponent} is: ${pxGOpponent}`)
       postPrediction(matchID, pxGArsenal, pxGOpponent)
     }

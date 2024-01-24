@@ -12,7 +12,6 @@ const index = async(req, res) => {
 const create = async(req, res) => {
     try {
         const data = req.body
-        console.log(data)
         const prediction = await Prediction.create(data)
         res.status(201).send({data: prediction})
     } catch (error) {
