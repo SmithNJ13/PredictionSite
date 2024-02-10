@@ -50,6 +50,18 @@ class User {
 
     return `User created: ${response}`;
   }
+
+  static async getById(idx) {
+    await client.connect()
+    const id = new ObjectID(idx)
+    const response = await client.db("database").collection("users").find({
+      _id: id
+    })
+    const value = await response.toArray()
+    const user = new User(value[0])
+    user["id"] = id
+    return user
+  }
 }
 
 module.exports = User;

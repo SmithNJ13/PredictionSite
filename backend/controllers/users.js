@@ -22,6 +22,10 @@ const index = async(req, res) => {
 const getUserToken = async(req, res) => {
     try {
         const token = req.headers["autherization"]
+        const tokenObject = await Token.getToken(token)
+        const userID = tokenObject.userID
+        const user = await User.getById(userID)
+        res.status(200).json(user)
     } catch (error) {
         res.status(404).json({error: error})
     }
@@ -41,4 +45,4 @@ const register = async(req, res) => {
     }
 }
 
-module.exports = {index, register}
+module.exports = {index, register, getUserToken}

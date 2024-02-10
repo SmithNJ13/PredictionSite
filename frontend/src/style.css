@@ -2,3 +2,24 @@
     width: 1920px;
     height: 1080px;
 }
+html {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+}
+.background {
+    position: fixed;
+    top: 0;
+    left: -0.5rem;
+    margin: 0;
+    padding: 0;
+}
+.background img {
+    position: relative;
+    width: 620px;
+    margin: none;
+}
