@@ -6,7 +6,7 @@ const year = currentDate.getFullYear()
 const month = String(currentDate.getMonth() + 1).padStart(2, "0")
 const day = String(currentDate.getDate()).padStart(2, "0")  
 // const date = `${year}-${month}-${day}`
-const date = `2023-12-17`
+const date = `2024-02-04`
 
 const index = async(req, res) => {
     try{

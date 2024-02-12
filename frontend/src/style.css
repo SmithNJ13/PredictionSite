@@ -12,14 +12,22 @@ body {
     height: 100vh;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 html {
-    overflow: hidden;
     background-color: wheat;
     top: 0;
     left: 0;
     margin: 0;
     padding: 0;
 }
+::-webkit-scrollbar {
+    width: 0.25rem;
+  } ::-webkit-scrollbar-track {
+    background-color: var(--ArsenalDarkRed);
+  } ::-webkit-scrollbar-thumb {
+    background-color: var(--ArsenalGold);
+  }
 
 

@@ -1,27 +1,21 @@
-.main_content {
-    padding: 0;
-    margin: 0;
-}
-.main_content h3 {
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+#header {
     position: relative;
-    text-align: center;
-}
-.matches {
-    position: relative;
-    justify-content: center;
     display: flex;
-    flex-direction: row;
-    gap: 100px;
-}
-.text p {
-    font-size: 100px;
-    color: black;
-    position: relative;
-    top: 25vh;
-    font-size: 60px;
-    font-weight: bold;
+    justify-content: center;
+    text-align: center;
+    font-size: 3rem;
+    font-family: "Russo One", sans-serif;
 }
 #currentMatch {
+    position: relative;
+    justify-content: center;
+    align-items: center;
     display: flex;
     flex-direction: row;
+    gap: 2rem;
+}
+.vs {
+    font-size: 4rem;
+    font-family: 'Russo One', sans-serif;
 }

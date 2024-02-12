@@ -76,24 +76,30 @@ const HomePage = () => {
 
   return (
     <>
-    <div id="currentMatch">
-      <TeamBanner
-      teamIcon={ArsenalIcon}
-      teamName={"Arsenal"}
-      colour={"red"}
-      inactive={handleInactive}
-      pxG={pxGArsenal}
-      setpxG={setpxGArsenal} 
-      id={1}/>
-      <div>V</div>
-      <TeamBanner 
-      teamIcon={icon}
-      teamName={opponent}
-      colour={colour}
-      inactive={handleInactive}
-      pxG={pxGOpponent}
-      setpxG={setpxGOpponent}
-      id={2}/>
+    <AttackMomentum />
+      <div id="header">
+        <header>Current Match:</header>
+      </div>
+    <div id="content">
+      <div id="currentMatch">
+        <TeamBanner
+        teamIcon={ArsenalIcon}
+        teamName={"Arsenal"}
+        colour={"var(--ArsenalRed)"}
+        inactive={handleInactive}
+        pxG={pxGArsenal}
+        setpxG={setpxGArsenal} 
+        id={1}/>
+        <div className="vs">V</div>
+        <TeamBanner 
+        teamIcon={icon}
+        teamName={opponent}
+        colour={colour}
+        inactive={handleInactive}
+        pxG={pxGOpponent}
+        setpxG={setpxGOpponent}
+        id={2}/>
+      </div>
     </div>
     </>
   );

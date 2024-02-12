@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
 #NavBar {
     position: absolute;
-    width: 0;
-    height: 0;
+    width: 14rem;
+    height: 100vh;
+    background-color: var(--ArsenalRed);
 }
 .line {
     position: relative;
     align-content: center;
     justify-content: center;
-    left: -0.75rem;
-    width: 8rem;
-    height: 0.25rem;
+    width: 9rem;
+    height: 0.2rem;
     background-color: ivory;
 }
 .NavItems {
