@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { TeamBanner } from "../../components/export";
+import { TeamBanner, AttackMomentum } from "../../components/export";
 import axios from "axios";
 import "./style.css";
 
@@ -72,31 +72,27 @@ const HomePage = () => {
       console.log(`The pxG for Arsenal is: ${pxGArsenal} and the pxG for ${opponent} is: ${pxGOpponent}`)
       postPrediction(matchID, pxGArsenal, pxGOpponent)
     }
-  }, [inactive])
+  }, )
 
   return (
     <>
-      <div className="matches">
-        <TeamBanner
-          icon={ArsenalIcon}
-          name={"Arsenal"}
-          colour={"#EF0107"}
-          inactive={handleInactive}
-          pxG={pxGArsenal}
-          setpxG={setpxGArsenal}
-        />
-        <div className="text">
-          <p>V</p>
-        </div>
-        <TeamBanner
-          icon={icon}
-          name={opponent}
-          colour={colour}
-          inactive={handleInactive}
-          pxG={pxGOpponent}
-          setpxG={setpxGOpponent}
-        />
-      </div>
+    <div id="currentMatch">
+      <TeamBanner
+      teamIcon={ArsenalIcon}
+      teamName={"Arsenal"}
+      colour={"red"}
+      inactive={handleInactive}
+      pxG={pxGArsenal}
+      setpxG={setpxGArsenal} />
+      <div>V</div>
+      <TeamBanner 
+      teamIcon={icon}
+      teamName={opponent}
+      colour={colour}
+      inactive={handleInactive}
+      pxG={pxGOpponent}
+      setpxG={setpxGOpponent}/>
+    </div>
     </>
   );
 };

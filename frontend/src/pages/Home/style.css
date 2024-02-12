@@ -1,15 +1,10 @@
-:root {
-    --bgColour: #d9d9d9;
-    --softText: #ff5c5c;
-    --softText2: #5c80ff;
-    --softSelect: #c8ffc7;
+.main_content {
+    padding: 0;
+    margin: 0;
 }
-html {
-    background-color: var(--bgColour);
-}
-.text {
-    font-size: 100px;
-    color: black;
+.main_content h3 {
+    position: relative;
+    text-align: center;
 }
 .matches {
     position: relative;
@@ -19,8 +14,14 @@ html {
     gap: 100px;
 }
 .text p {
+    font-size: 100px;
+    color: black;
     position: relative;
     top: 25vh;
     font-size: 60px;
     font-weight: bold;
+}
+#currentMatch {
+    display: flex;
+    flex-direction: row;
 }

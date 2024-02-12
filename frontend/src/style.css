@@ -1,25 +1,25 @@
 :root {
-    width: 1920px;
-    height: 1080px;
+    --ArsenalRed: #EF0107;
+    --ArsenalDarkRed: #DB0007;
+    --ArsenalBlue: #063672;
+    --ArsenalGold: #9C824A;
+    --softText: #ff5c5c;
+    --softText2: #5c80ff;
+    --softSelect: #c8ffc7;
+}
+body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 html {
-    width: 1920px;
-    height: 1080px;
     overflow: hidden;
+    background-color: wheat;
     top: 0;
     left: 0;
     margin: 0;
     padding: 0;
 }
-.background {
-    position: fixed;
-    top: 0;
-    left: -0.5rem;
-    margin: 0;
-    padding: 0;
-}
-.background img {
-    position: relative;
-    width: 620px;
-    margin: none;
-}
+
+

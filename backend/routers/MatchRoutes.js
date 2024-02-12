@@ -7,3 +7,4 @@ MatchRouter.get("/", MatchController.getOne)
 MatchRouter.get("/matches", MatchController.index)
 
 module.exports = MatchRouter
+
