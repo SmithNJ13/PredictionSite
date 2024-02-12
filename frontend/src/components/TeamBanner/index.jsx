@@ -65,7 +65,7 @@ const TeamBanner = ({teamIcon, teamName, colour, inactive, pxG, setpxG, id}) => 
       </div>
       <div id="bottom">
         <p>xG:</p>
-        <input className="xG" type="number" placeholder="0.0" value={isNaN(pxG) || pxG === undefined ? "" : pxG} onChange={(e) => setpxG(parseFloat(e.target.value))} disabled={clicked}/>
+        <input className="xG" type="text" pattern="^\d{0,2}(\.\d{0,2})?$" maxLength="5" placeholder="0" value={pxG === "0" ? "" : pxG} onChange={(e) => { const newValue = e.target.value; if (/^\d{0,2}(\.\d{0,2})?$/.test(newValue)) { setpxG(newValue === "" ? "0" : newValue); } }} disabled={clicked} />
         <button id="button" onClick={handleClick} disabled={clicked}>✔️</button>
       </div>
     </div>

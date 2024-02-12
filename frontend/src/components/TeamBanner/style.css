@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap');
 #matchcard1, #matchcard2 {
   position: relative;
   display: flex;
@@ -31,6 +33,8 @@
   justify-content: space-around;
   align-items: center;
   color: ivory;
+  font-family: 'Protest Riot', sans-serif;
+  font-weight: 100;
   overflow: visible;
   flex-wrap: nowrap;
   width: 210px;
@@ -38,5 +42,46 @@
   top: 1.25rem;
   margin: 3% 3% 3% 9%;
 }
+#bottom p {
+  color: ivory;
+  font-family: 'Protest Revolution', sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 10px;
+}
+#bottom input,
+#bottom button {
+  width: 32px;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  line-height: 1;
+}
+#bottom button {
+  border: none;
+  border-radius: 4px;
+}
+#bottom button:active {
+  background-color: var(--softSelect);
+  border-color: var(--softSelect);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+
+#bottom input {
+  text-align: center;
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: bold;
+}
+#bottom input[type="number"]::-webkit-inner-spin-button,
+#bottom input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+
 
 
