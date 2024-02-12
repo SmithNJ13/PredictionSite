@@ -1,4 +1,4 @@
-#matchcard {
+#matchcard1, #matchcard2 {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -29,13 +29,14 @@
   position: relative;
   display: flex;
   justify-content: space-around;
+  align-items: center;
   color: ivory;
-  overflow: hidden;
+  overflow: visible;
   flex-wrap: nowrap;
   width: 210px;
   height: 2rem;
-  top: 1rem;
-  margin-left: 9%;
+  top: 1.25rem;
+  margin: 3% 3% 3% 9%;
 }
 
 

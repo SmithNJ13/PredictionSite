@@ -21,7 +21,7 @@ const HomePage = () => {
 
       // Make sure motd is not empty
       if (data.motd.length > 0) {
-        setOpponent(data.motd[0].opponent);
+        setOpponent(String(data.motd[0].opponent));
         setIcon(data.icon);
         setColour(data.colour);
         setMatchID(data.motd[0]._id);
@@ -34,7 +34,7 @@ const HomePage = () => {
       console.log("Error fetching data: ", error);
     }
   }
-
+  
   async function postPrediction(matchID, pxGArsenal, pxGOpponent) {
     try {
       const response = await fetch("http://localhost:8080/", {
@@ -83,7 +83,8 @@ const HomePage = () => {
       colour={"red"}
       inactive={handleInactive}
       pxG={pxGArsenal}
-      setpxG={setpxGArsenal} />
+      setpxG={setpxGArsenal} 
+      id={1}/>
       <div>V</div>
       <TeamBanner 
       teamIcon={icon}
@@ -91,7 +92,8 @@ const HomePage = () => {
       colour={colour}
       inactive={handleInactive}
       pxG={pxGOpponent}
-      setpxG={setpxGOpponent}/>
+      setpxG={setpxGOpponent}
+      id={2}/>
     </div>
     </>
   );
