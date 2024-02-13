@@ -1,5 +1,5 @@
 const client = require("./setup")
-const url = "https://fbref.com/en/squads/18bb7c10/Arsenal-Stats"
+const url = "https://fbref.com/en/comps/9/schedule/Premier-League-Scores-and-Fixtures"
 const axios = require("axios")
 const cheerio = require("cheerio")
 
@@ -10,23 +10,27 @@ axios(url)
         const HTML = response.data;
         const $ = cheerio.load(HTML);
 
-        $("td.left[data-stat='comp']:has(a:contains('Premier League'))").each((index, compElement) => {
-            const competition = $(compElement).find("a").text().trim();
-            if (competition === "Premier League") {
-                const matchDate = $(compElement).closest("tr").find("th.left[data-stat='date']").text().trim();
-                const opponent = $(compElement).closest("tr").find("td.left[data-stat='opponent'] a").text().trim();
-                const xgFor = $(compElement).closest("tr").find("td.right[data-stat='xg_for']").text().trim();
-                const xgAgainst = $(compElement).closest("tr").find("td.right[data-stat='xg_against']").text().trim();
+        $("td.left[data-stat='date']").each((index, element) => {
+            const date = $(element).find("a").text().trim()
+            if(date) {
+                const matchTime = $(element).closest("tr").find("td.right[data-stat='start_time']").text().trim()
+                const homeTeam = $(element).closest("tr").find("td.right[data-stat='home_team'] a").text().trim()
+                const homeXG = $(element).closest("tr").find("td.right[data-stat='home_xg']").text().trim()
+                const awayXG = $(element).closest("tr").find("td.right[data-stat='away_xg']").text().trim()
+                const awayTeam = $(element).closest("tr").find("td.left[data-stat='away_team'] a").text().trim()
 
                 const matchInfo = {
-                    date: matchDate,
-                    opponent: opponent,
-                    xG: xgFor,
-                    xGA: xgAgainst
-                };
-                premierLeagueMatches.push(matchInfo);
+                    date: date,
+                    time: matchTime,
+                    home: homeTeam,
+                    homeXG: homeXG,
+                    away: awayTeam,
+                    awayXG: awayXG
+                }
+                premierLeagueMatches.push(matchInfo)
             }
-        });
+        })
+        // console.log(premierLeagueMatches)
     })
     .catch(error => {
         console.error('Error fetching data:', error);
@@ -63,15 +67,27 @@ axios(url)
             })
             console.log("PREDICTIONS SEEDED!")
             seedDB(premierLeagueMatches);
+            // deleteDB()
+            
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    const deleteDB = async () => {
+        try {
+            await client.db("database").collection("matches").deleteMany({})
+            await client.close()
+            console.log("Matches deleted!")
+        } catch (error) {
+            console.log(`Error deleting matches: ${error}`)
         }
     }
 
     const seedDB = async (matchesArray) => {
         try {
             await client.connect();
-            await client.db("database").collection("matches").createIndex({ date: 1, opponent: 1 }, { unique: true });
+            await client.db("database").collection("matches").drop();
 
             let ID = 0;
             for (const match of matchesArray) {
@@ -79,11 +95,13 @@ axios(url)
                     await client.db("database").collection("matches").insertOne({
                         _id: ID,
                         date: match.date,
-                        opponent: match.opponent,
-                        xG: parseFloat(match.xG),
-                        xGA: parseFloat(match.xGA)
+                        time: match.time,
+                        home: match.home,
+                        homeXG: match.homeXG,
+                        away: match.away,
+                        awayXG: match.awayXG
                     });
-                    console.log(`Inserted match for ${match.date} - ${match.opponent}`);
+                    // console.log(`Inserted match for ${match.date} - ${match.opponent}`);
                     ID++;
                 } catch (insertError) {
                     if (insertError.code !== 11000) {
@@ -92,7 +110,6 @@ axios(url)
                     }
                 }
             }
-            // await client.db("database").collection("matches").deleteMany({})
             console.log("MATCHES SEEDED!")
             await client.close();
         } catch (error) {
@@ -101,3 +118,10 @@ axios(url)
     };
     
     seedUsers()
+
+
+    /*
+    Code initially fetches the webpage from footybite and stores it as a variable, it then searches through the HTML document to find an element with the id "comp" and checks for 
+    all elements associated with comp that also contain "premier league" for each one that has their "comp" set as "premier league" we fetch the match date, opponent, xgFor and xgAgainst,
+    we then store this info as an object "matchInfo" and push it to an array
+    */

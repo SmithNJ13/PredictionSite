@@ -6,6 +6,7 @@
     --softText: #ff5c5c;
     --softText2: #5c80ff;
     --softSelect: #c8ffc7;
+    --offBlack: rgb(36, 28, 28);
 }
 body {
     width: 100vw;

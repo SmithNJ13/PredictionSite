@@ -5,9 +5,11 @@ class Match {
     constructor(data) {
         this.id = data._id
         this.date = data.date
-        this.opponent = data.opponent
-        this.xG = data.xG
-        this.xGA = data.xGA
+        this.time = data.time
+        this.home = data.home
+        this.homeXG = data.homeXG
+        this.away = data.away
+        this.awayXG = data.awayXG
     }
 
     static async getAll() {
@@ -20,11 +22,11 @@ class Match {
     static async getByDate(date) {
         await client.connect()
         const response = client.db("database").collection("matches").find({date: date})
-        const motd = await response.toArray()
-        if(motd.length <= 0) {
+        const games = await response.toArray()
+        if(games.length <= 0) {
             return false
         } else {
-            return motd
+            return games
         }
     }
 }

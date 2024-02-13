@@ -20,24 +20,9 @@ const index = async(req, res) => {
 
 const getOne = async (req, res) => {
     try {
-        const motd = await Match.getByDate(date);
-        console.log("MotD: ", motd)
-        if(motd) {
-            const opponent = motd[0].opponent
-            const filter = teams.find((team) => team.name === opponent)
-            if(filter) {
-                const response = {
-                    motd: motd,
-                    icon: filter.icon,
-                    colour: filter.primary
-                }
-                res.status(200).send(response)
-            } else {
-                res.status(500).send(`No teams found with name ${opponent}`)
-            }
-        } else {
-            res.status(500).send(`No Arsenal EPL games are on this date: ${date}`)
-        }
+        const liveGames = await Match.getByDate(date);
+        // console.log("liveGames: ", liveGames)
+        res.status(200).send(liveGames)
     } catch (error) {
         res.status(500).send({Error: error})
     }

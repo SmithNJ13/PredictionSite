@@ -78,7 +78,7 @@ const HomePage = () => {
     <>
     <AttackMomentum />
       <div id="header">
-        <header>Current Match:</header>
+        <header>Live Matches:</header>
       </div>
     <div id="content">
       <div id="currentMatch">
