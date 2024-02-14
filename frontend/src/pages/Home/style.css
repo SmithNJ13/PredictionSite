@@ -7,15 +7,15 @@
     font-size: 3rem;
     font-family: "Russo One", sans-serif;
 }
-#currentMatch {
-    position: relative;
+#content {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    text-align: center;
+}
+.matchCards {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     gap: 2rem;
-}
-.vs {
-    font-size: 4rem;
-    font-family: 'Russo One', sans-serif;
 }

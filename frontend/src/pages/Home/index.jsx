@@ -13,27 +13,19 @@ const HomePage = () => {
   const [inactive, setInactive] = useState([])
   const [pxGArsenal, setpxGArsenal] = useState(0.0)
   const [pxGOpponent, setpxGOpponent] = useState(0.0)
+  const [liveGames, setLiveGames] = useState([]);
+  const [date, setDate] = useState("")
+  let genCards = 1
 
   async function getTeams() {
     try { 
-      const response = await axios.get("http://localhost:8080/");
-      const data = response.data;
-
-      // Make sure motd is not empty
-      if (data.motd.length > 0) {
-        setOpponent(String(data.motd[0].opponent));
-        setIcon(data.icon);
-        setColour(data.colour);
-        setMatchID(data.motd[0]._id);
-      } else {
-        console.log("No matches of the day (motd) found.");
-      }
-
-      console.log(data);
+        const response = await axios.get("http://localhost:8080/");
+        setLiveGames(response.data);
+        setDate(response.data[0].match.date);
     } catch (error) {
-      console.log("Error fetching data: ", error);
+        console.log("Error fetching data: ", error);
     }
-  }
+}
   
   async function postPrediction(matchID, pxGArsenal, pxGOpponent) {
     try {
@@ -59,9 +51,9 @@ const HomePage = () => {
     }
   }
 
-  const handleInactive = (name) => {
-    setInactive((prevInactive) => [...prevInactive, name])
-  }
+  // const handleInactive = (name) => {
+  //   setInactive((prevInactive) => [...prevInactive, name])
+  // }
 
   useEffect(() => {
     getTeams();
@@ -76,30 +68,21 @@ const HomePage = () => {
 
   return (
     <>
-    <AttackMomentum />
-      <div id="header">
-        <header>Live Matches:</header>
-      </div>
+    <div id="header">
+      <header>Matches for: {date}</header>
+    </div>
     <div id="content">
-      <div id="currentMatch">
-        <TeamBanner
-        teamIcon={ArsenalIcon}
-        teamName={"Arsenal"}
-        colour={"var(--ArsenalRed)"}
-        inactive={handleInactive}
-        pxG={pxGArsenal}
-        setpxG={setpxGArsenal} 
-        id={1}/>
-        <div className="vs">V</div>
-        <TeamBanner 
-        teamIcon={icon}
-        teamName={opponent}
-        colour={colour}
-        inactive={handleInactive}
-        pxG={pxGOpponent}
-        setpxG={setpxGOpponent}
-        id={2}/>
-      </div>
+        {liveGames.map((game, index) => {
+          return (
+          <div key={game.match._id}>
+            <h4>Time: {game.match.time}</h4>
+            <div className="matchCards">
+              <TeamBanner id={genCards++} teamName={game.match.home} teamIcon={game.home_icon} colour={game.home_colour}/>
+              <TeamBanner id={genCards++} teamName={game.match.away} teamIcon={game.away_icon} colour={game.away_colour}/>
+            </div>
+          </div>
+          )
+        })}
     </div>
     </>
   );

@@ -21,8 +21,24 @@ const index = async(req, res) => {
 const getOne = async (req, res) => {
     try {
         const liveGames = await Match.getByDate(date);
-        // console.log("liveGames: ", liveGames)
-        res.status(200).send(liveGames)
+        const responses = []
+        liveGames.forEach(game => {
+            const findHome = teams.find((team) => team.name === game.home)
+            const findAway = teams.find((team) => team.name === game.away)
+            if(findHome && findAway) {
+                const response = {
+                    match: game,
+                    home_icon: findHome.icon,
+                    home_colour: findHome.primary,
+                    away_icon: findAway.icon,
+                    away_colour: findAway.primary
+                }
+                responses.push(response)
+            } else { res.status(500).send(`Could not find ${findHome} or ${findAway}`)}
+        });
+        if (responses.length > 0) {
+            res.status(200).send(responses)
+        } else { res.status(500).send("Array is empty")}
     } catch (error) {
         res.status(500).send({Error: error})
     }
