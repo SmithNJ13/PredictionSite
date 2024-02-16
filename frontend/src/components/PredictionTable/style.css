@@ -1,0 +1,44 @@
+#table {
+    position: relative;
+    padding: 1rem;
+    width: 100%;
+}
+
+#info {
+    width: 100%;
+    border-collapse: collapse;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+#info th, #info td {
+    padding: 8px; 
+    text-align: center; 
+}
+.entry {
+    border-bottom: 2px solid black;
+}
+.entry:hover {
+    background-color: rgba(247, 247, 240, 0.08);
+}
+#info th {
+    background-color: black; 
+}
+.teams {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-weight: bold;
+}
+.netValue {
+    font-weight: bold;
+}
+.netxg:hover {
+    color: red;
+    cursor: pointer;
+    user-select: none;
+}
+.netxg:active {
+    scale: 102.5%;
+}

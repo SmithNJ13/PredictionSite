@@ -5,10 +5,13 @@
   width: 300px;
   height: 440px;
 }
+
 .teamName, .teamIcon {
   position: absolute;
 }
+
 .teamName {
+  width: 220px;
   color: ivory;
   font-family: 'Protest Riot', sans-serif;
   font-weight: 100;
@@ -17,16 +20,57 @@
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
 .teamIcon {
   top: 11%;
   left: 50%;
   transform: translateX(-50%);
 }
+
 #top img {
   width: 120px;
   height: 120px;
 }
 
+#bottom {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 1px;
+}
 
+#bottom p {
+  color: ivory;
+  font-family: 'Protest Revolution', sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 10px;
+}
 
+#bottom input,
+#bottom button {
+  width: 32px;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  line-height: 1;
+}
 
+#bottom button {
+  border: none;
+  border-radius: 4px;
+}
+#bottom input {
+  font-weight: bold;
+  text-align: center;
+}
+
+#bottom button:active {
+  background-color: var(--softSelect);
+  border-color: var(--softSelect);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}

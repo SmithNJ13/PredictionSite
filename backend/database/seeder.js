@@ -89,7 +89,7 @@ axios(url)
             await client.connect();
             await client.db("database").collection("matches").drop();
 
-            let ID = 0;
+            let ID = 1;
             for (const match of matchesArray) {
                 try {
                     await client.db("database").collection("matches").insertOne({

@@ -6,8 +6,8 @@ class Prediction {
         this.id = data.id
         this.userID = data.userID
         this.matchID = data.matchID
-        this.pxG = data.pxG
-        this.pxGA = data.pxGA
+        this.pxGHome = data.pxGHome
+        this.pxGAway = data.pxGAway
     }
 
     static async getAll() {
@@ -17,7 +17,7 @@ class Prediction {
         return all;
     }
 
-    static async create({id, userID, matchID, pxG, pxGA}) {
+    static async create({id, userID, matchID, pxGHome, pxGAway}) {
         try {
             await client.connect()
             // const response = await client.db("database").collection("predictions").deleteMany({})
@@ -25,8 +25,8 @@ class Prediction {
                 _id: id,
                 userID: userID,
                 matchID: matchID,
-                pxG: pxG === null ? 0.0 : pxG,
-                pxGA: pxGA === null ? 0.0 : pxGA
+                pxGHome: pxGHome === null ? 0.0 : pxGHome,
+                pxGAway: pxGAway === null ? 0.0 : pxGAway
             })
             return response
         } catch (error) {

@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import "./style.css";
 import MatchCard from "../../assets/matchcard.svg?react";
 
-const TeamBanner = ({teamIcon, teamName, colour, inactive, pxG, setpxG, id}) => {
+const TeamBanner = ({id, matchID, teamIcon, teamName, colour, side, inactive, buttonClick}) => {
   const [clicked, setClicked] = useState(false)
+  const [pxG, setpxG] = useState(0.0)
   const [size, setSize] = useState({
     fontSize: 34,
   })
@@ -34,8 +35,10 @@ const TeamBanner = ({teamIcon, teamName, colour, inactive, pxG, setpxG, id}) => 
   const handleClick = async () => {
     setClicked(true)
     if(inactive) {
-      inactive(name)
+      inactive(teamName)
     }
+    console.log(pxG, teamName, matchID, side)
+    buttonClick({pxG, teamName, matchID, side})
   }
 
   useEffect(() => {
@@ -63,11 +66,11 @@ const TeamBanner = ({teamIcon, teamName, colour, inactive, pxG, setpxG, id}) => 
         <img className="teamIcon" src={teamIcon} alt="Team_Icon"></img>
         <h1 className="teamName" style={size}>{teamName}</h1>
       </div>
-      {/* <div id="bottom">
+      <div id="bottom">
         <p>xG:</p>
         <input className="xG" type="text" pattern="^\d{0,2}(\.\d{0,2})?$" maxLength="5" placeholder="0" value={pxG === "0" ? "" : pxG} onChange={(e) => { const newValue = e.target.value; if (/^\d{0,2}(\.\d{0,2})?$/.test(newValue)) { setpxG(newValue === "" ? "0" : newValue); } }} disabled={clicked} />
         <button id="button" onClick={handleClick} disabled={clicked}>✔️</button>
-      </div> */}
+      </div>
     </div>
     </>
   );
