@@ -6,7 +6,7 @@ const year = currentDate.getFullYear()
 const month = String(currentDate.getMonth() + 1).padStart(2, "0")
 const day = String(currentDate.getDate()).padStart(2, "0")  
 // const date = `${year}-${month}-${day}`
-const date = `2024-02-04`
+const date = `2024-02-17`
 
 const index = async(req, res) => {
     try{
@@ -40,7 +40,7 @@ const getOne = async (req, res) => {
             res.status(200).send(responses)
         } else { res.status(500).send("Array is empty")}
     } catch (error) {
-        res.status(500).send({Error: error})
+        res.status(500).send(`There are no Premier League matches on today (${date})`)
     }
 }
 

@@ -2,43 +2,34 @@ import { useState, useEffect } from "react";
 import "./style.css";
 import MatchCard from "../../assets/matchcard.svg?react";
 
-const TeamBanner = ({id, matchID, teamIcon, teamName, colour, side, inactive, buttonClick}) => {
+const TeamBanner = ({id, matchID, teamIcon, teamName, teamColour, side, buttonClick}) => {
   const [clicked, setClicked] = useState(false)
   const [pxG, setpxG] = useState(0.0)
-  const [size, setSize] = useState({
-    fontSize: 34,
-  })
+  const [size, setSize] = useState({fontSize: 34})
 
-  const sizeHandler = async (teamName) => {
-    try {
+  const sizeHandler = (teamName) => {
       if(teamName.length > 15) {
-        setSize({
-          fontSize: Math.max(10, size.fontSize - (teamName.length / 2))
-        })
+        return Math.max(10, 34 - (teamName.length / 2))
       }
       if(teamName.length > 6 && teamName.length <= 15) {
-        const fontSize = size.fontSize - (teamName.length / 4);
-        const fontSizeStyle = {
-          fontSize,
-        }
-        setSize(fontSizeStyle)
-      } else if (teamName.length <= 6) {
-        setSize({
-          fontSize: 34,
-        })
+        return 34 - (teamName.length / 4)
+      } else {
+        return 34
       }
-    } catch (error) {
-      console.log(error)
-    }
   }
 
-  const handleClick = async () => {
-    setClicked(true)
-    if(inactive) {
-      inactive(teamName)
+  const handleClick = () => {
+    const pxGDouble = parseFloat(pxG)
+    const Info = {
+      matchID: matchID,
+      teamName: teamName,
+      side: side,
+      pxG: pxGDouble,
+      inactive: true
     }
-    console.log(pxG, teamName, matchID, side)
-    buttonClick({pxG, teamName, matchID, side})
+    console.log(Info)
+    setClicked(true)
+    buttonClick(Info)
   }
 
   useEffect(() => {
@@ -48,14 +39,15 @@ const TeamBanner = ({id, matchID, teamIcon, teamName, colour, side, inactive, bu
       const flair = document.querySelector(`#matchcard${id} #flair`);
       const flair2 = document.querySelector(`#matchcard${id} #flair2`);
       if (flair && flair2) {
-        flair.style.fill = colour;
-        flair2.style.fill = colour;
+        flair.style.fill = teamColour;
+        flair2.style.fill = teamColour;
       }
     }
-  }, [colour]); 
+  }, [teamColour, id]); 
 
   useEffect(() => {
-    sizeHandler(teamName);
+    const fontSize = sizeHandler(teamName)
+    setSize({fontSize})
   }, [teamName]);
   
   return (

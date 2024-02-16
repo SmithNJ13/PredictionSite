@@ -21,6 +21,7 @@ class Prediction {
         try {
             await client.connect()
             // const response = await client.db("database").collection("predictions").deleteMany({})
+            await client.db("database").collection("predictions").createIndex({userID: 1, matchID: 1}, {unique: true})
             const response = await client.db("database").collection("predictions").insertOne({ 
                 _id: id,
                 userID: userID,
