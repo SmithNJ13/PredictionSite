@@ -4,6 +4,10 @@ import axios from "axios";
 import "./style.css";
 
 const HomePage = () => {
+  function dateFormat(string) {
+    const format = string.split("-")
+    return `${format[2]}-${format[1]}-${format[0]}`
+  }
 
   console.log("HomePage rendered")
   const [inactive, setInactive] = useState([])
@@ -71,7 +75,7 @@ const HomePage = () => {
   return (
     <>
     <div id="header">
-      <header>Matches for: {date}</header>
+      <header>Matches for: {dateFormat(date)}</header>
     </div>
     <div id="content">
         {liveGames.map((game) => {
@@ -79,9 +83,9 @@ const HomePage = () => {
           <div key={game.match._id} id={game.match._id}>
             <h4 className="time">Time: {game.match.time}</h4>
             <div className="matchCards">
-              <TeamBanner id={genCards++} matchID={game.match._id} teamName={game.match.home} teamIcon={game.home_icon} teamColour={game.home_colour} side={"home"} inactive={false} buttonClick={handleBanners}/>
+              <TeamBanner id={genCards++} matchID={game.match._id} teamName={game.match.home} teamIcon={game.home_icon} teamColour={game.home_colour} side={"home"} buttonClick={handleBanners}/>
               <div className="text"><h2>VS</h2></div>
-              <TeamBanner id={genCards++} matchID={game.match._id} teamName={game.match.away} teamIcon={game.away_icon} teamColour={game.away_colour} side={"away"}inactive={false} buttonClick={handleBanners}/>
+              <TeamBanner id={genCards++} matchID={game.match._id} teamName={game.match.away} teamIcon={game.away_icon} teamColour={game.away_colour} side={"away"} buttonClick={handleBanners}/>
             </div>
           </div>
           )

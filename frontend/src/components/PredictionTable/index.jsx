@@ -3,22 +3,22 @@ import axios from "axios"
 import "./style.css";
 
 const userID = 1
-const sampleEntries = [
-  {
-    date: "2024-01-30",
-    home: "Arsenal",
-    away: "Liverpool",
-    home_pxG: 2.15,
-    away_pxG: 1.37,
-    home_xG: 1.93,
-    away_xG: 1.77
-  }
-];
+const homeStyle = {
+  color: "#ff5c5c"
+}
+const awayStyle = {
+  color: "#5c80ff"
+}
 
-const PredictionTable = () => {
+const PredictionTable = ({ updateNetXG }) => {
   const [sortOrder, setSortOrder] = useState('default'); 
   const [userPredictions, setUserPredictions] = useState([])
   const [userEntries, setUserEntries] = useState([])
+
+  function dateFormat(string) {
+    const format = string.split("-")
+    return `${format[2]}-${format[1]}-${format[0]}`
+  }
 
   useEffect(() => {
     async function combineData() {
@@ -46,6 +46,20 @@ const PredictionTable = () => {
 
           entries.push(Entry)
         }
+
+        let totalNetXG = 0
+        let netXGCount = 0;
+
+        for (const entry of entries) {
+          const homeDiff = entry.home_xG === undefined || entry.home_xG === null ? 0 : -Math.abs(entry.home_pxG - entry.home_xG);
+          const awayDiff = entry.away_xG === undefined || entry.away_xG === null ? 0 : -Math.abs(entry.away_pxG - entry.away_xG);
+          const netXG = homeDiff + awayDiff;
+          
+          totalNetXG += netXG;
+          netXGCount++;
+        }
+        const averageNetXG = netXGCount === 0 ? 0 : totalNetXG / netXGCount
+        updateNetXG(averageNetXG)
         setUserEntries(entries)
       } catch (error) {
         console.log(error)
@@ -63,6 +77,10 @@ const PredictionTable = () => {
       setSortOrder('default');
     }
   };
+
+  const matchPage= () => {
+    console.log("Info!")
+  }
 
   
 
@@ -102,22 +120,22 @@ const PredictionTable = () => {
             const awayDiff = e.away_xG === undefined || e.away_xG === null ? 0 : -Math.abs(e.away_pxG - e.away_xG);
             const netXG = (homeDiff + awayDiff)
             return (
-              <tr key={index} className="entry">
-                <td>{e.date}</td>
+              <tr key={index} className="entry" onClick={matchPage}>
+                <td className="date">{dateFormat(e.date)}</td>
                 <td className="teams">
-                  <p>{e.home}</p>
+                  <p style={homeStyle}>{e.home}</p>
                   <div>V</div>
-                  <p>{e.away}</p>
+                  <p style={awayStyle}>{e.away}</p>
                 </td>
                 <td>
-                  <p>{e.home_pxG}</p>
+                  <p style={homeStyle}>{e.home_pxG}</p>
                   <br></br>
-                  <p>{e.away_pxG}</p>
+                  <p style={awayStyle}>{e.away_pxG}</p>
                 </td>
                 <td>
-                  <p>{e.home_xG ? e.home_xG : "---"}</p>
+                  <p style={homeStyle}>{e.home_xG ? e.home_xG : "---"}</p>
                   <br></br>
-                  <p>{e.away_xG ? e.away_xG : "---"}</p>
+                  <p style={awayStyle}>{e.away_xG ? e.away_xG : "---"}</p>
                 </td>
                 <td className="netValue">{netXG.toFixed(2)}</td>
               </tr>

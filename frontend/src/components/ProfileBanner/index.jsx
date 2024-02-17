@@ -4,17 +4,23 @@ import "./style.css"
 
 const ProfileBanner = () => {
   const userName = "TestAccount96"
-  const value = "-0.33"
+  const [totalNetXG, setTotalNetXG] = useState(0)
+
+  const AddNetXG = (netXG) => {
+    setTotalNetXG(prevNetXG => prevNetXG + netXG)
+  }
   return (
     <>
     <div id="ProfileBox">
         <div id="UserInfo">
             <img className="UserIcon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Football_%28soccer_ball%29.svg/964px-Football_%28soccer_ball%29.svg.png"></img>
-            <h1 className="UserTag">{userName} | ({value})</h1>
+            <h1 className="UserTag">{userName} |
+            <h6>|</h6>
+            <h6 className="rating">{totalNetXG.toFixed(3)}</h6></h1>
         </div>
         <div id="PredictionInfo">
             <div className="Header">Prediction History</div>
-            <PredictionTable />
+            <PredictionTable updateNetXG={AddNetXG}/>
         </div>
     </div>
     </>

@@ -36,3 +36,20 @@
     object-fit: cover;
     object-position: center;
 }
+.UserTag {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.rating {
+    color: #c8ffc7;
+}
+.rating:before {
+    content: " (";
+    padding-left: 0.33rem;
+    color: ivory;
+}
+.rating::after {
+    content: ")";
+    color: ivory;
+}
