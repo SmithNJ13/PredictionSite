@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from "axios"
 import "./style.css";
 
+const userID = 1
 const sampleEntries = [
   {
     date: "2024-01-30",
@@ -10,38 +12,47 @@ const sampleEntries = [
     away_pxG: 1.37,
     home_xG: 1.93,
     away_xG: 1.77
-  },
-  {
-    date: "2024-02-01",
-    home: "Manchester Utd",
-    away: "Manchester City",
-    home_pxG: 1.98,
-    away_pxG: 1.63,
-    home_xG: 2.05,
-    away_xG: 1.82
-  },
-  {
-    date: "2024-02-05",
-    home: "Chelsea",
-    away: "Tottenham",
-    home_pxG: 2.05,
-    away_pxG: 1.45,
-    home_xG: 2.12,
-    away_xG: 1.68
-  },
-  {
-    date: "2024-02-11",
-    home: "Liverpool",
-    away: "Chelsea",
-    home_pxG: 3.1,
-    away_pxG: 0.4,
-    home_xG: undefined,
-    away_xG: 0.6
   }
 ];
 
 const PredictionTable = () => {
   const [sortOrder, setSortOrder] = useState('default'); 
+  const [userPredictions, setUserPredictions] = useState([])
+  const [userEntries, setUserEntries] = useState([])
+
+  useEffect(() => {
+    async function combineData() {
+      try {
+        const predictions = await axios.get(`http://localhost:8080/predictions/${userID}`)
+        const data = predictions.data
+        setUserPredictions(data)
+
+        const entries = []
+        for (const prediction of data) {
+          const matchID = prediction.matchID
+          const matchedInfo = await axios.get(`http://localhost:8080/matches/${matchID}`)
+          const matchData = matchedInfo.data
+
+          console.log(matchData)
+          const Entry = {
+            date: matchData[0].date,
+            home: matchData[0].home,
+            away: matchData[0].away,
+            home_pxG: prediction.pxGHome,
+            away_pxG: prediction.pxGAway,
+            home_xG: matchData[0].homeXG,
+            away_xG: matchData[0].awayXG
+          }
+
+          entries.push(Entry)
+        }
+        setUserEntries(entries)
+      } catch (error) {
+        console.log(error)
+      }
+  }
+  combineData()
+}, [userID])
 
   const handleSort = () => {
     if (sortOrder === 'default') {
@@ -53,7 +64,9 @@ const PredictionTable = () => {
     }
   };
 
-  const sortedEntries = [...sampleEntries].sort((a, b) => {
+  
+
+  const sortedEntries = [...userEntries].sort((a, b) => {
     const homeDifferenceA = (a.home_xG === undefined || a.home_xG === null ? 0 : -Math.abs(a.home_pxG - a.home_xG))
     const awayDifferenceA = (a.away_xG === undefined || a.away_xG === null ? 0 : -Math.abs(a.away_pxG - a.away_xG))
     const netXGA = homeDifferenceA + awayDifferenceA

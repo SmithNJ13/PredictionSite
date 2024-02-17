@@ -34,6 +34,17 @@ class Prediction {
             return error
         }
     }
+
+    static async getUserPredictions(uID) {
+        await client.connect()
+        const response = client.db("database").collection("predictions").find({userID: uID})
+        const predictions = await response.toArray()
+        if(predictions.length >= 1) {
+            return predictions
+        } else {
+            return `User ${uID} has made no predictions`
+        }
+    }
 }
 
 module.exports = Prediction

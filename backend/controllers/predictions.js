@@ -19,4 +19,14 @@ const create = async(req, res) => {
     }
 }
 
-module.exports = {index, create}
+const getUserPredictions = async(req, res) => {
+    try {
+        const id = parseInt(req.params.id)
+        const userPredictions = await Prediction.getUserPredictions(id)
+        res.status(200).send(userPredictions)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+}
+
+module.exports = {index, create, getUserPredictions}

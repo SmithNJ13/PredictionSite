@@ -29,6 +29,17 @@ class Match {
             return games
         }
     }
+
+    static async getByID(id) {
+        await client.connect()
+        const response = client.db("database").collection("matches").find({_id: id})
+        const game = await response.toArray()
+        if(game.length >= 1) {
+            return game
+        } else {
+            return `No matches with ID: ${id} found!`
+        }
+    }
 }
 
 module.exports = Match

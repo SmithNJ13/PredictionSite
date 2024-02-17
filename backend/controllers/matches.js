@@ -44,4 +44,14 @@ const getOne = async (req, res) => {
     }
 }
 
-module.exports = {index, getOne}
+const getByID = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id)
+        const match = await Match.getByID(id)
+        res.status(200).send(match)
+    } catch (error) {
+        res.status(404).send("No matches found")
+    }
+}
+
+module.exports = {index, getOne, getByID}

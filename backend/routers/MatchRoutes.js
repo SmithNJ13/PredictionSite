@@ -5,6 +5,7 @@ const MatchRouter = Router()
 
 MatchRouter.get("/", MatchController.getOne)
 MatchRouter.get("/matches", MatchController.index)
+MatchRouter.get("/matches/:id", MatchController.getByID)
 
 module.exports = MatchRouter
 

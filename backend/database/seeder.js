@@ -15,9 +15,12 @@ axios(url)
             if(date) {
                 const matchTime = $(element).closest("tr").find("td.right[data-stat='start_time']").text().trim()
                 const homeTeam = $(element).closest("tr").find("td.right[data-stat='home_team'] a").text().trim()
-                const homeXG = $(element).closest("tr").find("td.right[data-stat='home_xg']").text().trim()
-                const awayXG = $(element).closest("tr").find("td.right[data-stat='away_xg']").text().trim()
+                const homeXGS = $(element).closest("tr").find("td.right[data-stat='home_xg']").text().trim()
+                const awayXGS = $(element).closest("tr").find("td.right[data-stat='away_xg']").text().trim()
                 const awayTeam = $(element).closest("tr").find("td.left[data-stat='away_team'] a").text().trim()
+
+                const homeXG = parseFloat(homeXGS)
+                const awayXG = parseFloat(awayXGS)
 
                 const matchInfo = {
                     date: date,
@@ -59,11 +62,10 @@ axios(url)
             await client.connect()
             await client.db("database").collection("predictions").drop()
             await client.db("database").collection("predictions").insertOne({
-                _id: 0,
                 userID: 1,
                 matchID: 3,
-                pxG: 2.1,
-                pxGA: 0.4
+                pxGHome: 2.1,
+                pxGAway: 0.4
             })
             console.log("PREDICTIONS SEEDED!")
             seedDB(premierLeagueMatches);
