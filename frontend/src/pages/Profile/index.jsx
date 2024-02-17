@@ -1,8 +1,11 @@
 import ProfileBanner from "../../components/ProfileBanner"
+import "./style.css"
 
 const ProfilePage = () => {
   return (
-    <ProfileBanner />
+    <div id="content">
+      <ProfileBanner />
+    </div>
   )
 }
 

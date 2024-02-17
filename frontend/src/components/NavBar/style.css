@@ -4,6 +4,7 @@
     width: 14rem;
     height: 100vh;
     background-color: var(--ArsenalRed);
+    border-right: 5px solid #9C824A;
 }
 .line {
     position: relative;

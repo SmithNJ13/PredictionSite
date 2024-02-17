@@ -18,6 +18,11 @@ const ProfileBanner = () => {
             <h6>|</h6>
             <h6 className="rating">{totalNetXG.toFixed(3)}</h6></h1>
         </div>
+        <div id="UserDescription">
+          <div className="descriptionBox">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime tempora voluptatibus corrupti explicabo, facilis voluptas qui dicta animi mollitia tenetur voluptatem exercitationem. Recusandae, natus laborum.</p>
+          </div>
+        </div>
         <div id="PredictionInfo">
             <div className="Header">Prediction History</div>
             <PredictionTable updateNetXG={AddNetXG}/>
