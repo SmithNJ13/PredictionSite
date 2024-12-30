@@ -61,12 +61,26 @@ axios(url)
         try{
             await client.connect()
             await client.db("database").collection("predictions").drop()
-            await client.db("database").collection("predictions").insertOne({
-                userID: 1,
-                matchID: 3,
-                pxGHome: 2.1,
-                pxGAway: 0.4
-            })
+            await client.db("database").collection("predictions").insertMany([
+                {
+                    userID: 1,
+                    matchID: 3,
+                    side: "Home",
+                    predicted_xG: 1.3,
+                    corners: 11,
+                    playerToScore: "Player_To_Score",
+                    cleanSheet: false
+                },
+                {                    
+                    userID: 1,
+                    matchID: 3,
+                    side: "Away",
+                    predicted_xG: 1.7,
+                    corners: 16,
+                    playerToScore: "Player_To_Score",
+                    cleanSheet: false
+                },
+            ])
             console.log("PREDICTIONS SEEDED!")
             seedDB(premierLeagueMatches);
             // deleteDB()

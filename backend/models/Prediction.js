@@ -6,8 +6,11 @@ class Prediction {
         this.id = data.id
         this.userID = data.userID
         this.matchID = data.matchID
-        this.pxGHome = data.pxGHome
-        this.pxGAway = data.pxGAway
+        this.side = data.side
+        this.predicted_xG = data.predicted_xG
+        this.corners = data.corners
+        this.playerToScore = data.playerToScore
+        this.cleanSheet = data.cleanSheet
     }
 
     static async getAll() {
@@ -17,7 +20,7 @@ class Prediction {
         return all;
     }
 
-    static async create({id, userID, matchID, pxGHome, pxGAway}) {
+    static async create({id, userID, matchID, side, predicted_xG, corners, playerToScore, cleanSheet}) {
         try {
             await client.connect()
             // const response = await client.db("database").collection("predictions").deleteMany({})
@@ -26,8 +29,11 @@ class Prediction {
                 _id: id,
                 userID: userID,
                 matchID: matchID,
-                pxGHome: pxGHome === null ? 0.0 : pxGHome,
-                pxGAway: pxGAway === null ? 0.0 : pxGAway
+                side: side,
+                predicted_xG: predicted_xG,
+                corners: corners,
+                playerToScore: playerToScore,
+                cleanSheet: cleanSheet
             })
             return response
         } catch (error) {

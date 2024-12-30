@@ -36,15 +36,15 @@ const PredictionTable = ({ updateNetXG }) => {
           console.log(matchData)
           const Entry = {
             date: matchData[0].date,
-            home: matchData[0].home,
-            away: matchData[0].away,
-            home_pxG: prediction.pxGHome,
-            away_pxG: prediction.pxGAway,
-            home_xG: matchData[0].homeXG,
-            away_xG: matchData[0].awayXG
+            matchID: prediction.matchID,
+            side: prediction.side,
+            predicted_xG: prediction.predicted_xG,
+            corners: prediction.corners,
+            playerToScore: prediction.playerToScore,
+            cleanSheet: prediction.cleanSheet
           }
-
           entries.push(Entry)
+          console.log(entries)
         }
 
         let totalNetXG = 0
@@ -109,9 +109,12 @@ const PredictionTable = ({ updateNetXG }) => {
           <tr>
             <th>Date</th>
             <th>Match</th>
+            <th>1st Player To Score</th>
+            <th>Corners</th>
             <th>Predicted xG</th>
             <th>Actual xG</th>
             <th onClick={handleSort} className="netxg">Net xG</th>
+            <th>Clean Sheet?</th>
           </tr>
         </thead>
         <tbody className="entries">

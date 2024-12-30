@@ -77,9 +77,13 @@ const handleClick = () => {
             <div id="predictionSheet" className="absolute top-[10%] left-[20%] align-center justify-center text-white">
               <form className="flex flex-col gap-[20px]">
                 <p className="flex flex-col">xG: <input className="text-black"></input></p>
-                <p className="flex flex-col">First Player to Score: <input className="text-black"></input></p>
-                <p className="flex flex-col">AnotherPredictionStat: <input className="text-black"></input></p>
-                <p className="flex flex-col">Clean Sheet? <input className="text-black"></input></p>
+                <p className="flex flex-col">Total Corners: <input className="text-black"></input></p>
+                <p className="flex flex-col">First Player to Score: 
+                  <select className="text-black">
+                  <option>Player1</option>
+                  <option>Player2</option>
+                  </select></p>
+                <p className="flex flex-col items-center">Clean Sheet? <input className="" type="checkbox"></input></p>
                 <button className="ml-[30%] border-white border-[1px] rounded w-[60px] hover:text-green-500">Submit</button>
               </form>
             </div>
