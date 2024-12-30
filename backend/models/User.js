@@ -48,7 +48,7 @@ class User {
       password: password,
     });
 
-    return `User created: ${response}`;
+    return {message: "User created successfully", user: response};
   }
 
   static async getById(idx) {

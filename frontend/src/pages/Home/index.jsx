@@ -1,97 +1,39 @@
 import { useState, useEffect } from "react";
-import { TeamBanner, } from "../../components/export";
+import { TeamBanner, NewsFeed} from "../../components/export";
 import axios from "axios";
 import "./style.css";
 
+
+
 const HomePage = () => {
-  function dateFormat(string) {
-    const format = string.split("-")
-    return `${format[2]}-${format[1]}-${format[0]}`
-  }
-
-  console.log("HomePage rendered")
-  const [inactive, setInactive] = useState([])
-  const [liveGames, setLiveGames] = useState([]);
-  const [date, setDate] = useState("")
-  let genCards = 1
   
-  useEffect(() => {
-    getGames()
-  }, [])
-  
-  useEffect(() => {
-    console.log("useEffect for checking inactive TeamBanners ran")
-    inactive.forEach(info => {
-      const matchedBanners = inactive.filter(banner => banner.matchID === info.matchID);
-      if (matchedBanners.length === 2) {
-        const pxGHome = matchedBanners.find(banner => banner.side === "home").pxG;
-        const pxGAway = matchedBanners.find(banner => banner.side === "away").pxG;
-        postPrediction(info.matchID, pxGHome, pxGAway);
-      }
-    });
-  }, [inactive])
-  
-  const handleBanners = (info) => {
-    setInactive(prevInactive => [...prevInactive, info])
-  }
-
-  async function getGames() {
-    try { 
-        await axios.get("http://localhost:8080/")
-        .then(response => {
-          const data = response.data
-          setLiveGames(data)
-          setDate(data[0].match.date)
-        })
-    } catch (error) {
-        console.log(error);
-    }
-  }
-
-  async function postPrediction(matchID, pxGHome, pxGAway) {
-    try {
-      const response = await fetch("http://localhost:8080/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userID: 1,
-          matchID: matchID,
-          pxGHome: pxGHome,
-          pxGAway: pxGAway
-        })
-      })
-      if(!response.ok) {
-        console.log("Failed to create prediction", response.status)
-      } else {
-        console.log("Prediction created successfully")
-      }
-    } catch (error) {
-      console.log("Error making API call: ", error)
-    }
-  }
 
   return (
     <>
-    <div id="header">
-      <header>Matches for: {dateFormat(date)}</header>
+    <NewsFeed />
+    <div className="hero-section">
+      <h1>Welcome to Prediccion Football</h1>
+      <h2>Here you can make predictions on your favourite football matches</h2>
     </div>
-    <div id="content">
-        {liveGames.map((game) => {
-          return (
-          <div key={game.match._id} id={game.match._id}>
-            <h4 className="time">Time: {game.match.time}</h4>
-            <div className="matchCards">
-              <TeamBanner id={genCards++} matchID={game.match._id} teamName={game.match.home} teamIcon={game.home_icon} teamColour={game.home_colour} side={"home"} buttonClick={handleBanners}/>
-              <div className="text"><h2>VS</h2></div>
-              <TeamBanner id={genCards++} matchID={game.match._id} teamName={game.match.away} teamIcon={game.away_icon} teamColour={game.away_colour} side={"away"} buttonClick={handleBanners}/>
-            </div>
-          </div>
-          )
-        })}
+    <div>
+      <section>
+        <h1>View a list of live matches</h1>
+      </section>
+      <section>
+        <h1>Read up on team information and statistics</h1>
+      </section>
+      <section>
+        <h1>Make predictions on match outcomes and team performance</h1>
+      </section>
+      <section>
+        <h1>Track your prediction history and your performance</h1>
+        <p>Compare your statistics against a leaderboard of other users</p>
+      </section>
+      <section>
+        <h1>Do it all for <a className="font-bold">FREE</a> by signing up <a href="/register" className="text-blue-800 hover:underline">here</a></h1>
+      </section>
     </div>
-    </> 
+    </>
   );
 };
 

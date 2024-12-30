@@ -1,0 +1,10 @@
+.loginform {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 10px;
+}
+.emailbox, .passbox {
+    margin-left: 10px;
+}

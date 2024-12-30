@@ -1,38 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
-#NavBar {
-    position: absolute;
-    width: 14rem;
-    height: 100vh;
-    background-color: var(--ArsenalRed);
-    border-right: 5px solid #9C824A;
-}
-.line {
-    position: relative;
-    align-content: center;
-    justify-content: center;
-    width: 9rem;
-    height: 0.2rem;
-    background-color: ivory;
-}
-.NavItems {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 3rem 2rem 2rem 3rem;
-    gap: 1rem;
-    z-index: 100;
-    font-size: 2rem;
+#nav_items {
     font-family: 'Russo One', sans-serif;
 }
-.NavItems a {
-    text-decoration: none;
-    color: ivory;
-}
-.NavItems a:hover {
-    scale: 110%;
-}
-.NavItems a:active {
-    scale: 100%;
+#icon {
+    cursor: pointer;
 }

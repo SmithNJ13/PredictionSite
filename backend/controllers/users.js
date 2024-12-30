@@ -45,4 +45,14 @@ const register = async(req, res) => {
     }
 }
 
+const login = async(req, res) => {
+    try {
+        const data = req.body
+    } catch (error) {
+        res.status(500).json({
+            error: error.message
+        })
+    }
+}
+
 module.exports = {index, register, getUserToken}

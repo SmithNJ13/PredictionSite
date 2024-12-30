@@ -123,7 +123,7 @@ axios(url)
 
 
     /*
-    Code initially fetches the webpage from footybite and stores it as a variable, it then searches through the HTML document to find an element with the id "comp" and checks for 
+    Code initially fetches the webpage from fbref and stores it as a variable, it then searches through the HTML document to find an element with the id "comp" and checks for 
     all elements associated with comp that also contain "premier league" for each one that has their "comp" set as "premier league" we fetch the match date, opponent, xgFor and xgAgainst,
     we then store this info as an object "matchInfo" and push it to an array
     */

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./style.css"
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -42,6 +43,7 @@ const RegisterPage = () => {
 
   return (
     <>
+    <section className="registerForm"> 
       <h1>Register Page!</h1>
       <form onSubmit={handleSubmit}>
         <label>
@@ -79,6 +81,7 @@ const RegisterPage = () => {
         <br />
         <button type="submit">Submit</button>
       </form>
+    </section>
     </>
   );
 };

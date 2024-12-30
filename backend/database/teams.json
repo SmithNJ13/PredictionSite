@@ -118,5 +118,17 @@
         "primary":"#FDB913",
         "secondary": "#FFFFFF",
         "icon":"https://resources.premierleague.com/premierleague/badges/t39.png"
+    },
+    {
+        "name": "Ipswich Town",
+        "primary": "#FFFFFF",
+        "secondary": "#FFFFF",
+        "icon": "https://resources.premierleague.com/premierleague/badges/t40.png"
+    },
+    {
+        "name": "Leicester City",
+        "primary": "#FFFFFF",
+        "secondary": "#FFFFF",
+        "icon": "https://resources.premierleague.com/premierleague/badges/t13.png"
     }
 ]

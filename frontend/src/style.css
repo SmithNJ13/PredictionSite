@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
     --ArsenalRed: #EF0107;
     --ArsenalDarkRed: #DB0007;
@@ -16,7 +20,7 @@ body {
     overflow-y: scroll;
 }
 html {
-    background-color: wheat;
+    background-color: #aebcad;
     top: 0;
     left: 0;
     margin: 0;
@@ -26,9 +30,9 @@ html {
 ::-webkit-scrollbar {
     width: 0.25rem;
   } ::-webkit-scrollbar-track {
-    background-color: var(--ArsenalDarkRed);
+    background-color: var(--offBlack);
   } ::-webkit-scrollbar-thumb {
-    background-color: var(--ArsenalGold);
+    background-color: grey;
   }
 
 
