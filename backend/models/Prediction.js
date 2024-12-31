@@ -20,22 +20,31 @@ class Prediction {
         return all;
     }
 
-    static async create({id, userID, matchID, side, predicted_xG, corners, playerToScore, cleanSheet}) {
+    static async create({id, userID, matchID, side}) {
         try {
             await client.connect()
             // const response = await client.db("database").collection("predictions").deleteMany({})
             await client.db("database").collection("predictions").createIndex({userID: 1, matchID: 1}, {unique: true})
-            const response = await client.db("database").collection("predictions").insertOne({ 
+            const response = await client.db("database").collection("predictions").insertOne({
                 _id: id,
                 userID: userID,
                 matchID: matchID,
-                side: side,
-                predicted_xG: predicted_xG,
-                corners: corners,
-                playerToScore: playerToScore,
-                cleanSheet: cleanSheet
-            })
-            return response
+                side: {
+                    home: {
+                        predicted_xG: side.home.predicted_xG,
+                        corners: side.home.corners,
+                        playerToScore: side.home.playerToScore,
+                        cleanSheet: side.home.cleanSheet
+                    },
+                    away: {
+                        predicted_xG: side.away.predicted_xG,
+                        corners: side.away.corners,
+                        playerToScore: side.away.playerToScore,
+                        cleanSheet: side.away.cleanSheet
+                    }
+                }
+            });
+            return response;
         } catch (error) {
             return error
         }

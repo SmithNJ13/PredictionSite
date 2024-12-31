@@ -61,26 +61,25 @@ axios(url)
         try{
             await client.connect()
             await client.db("database").collection("predictions").drop()
-            await client.db("database").collection("predictions").insertMany([
-                {
+            await client.db("database").collection("predictions").insertOne({
                     userID: 1,
                     matchID: 3,
-                    side: "Home",
-                    predicted_xG: 1.3,
-                    corners: 11,
-                    playerToScore: "Player_To_Score",
-                    cleanSheet: false
-                },
-                {                    
-                    userID: 1,
-                    matchID: 3,
-                    side: "Away",
-                    predicted_xG: 1.7,
-                    corners: 16,
-                    playerToScore: "Player_To_Score",
-                    cleanSheet: false
-                },
-            ])
+                    side: {
+                        home: {
+                            predicted_xG: 1.5,
+                            corners: 11,
+                            playerToScore: "Player2",
+                            cleanSheet: true
+                        },
+                        away: {
+                            predicted_xG: null,
+                            corners: null,
+                            playerToScore: null,
+                            cleanSheet: false
+                        }
+                    }
+            })
+
             console.log("PREDICTIONS SEEDED!")
             seedDB(premierLeagueMatches);
             // deleteDB()
@@ -132,7 +131,6 @@ axios(url)
             console.error('Error connecting to the database:', error);
         }
     };
-    
     seedUsers()
 
 

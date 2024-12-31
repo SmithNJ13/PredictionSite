@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from "axios"
 import "./style.css";
 
+// Setting userID (This will be the actual userID once it's all connected up), and applying red & blue colours for Home & Away
 const userID = 1
 const homeStyle = {
   color: "#ff5c5c"
@@ -10,6 +11,7 @@ const awayStyle = {
   color: "#5c80ff"
 }
 
+// This is creating the actual table of user Predictions, as well as calculating the netXG
 const PredictionTable = ({ updateNetXG }) => {
   const [sortOrder, setSortOrder] = useState('default'); 
   const [userPredictions, setUserPredictions] = useState([])
@@ -21,19 +23,23 @@ const PredictionTable = ({ updateNetXG }) => {
   }
 
   useEffect(() => {
+    /* Why I'm "combining data" I have no idea ??? It exists in its own format as both a seperate "match information" and "prediction information" with a unique identifer of matchID,
+    what am I actually doing here? I think I must have been insane back then. */
     async function combineData() {
       try {
-        const predictions = await axios.get(`http://localhost:8080/predictions/${userID}`)
-        const data = predictions.data
+        const predictions = await axios.get(`http://localhost:8080/predictions/${userID}`) // This is fetching the predictions for a specific user
+        const data = predictions.data // And then storing said information as a local variable, good!
         setUserPredictions(data)
 
-        const entries = []
-        for (const prediction of data) {
+        const entries = [] // Empty entries array because... I'm trying to cook something???
+        for (const prediction of data) { // For each prediction in the set of "data"...
           const matchID = prediction.matchID
           const matchedInfo = await axios.get(`http://localhost:8080/matches/${matchID}`)
           const matchData = matchedInfo.data
+          // We take all the useful attributes of matchID and then find all of the matches that have the matchIDs found in all of the predictions, okay this works
+          // We then store that information as "matchData"... so in theory we have a list of all the matches that have IDs that feature in predictions
+          console.log("Matches with their ID featured in predictions: ", matchData)
 
-          console.log(matchData)
           const Entry = {
             date: matchData[0].date,
             matchID: prediction.matchID,
@@ -42,7 +48,8 @@ const PredictionTable = ({ updateNetXG }) => {
             corners: prediction.corners,
             playerToScore: prediction.playerToScore,
             cleanSheet: prediction.cleanSheet
-          }
+          } /* I am then creating an "Entry" data structure, which contains the date of the match, the matchID (which, we already have?), the side, the predicted_xG, corners, 
+           playerToScore and cleanSheet information - so everything found in a prediction. I think I'm overcomplicating this, but sure, we'll go with it... */
           entries.push(Entry)
           console.log(entries)
         }
@@ -50,7 +57,7 @@ const PredictionTable = ({ updateNetXG }) => {
         let totalNetXG = 0
         let netXGCount = 0;
 
-        for (const entry of entries) {
+        for (const entry of entries) { // This is a mess and can absolutely be fixed...
           const homeDiff = entry.home_xG === undefined || entry.home_xG === null ? 0 : -Math.abs(entry.home_pxG - entry.home_xG);
           const awayDiff = entry.away_xG === undefined || entry.away_xG === null ? 0 : -Math.abs(entry.away_pxG - entry.away_xG);
           const netXG = homeDiff + awayDiff;
@@ -102,7 +109,7 @@ const PredictionTable = ({ updateNetXG }) => {
     }
   });
 
-  return (
+  return ( // GOOD GOD THIS NEEDS AN OVERHAUL WHAT AM I DOING?!!?!?!!??!
     <div id="table">
       <table id="info">
         <thead>
