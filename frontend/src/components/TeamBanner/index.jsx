@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
+import axios from "axios";
 import "./style.css";
 import MatchCard from "../../assets/matchcard.svg?react";
 
@@ -16,18 +17,72 @@ const TeamBanner = ({id, matchID, teamIcon, teamName, teamColour, side, buttonCl
       if(teamName.length > 6 && teamName.length <= 15) {
         return 34 - (teamName.length / 4)
       } else {
-        return 34
+        return 34 
       }
   }
 
 const handleClick = () => {
   const card = document.querySelector(`#matchcard${id}`)
-  console.log(card)
+  // console.log(card)
   setFlipped(true)
   const flair2 = card.querySelector('#flair2');
     if (flair2) {
       flair2.style.display = "none";
     }
+}
+
+async function postPrediction (e) {
+  e.preventDefault()
+  const Form = new FormData(e.target)
+  const xG = parseInt(Form.get("xG"))
+  const corners = parseInt(Form.get("corners"))
+  const playerToScore = Form.get("playerToScore")
+  const cleanSheet = Form.get("cleanSheet") === "on"
+  console.log(side, xG, corners, playerToScore, cleanSheet)
+
+  try {
+    const response = await fetch("http://localhost:8080/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userID: 1,
+        matchID: matchID,
+        side: {
+          home: side === "home" ? {
+            predicted_xG: xG,
+            corners: corners,
+            playerToScore: playerToScore,
+            cleanSheet: cleanSheet
+          } : {
+            predicted_xG: null,
+            corners: null,
+            playerToScore: null,
+            cleanSheet: null
+          },
+          away: side === "away" ? {
+            predicted_xG: xG,
+            corners: corners,
+            playerToScore: playerToScore,
+            cleanSheet: cleanSheet
+          } : {
+            predicted_xG: null,
+            corners: null,
+            playerToScore: null,
+            cleanSheet: null
+          }
+        }
+      })
+    })
+    if(!response.ok) {
+      console.log("Failed to create prediction", response.status)
+    } else {
+      console.log("Prediction created successfully")
+    }
+  } catch (error) {
+    console.log("Error making API call: ", error)
+  }
 }
 
   useEffect(() => {
@@ -75,15 +130,15 @@ const handleClick = () => {
           <div id="back">
             <MatchCard className="cardBody"/>
             <div id="predictionSheet" className="absolute top-[10%] left-[20%] align-center justify-center text-white">
-              <form className="flex flex-col gap-[20px]">
-                <p className="flex flex-col">xG: <input className="text-black"></input></p>
-                <p className="flex flex-col">Total Corners: <input className="text-black"></input></p>
+              <form className="flex flex-col gap-[20px]" onSubmit={postPrediction}>
+                <p className="flex flex-col">xG: <input className="text-black" name="xG"></input></p>
+                <p className="flex flex-col">Total Corners: <input className="text-black" name="corners"></input></p>
                 <p className="flex flex-col">First Player to Score: 
-                  <select className="text-black">
+                  <select className="text-black" name="playerToScore">
                   <option>Player1</option>
                   <option>Player2</option>
                   </select></p>
-                <p className="flex flex-col items-center">Clean Sheet? <input className="" type="checkbox"></input></p>
+                <p className="flex flex-col items-center">Clean Sheet? <input className="" type="checkbox" name="cleanSheet"></input></p>
                 <button className="ml-[30%] border-white border-[1px] rounded w-[60px] hover:text-green-500">Submit</button>
               </form>
             </div>
