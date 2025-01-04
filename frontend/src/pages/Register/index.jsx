@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { baseURL } from "../../consts/api";
 import "./style.css"
 
 const RegisterPage = () => {
@@ -31,7 +32,7 @@ const RegisterPage = () => {
         "Content-Type": "application/json"
       }
     }
-    const response = await fetch("http://localhost:8080/users/register", options)
+    const response = await fetch(`${baseURL}/users/register`, options)
     const responseData = await response.json()
     if(response.status === 201) {
       console.log("User successfully created")

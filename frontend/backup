@@ -44,7 +44,7 @@ const HomePage = () => {
 
   async function getGames() {
     try { 
-        await axios.get("http://localhost:8080/")
+        await axios.get("${baseURL}/")
         .then(response => {
           const data = response.data
           if(data) {
@@ -60,7 +60,7 @@ const HomePage = () => {
 
   async function postPrediction(matchID, pxGHome, pxGAway) {
     try {
-      const response = await fetch("http://localhost:8080/", {
+      const response = await fetch("${baseURL}/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { baseURL } from "../../consts/api";
 import { TeamBanner, } from "../../components/export";
 import axios from "axios";
 import "./style.css";
@@ -42,7 +43,7 @@ const Live = () => {
     
       async function getGames() {
         try { 
-            await axios.get("http://localhost:8080/")
+            await axios.get(`${baseURL}/`)
             .then(response => {
               const data = response.data
               if(data) {
@@ -58,7 +59,7 @@ const Live = () => {
     
       async function postPrediction(matchID, pxGHome, pxGAway) {
         try {
-          const response = await fetch("http://localhost:8080/", {
+          const response = await fetch(`${baseURL}/`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

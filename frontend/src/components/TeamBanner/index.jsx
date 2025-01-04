@@ -1,3 +1,4 @@
+import { baseURL } from "../../consts/api";
 import { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import axios from "axios";
@@ -45,10 +46,10 @@ async function postPrediction (e) {
   No error with conditionals, this error is to do with the request itself... unexpected character in JSON file?*/
   
   try {
-    const userPredictions = await fetch(`http://localhost:8080/predictions/${userID}/${matchID}`)
+    const userPredictions = await fetch(`${baseURL}/predictions/${userID}/${matchID}`)
     const body = await userPredictions.json()
     if(body.length > 0) {
-      const update = await fetch("http://localhost:8080/", {
+      const update = await fetch(`${baseURL}/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +89,7 @@ async function postPrediction (e) {
         console.log("Prediction updated successfully")
       }
     } else {
-      const response = await fetch("http://localhost:8080/", {
+      const response = await fetch(`${baseURL}/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

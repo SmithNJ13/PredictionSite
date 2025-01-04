@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { baseURL } from "../../consts/api";
 import axios from "axios"
 import "./style.css";
 
@@ -27,14 +28,14 @@ const PredictionTable = ({ updateNetXG }) => {
     what am I actually doing here? I think I must have been insane back then. */
     async function combineData() {
       try {
-        const predictions = await axios.get(`http://localhost:8080/predictions/${userID}`) // This is fetching the predictions for a specific user
+        const predictions = await axios.get(`${baseURL}/predictions/${userID}`) // This is fetching the predictions for a specific user
         const data = predictions.data // And then storing said information as a local variable, good!
         setUserPredictions(data)
 
         const entries = [] // Empty entries array because... I'm trying to cook something???
         for (const prediction of data) { // For each prediction in the set of "data"...
           const matchID = prediction.matchID
-          const matchedInfo = await axios.get(`http://localhost:8080/matches/${matchID}`)
+          const matchedInfo = await axios.get(`${baseURL}/matches/${matchID}`)
           const matchData = matchedInfo.data
           // We take all the useful attributes of matchID and then find all of the matches that have the matchIDs found in all of the predictions, okay this works
           // We then store that information as "matchData"... so in theory we have a list of all the matches that have IDs that feature in predictions
