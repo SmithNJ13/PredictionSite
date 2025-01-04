@@ -42,51 +42,61 @@ async function postPrediction (e) {
   const cleanSheet = Form.get("cleanSheet") === "on"
   console.log(side, xG, corners, playerToScore, cleanSheet)
 
-  /* Do a fetch request? Find matches with specific userID and matchID, if there is one for the current match then use PUT method, else create a new one with POST method
-  No error with conditionals, this error is to do with the request itself... unexpected character in JSON file?*/
   
   try {
+    /* Fetch specific matches that are associated with a given userID and matchID, if none exist - we use POST method to create a new prediction, if one exists we update with PUT
+    TODO: Change to PATCH instead for specific data*/
     const userPredictions = await fetch(`${baseURL}/predictions/${userID}/${matchID}`)
     const body = await userPredictions.json()
     if(body.length > 0) {
-      const update = await fetch(`${baseURL}/`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userID: 1,
-          matchID: matchID,
-          side: {
-            home: side === "home" ? {
-              predicted_xG: xG,
-              corners: corners,
-              playerToScore: playerToScore,
-              cleanSheet: cleanSheet
-            } : {
-              predicted_xG: null,
-              corners: null,
-              playerToScore: null,
-              cleanSheet: null
-            },
-            away: side === "away" ? {
-              predicted_xG: xG,
-              corners: corners,
-              playerToScore: playerToScore,
-              cleanSheet: cleanSheet
-            } : {
-              predicted_xG: null,
-              corners: null,
-              playerToScore: null,
-              cleanSheet: null
+      if(side == "home") {
+        const update = await fetch(`${baseURL}/`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userID: 1,
+            matchID: matchID,
+            side: {
+              home: {
+                predicted_xG: xG,
+                corners: corners,
+                playerToScore: playerToScore,
+                cleanSheet: cleanSheet
+              }
             }
-          }
+          })
         })
-      })
-      if(!update.ok) {
-        console.log("Failed to update prediction", update.status)
+        if(!update.ok) {
+          console.log("Failed to update prediction", update.status)
+        } else {
+          console.log("Prediction updated successfully")
+        }
       } else {
-        console.log("Prediction updated successfully")
+        const update = await fetch(`${baseURL}/`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userID: 1,
+            matchID: matchID,
+            side: {
+              away: {
+                predicted_xG: xG,
+                corners: corners,
+                playerToScore: playerToScore,
+                cleanSheet: cleanSheet
+              }
+            }
+          })
+        })
+        if(!update.ok) {
+          console.log("Failed to update prediction", update.status)
+        } else {
+          console.log("Prediction updated successfully")
+        }
       }
     } else {
       const response = await fetch(`${baseURL}/`, {

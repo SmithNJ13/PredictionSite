@@ -53,6 +53,15 @@ class Prediction {
     static async update({userID, matchID, side}) {
         try {
             await client.connect()
+            const updateSide = side.home ? "home" : "away"
+            const updateData = {
+                [updateSide]: {
+                    predicted_xG: side[updateSide].predicted_xG,
+                    corners: side[updateSide].corners,
+                    playerToScore: side[updateSide].playerToScore,
+                    cleanSheet: side[updateSide].cleanSheet
+                }
+            }
             const response = await client.db("database").collection("predictions").updateOne(
                 {
                     userID: userID,
@@ -62,16 +71,10 @@ class Prediction {
                     $set: {
                         side: {
                             home: {
-                                predicted_xG: side.home.predicted_xG,
-                                corners: side.home.corners,
-                                playerToScore: side.home.playerToScore,
-                                cleanSheet: side.home.cleanSheet
+                                updateData
                             },
                             away: {
-                                predicted_xG: side.away.predicted_xG,
-                                corners: side.away.corners,
-                                playerToScore: side.away.playerToScore,
-                                cleanSheet: side.away.cleanSheet
+                                updateData
                             }
                         }
                     }
