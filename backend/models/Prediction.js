@@ -50,7 +50,40 @@ class Prediction {
         }
     }
 
-    static async getUserPredictions(uID) {
+    static async update({userID, matchID, side}) {
+        try {
+            await client.connect()
+            const response = await client.db("database").collection("predictions").updateOne(
+                {
+                    userID: userID,
+                    matchID: matchID
+                },
+                {
+                    $set: {
+                        side: {
+                            home: {
+                                predicted_xG: side.home.predicted_xG,
+                                corners: side.home.corners,
+                                playerToScore: side.home.playerToScore,
+                                cleanSheet: side.home.cleanSheet
+                            },
+                            away: {
+                                predicted_xG: side.away.predicted_xG,
+                                corners: side.away.corners,
+                                playerToScore: side.away.playerToScore,
+                                cleanSheet: side.away.cleanSheet
+                            }
+                        }
+                    }
+                }
+            );
+        return response;
+        } catch (error) {
+
+        }
+    }
+
+    static async getAllUserPredictions(uID) {
         await client.connect()
         const response = client.db("database").collection("predictions").find({userID: uID})
         const predictions = await response.toArray()
@@ -58,6 +91,17 @@ class Prediction {
             return predictions
         } else {
             return `User ${uID} has made no predictions`
+        }
+    }
+
+    static async getAllUserMatchPredictions(uID, mID) {
+        await client.connect()
+        const response = client.db("database").collection("predictions").find({userID: uID, matchID: mID})
+        const predictions = await response.toArray()
+        if(predictions.length >= 1) {
+            return predictions
+        } else {
+            return []
         }
     }
 }

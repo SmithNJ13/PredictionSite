@@ -73,7 +73,7 @@ const Live = () => {
           if(!response.ok) {
             console.log("Failed to create prediction", response.status)
           } else {
-            console.log("Prediction created successfully")
+            // console.log("Prediction created successfully")
           }
         } catch (error) {
           console.log("Error making API call: ", error)

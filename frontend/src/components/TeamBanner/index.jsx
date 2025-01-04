@@ -32,53 +32,101 @@ const handleClick = () => {
 }
 
 async function postPrediction (e) {
+  const userID = 1
   e.preventDefault()
   const Form = new FormData(e.target)
-  const xG = parseInt(Form.get("xG"))
+  const xG = parseFloat(Form.get("xG"))
   const corners = parseInt(Form.get("corners"))
   const playerToScore = Form.get("playerToScore")
   const cleanSheet = Form.get("cleanSheet") === "on"
   console.log(side, xG, corners, playerToScore, cleanSheet)
 
+  /* Do a fetch request? Find matches with specific userID and matchID, if there is one for the current match then use PUT method, else create a new one with POST method
+  No error with conditionals, this error is to do with the request itself... unexpected character in JSON file?*/
+  
   try {
-    const response = await fetch("http://localhost:8080/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userID: 1,
-        matchID: matchID,
-        side: {
-          home: side === "home" ? {
-            predicted_xG: xG,
-            corners: corners,
-            playerToScore: playerToScore,
-            cleanSheet: cleanSheet
-          } : {
-            predicted_xG: null,
-            corners: null,
-            playerToScore: null,
-            cleanSheet: null
-          },
-          away: side === "away" ? {
-            predicted_xG: xG,
-            corners: corners,
-            playerToScore: playerToScore,
-            cleanSheet: cleanSheet
-          } : {
-            predicted_xG: null,
-            corners: null,
-            playerToScore: null,
-            cleanSheet: null
+    const userPredictions = await fetch(`http://localhost:8080/predictions/${userID}/${matchID}`)
+    const body = await userPredictions.json()
+    if(body.length > 0) {
+      const update = await fetch("http://localhost:8080/", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userID: 1,
+          matchID: matchID,
+          side: {
+            home: side === "home" ? {
+              predicted_xG: xG,
+              corners: corners,
+              playerToScore: playerToScore,
+              cleanSheet: cleanSheet
+            } : {
+              predicted_xG: null,
+              corners: null,
+              playerToScore: null,
+              cleanSheet: null
+            },
+            away: side === "away" ? {
+              predicted_xG: xG,
+              corners: corners,
+              playerToScore: playerToScore,
+              cleanSheet: cleanSheet
+            } : {
+              predicted_xG: null,
+              corners: null,
+              playerToScore: null,
+              cleanSheet: null
+            }
           }
-        }
+        })
       })
-    })
-    if(!response.ok) {
-      console.log("Failed to create prediction", response.status)
+      if(!update.ok) {
+        console.log("Failed to update prediction", update.status)
+      } else {
+        console.log("Prediction updated successfully")
+      }
     } else {
-      console.log("Prediction created successfully")
+      const response = await fetch("http://localhost:8080/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userID: 1,
+          matchID: matchID,
+          side: {
+            home: side === "home" ? {
+              predicted_xG: xG,
+              corners: corners,
+              playerToScore: playerToScore,
+              cleanSheet: cleanSheet
+            } : {
+              predicted_xG: null,
+              corners: null,
+              playerToScore: null,
+              cleanSheet: null
+            },
+            away: side === "away" ? {
+              predicted_xG: xG,
+              corners: corners,
+              playerToScore: playerToScore,
+              cleanSheet: cleanSheet
+            } : {
+              predicted_xG: null,
+              corners: null,
+              playerToScore: null,
+              cleanSheet: null
+            }
+          }
+        })
+      })
+      if(!response.ok) {
+        console.log("Failed to create prediction", response.status)
+      } else {
+        console.log("Prediction created successfully")
+      }
     }
   } catch (error) {
     console.log("Error making API call: ", error)
@@ -127,7 +175,7 @@ async function postPrediction (e) {
             </div>
           </div>
         ) : (
-          <div id="back">
+          <div id="back"> 
             <MatchCard className="cardBody"/>
             <div id="predictionSheet" className="absolute top-[10%] left-[20%] align-center justify-center text-white">
               <form className="flex flex-col gap-[20px]" onSubmit={postPrediction}>
