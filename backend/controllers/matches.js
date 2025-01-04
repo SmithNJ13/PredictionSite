@@ -5,8 +5,8 @@ const currentDate = new Date()
 const year = currentDate.getFullYear()
 const month = String(currentDate.getMonth() + 1).padStart(2, "0")
 const day = String(currentDate.getDate()).padStart(2, "0")  
-// const date = `${year}-${month}-${day}`
-const date = `2024-12-30`
+const date = `${year}-${month}-${day}`
+// const date = `2024-12-30`
 
 const index = async(req, res) => {
     try{
@@ -21,26 +21,29 @@ const index = async(req, res) => {
 const getOne = async (req, res) => {
     try {
         const liveGames = await Match.getByDate(date);
-        const responses = []
-        liveGames.forEach(game => {
+        const responses = liveGames.map(game => {
             const findHome = teams.find((team) => team.name === game.home)
             const findAway = teams.find((team) => team.name === game.away)
-            if(findHome && findAway) {
-                const response = {
-                    match: game,
-                    home_icon: findHome.icon,
-                    home_colour: findHome.primary,
-                    away_icon: findAway.icon,
-                    away_colour: findAway.primary
-                }
-                responses.push(response)
-            } else { res.status(500).send(`Could not find ${findHome} or ${findAway}`)}
+            if(!findHome) {
+                throw new Error(`Could not find ${game.home}`)
+            }
+            if(!findAway) {
+                throw new Error(`Could not find ${game.away}`)
+            }
+            const response = {
+                match: game,
+                home_icon: findHome.icon,
+                home_colour: findHome.primary,
+                away_icon: findAway.icon,
+                away_colour: findAway.primary
+            }
+            return response
         });
         if (responses.length > 0) {
             res.status(200).send(responses)
-        } else { res.status(500).send("Array is empty")}
+        } else { res.status(500).send(`There are no Premier League matches on: ${date}`)}
     } catch (error) {
-        res.status(500).send(`There are no Premier League matches on today (${date})`)
+        res.status(500).send(error.message)
     }
 }
 

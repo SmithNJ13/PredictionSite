@@ -90,6 +90,12 @@
         "icon":"https://resources.premierleague.com/premierleague/badges/t4.png"
     },
     {
+        "name":"Southampton",
+        "primary":"#DD0000",
+        "secondary": "#FFFFFF",
+        "icon":"https://resources.premierleague.com/premierleague/badges/t17.png"
+    },
+    {
         "name":"Nott'ham Forest",
         "primary":"#DD0000",
         "secondary": "#FFFFFF",
@@ -101,6 +107,7 @@
         "secondary": "#FFFFFF",
         "icon":"https://resources.premierleague.com/premierleague/badges/t49.png"
     },
+
     {
         "name":"Tottenham",
         "primary":"#132257",
