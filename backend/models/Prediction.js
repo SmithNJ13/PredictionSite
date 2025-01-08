@@ -49,10 +49,13 @@ class Prediction {
             return error
         }
     }
-    /* Lets slow it down a bit... okay so you want to go through the DB and update a specific prediction based on the userID and matchID, the user cannot predict on home or
-    simulatenously, so the backend will only recieve information of either home or away first */
-
+    
     static async update({userID, matchID, side}) {
+        /* Yaaaaay! I got it working, so NOW lets break down what we did, so we DON'T forget this!!!
+        So since side (from frontend) comes as an object, we need to access the actual "side" name (home/away) and since that's a key, we can use Object.keys to access that
+        we then use updateOne (because we want to edit a PART of the data) we then filter (the first part of update within the { } ) by userID and matchID
+        I then tell the update what to add in, after filtering, here we are checking side (the object) and the "key" (home or away) and we're setting this as which part
+        of the data is getting updated. We then update the elements within that object, predicted_XG, corners etc;*/
         const side_name = Object.keys(side)
         try {
             await client.connect()
