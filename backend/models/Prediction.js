@@ -49,19 +49,13 @@ class Prediction {
             return error
         }
     }
+    /* Lets slow it down a bit... okay so you want to go through the DB and update a specific prediction based on the userID and matchID, the user cannot predict on home or
+    simulatenously, so the backend will only recieve information of either home or away first */
 
     static async update({userID, matchID, side}) {
+        const side_name = Object.keys(side)
         try {
             await client.connect()
-            const updateSide = side.home ? "home" : "away"
-            const updateData = {
-                [updateSide]: {
-                    predicted_xG: side[updateSide].predicted_xG,
-                    corners: side[updateSide].corners,
-                    playerToScore: side[updateSide].playerToScore,
-                    cleanSheet: side[updateSide].cleanSheet
-                }
-            }
             const response = await client.db("database").collection("predictions").updateOne(
                 {
                     userID: userID,
@@ -69,13 +63,11 @@ class Prediction {
                 },
                 {
                     $set: {
-                        side: {
-                            home: {
-                                updateData
-                            },
-                            away: {
-                                updateData
-                            }
+                        [`side.${side_name}`]: {
+                            predicted_xG: parseFloat(side[side_name].predicted_xG),
+                            corners: side[side_name].corners,
+                            playerToScore: side[side_name].playerToScore,
+                            cleanSheet: side[side_name].cleanSheet
                         }
                     }
                 }
