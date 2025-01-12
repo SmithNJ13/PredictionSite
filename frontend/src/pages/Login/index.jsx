@@ -23,14 +23,14 @@ const LoginPage = () => {
     console.log("Submitted")
     e.preventDefault()
 
-    const form = new FormData(event.target)
+    const form = new FormData(e.target)
     const data = {
       name: form.get("name"),
       password: form.get("password")
     }
     try {
       const response = await axios.post(
-        "link", data
+        "localhost:8080/users/login", data
       )
       if(response.status === 200) {
         localStorage.setItem("token", response.data.token)
@@ -41,7 +41,7 @@ const LoginPage = () => {
           }
         }
         const response2 = await axios.get(
-          "link", options
+          "localhost:8080/users/auth", options
         )
         setUser(response2.data)
         navigate("/")
@@ -65,7 +65,7 @@ const LoginPage = () => {
         </section>
         <button type="submit">Submit</button>
       </form>
-      <p>{string} Sign up <NavLink to="/register">here</NavLink></p>
+      <p>{string} Sign up <NavLink to="/register" className="text-blue-600 underline font-bold">here</NavLink></p>
     </div>
   )
 }

@@ -32,6 +32,9 @@ const NavBar = () => {
                   <li className="list-none">
                     <a href="/profile" className="hover:text-lime-600 hover:underline">Profile</a>
                   </li>
+                  <li className="list-none">
+                    <a href="/login" className="hover:text-lime-600 hover:underline">Login</a>
+                  </li>
                 </nav>
               </div>
             </div>

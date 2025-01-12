@@ -40,13 +40,14 @@ const RegisterPage = () => {
       alert(responseData.message || "Failed to create user")
     }
     console.log('Form Data Submitted:', formData);
+    document.getElementById("register").reset()
   };
 
   return (
     <>
     <section className="registerForm"> 
       <h1>Register Page!</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} id="register">
         <label>
           Username:
           <input

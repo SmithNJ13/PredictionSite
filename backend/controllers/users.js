@@ -55,4 +55,4 @@ const login = async(req, res) => {
     }
 }
 
-module.exports = {index, register, getUserToken}
+module.exports = {index, register, getUserToken, login}
