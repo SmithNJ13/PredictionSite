@@ -30,7 +30,7 @@ const HomePage = () => {
         <p>Compare your statistics against a leaderboard of other users</p>
       </section>
       <section>
-        <h1>Do it all for <a className="font-bold">FREE</a> by signing up <a href="/register" className="text-blue-800 hover:underline">here</a></h1>
+        <h1>Do it all for <a className="font-bold">FREE</a> by signing up <a href="/register" className="text-blue-600 font-bold hover:underline">here</a></h1>
       </section>
     </div>
     </>
