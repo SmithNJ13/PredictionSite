@@ -198,7 +198,7 @@ async function postPrediction (e) {
                   <option>Player2</option>
                   </select></p>
                 <p className="flex flex-col items-center">Clean Sheet? <input className="" type="checkbox" name="cleanSheet"></input></p>
-                <button className="ml-[30%] border-white border-[1px] rounded w-[60px] hover:text-green-500">Submit</button>
+                <button className="ml-[30%] border-white border-[1px] rounded w-[60px] hover:text-DarkSpring">Submit</button>
               </form>
             </div>
           </div>

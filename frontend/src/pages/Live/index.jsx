@@ -84,16 +84,16 @@ const Live = () => {
       return (
         <>
         <div id="header">
-          <header>Matches for: {dateFormat(date)}</header>
+          <header className="text-SpringGreen">Matches for: {dateFormat(date)}</header>
         </div>
         <div id="content">
             {liveGames.map((game) => {
               return (
               <div key={game.match._id} id={game.match._id}>
-                <h4 className="time">Time: {game.match.time}</h4>
+                <h4 className="time text-SpringGreen">Time: {game.match.time}</h4>
                 <div className="matchCards">
                   <TeamBanner id={genCards++} matchID={game.match._id} teamName={game.match.home} teamIcon={game.home_icon} teamColour={game.home_colour} side={"home"} buttonClick={handleBanners}/>
-                  <div className="text"><h2>VS</h2></div>
+                  <div className="text text-white"><h2>VS</h2></div>
                   <TeamBanner id={genCards++} matchID={game.match._id} teamName={game.match.away} teamIcon={game.away_icon} teamColour={game.away_colour} side={"away"} buttonClick={handleBanners}/>
                 </div>
               </div>

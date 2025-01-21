@@ -9,7 +9,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        "offblack": "#151515",
+        "AshGray": "#bac1b8",
+        "RaisinBlack": "#161925",
+        "GunMetal": "#2b303a",
+        "Moonstone": "#40BAD5 ",
+        "DarkSpring": "#0c7c59",
+        "SpringGreen": "#0fff95",
+        "Aquamarine": "#4BFFB1",
       },
       backgroundImage: {
         
