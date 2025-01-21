@@ -53,7 +53,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <h1 id="login" className="text-SpringGreen text-center text-4xl underline">Login Page</h1>
+      <h1 id="title" className="text-SpringGreen text-center text-4xl underline">Login Page</h1>
       <div id="content" className="flex flex-col gap-[10px] h-full">
         <div className="self-center bg-GunMetal p-[2rem] rounded-[10px]">
           <form onSubmit={login} className="loginform">
@@ -67,7 +67,7 @@ const LoginForm = () => {
             </section>
             <button type="submit" className="m-[1rem] p-[2px] text-SpringGreen border-[2px] border-gray-300 rounded w-[25%] self-center hover:font-bold">Submit</button>
           </form>
-        <p className="m-[1rem] text-AshGray">{string} Sign up <NavLink to="/register" className="text-Moonstone font-bold hover:underline">here</NavLink></p>
+        <p className="m-[1rem] text-AshGray">{string} Sign up <NavLink to="/register" className="text-Moonstone font-bold italic hover:underline">here</NavLink></p>
         </div>
       </div>
     </>

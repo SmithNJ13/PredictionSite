@@ -51,12 +51,12 @@ const [formData, setFormData] = useState({
 
   return (
     <>
-      <h1 id="registerTitle" className="text-SpringGreen text-center text-4xl underline">Register Page</h1>
+      <h1 id="title" className="text-SpringGreen text-center text-4xl underline">Register Page</h1>
       <div id="content" className="flex flex-col gap-[10px] h-full">
-        <div className="self-center bg-GunMetal p-[2rem] rounded-[10px]">
-          <form onSubmit={handleSubmit} id="register">
-            <section className="top flex flex-col gap-[10px]">
-              <label className="text-AshGray">Username:</label>
+        <div className="self-center bg-GunMetal p-[1rem] rounded-[10px]">
+          <form onSubmit={handleSubmit} id="register" className="flex flex-col gap-[20px] px-[1rem]">
+            <section className="top flex flex-col">
+              <label className="text-AshGray self-start">Username:</label>
               <input className="emailbox p-[10px] rounded-[5px] border border-gray-300" 
                   placeholder="JaneDoe1"
                   type="text"
@@ -66,8 +66,8 @@ const [formData, setFormData] = useState({
                   required>
               </input>
             </section>
-            <section className="middle flex flex-col gap-[10px]">
-              <label className="text-AshGray">Email:</label>
+            <section className="middle flex flex-col">
+              <label className="text-AshGray self-start">Email:</label>
               <input className="emailbox p-[10px] rounded-[5px] border border-gray-300" 
                   placeholder="JaneDoe@email.com" 
                   type="email"
@@ -77,15 +77,15 @@ const [formData, setFormData] = useState({
                   required>
               </input>
             </section>
-            <section className="bottom flex flex-col gap-[10px]">
-              <label className="text-AshGray">Password:</label>
+            <section className="bottom flex flex-col">
+              <label className="text-AshGray self-start">Password:</label>
               <input className="passbox p-[10px] rounded-[5px] border border-gray-300"
                   placeholder="1234" 
                   type="password"
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  required>
+                  required> 
               </input>
             </section>
             <button type="submit" className="m-[1rem] p-[2px] text-SpringGreen border-[2px] border-gray-300 rounded w-[33%] self-center hover:font-bold">Submit</button>
