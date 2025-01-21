@@ -52,21 +52,25 @@ const LoginForm = () => {
     }
 
   return (
-    <div id="content" className="bg-white relative flex flex-col gap-[10px] w-1/3 h-fit">
-          <h1>Login Page</h1>
+    <>
+      <h1 id="login" className="text-SpringGreen text-center text-4xl underline">Login Page</h1>
+      <div id="content" className="flex flex-col gap-[10px] h-full">
+        <div className="self-center bg-GunMetal p-[2rem] rounded-[10px]">
           <form onSubmit={login} className="loginform">
-            <section className="top">
-              <label>Email / Username:</label>
-              <input className="emailbox" placeholder="example@email.com" name="name" role="input" type="text" value={name} onChange={currentName}></input>
+            <section className="top flex flex-col gap-[10px]">
+              <label className="text-AshGray">Email / Username:</label>
+              <input className="emailbox p-[10px] rounded-[5px] border border-gray-300" placeholder="example@email.com" name="name" role="input" type="text" value={name} onChange={currentName}></input>
             </section>
-            <section className="bottom">
-              <label>Password:</label>
-              <input className="passbox" name="password" role="input" type="password" value={password} onChange={currentPassword}></input>
+            <section className="bottom flex flex-col gap-[10px]">
+              <label className="text-AshGray">Password:</label>
+              <input className="passbox p-[10px] rounded-[5px] border border-gray-300" name="password" role="input" type="password" value={password} onChange={currentPassword}></input>
             </section>
-            <button type="submit">Submit</button>
+            <button type="submit" className="m-[1rem] p-[2px] text-SpringGreen border-[2px] border-gray-300 rounded w-[25%] self-center hover:font-bold">Submit</button>
           </form>
-          <p>{string} Sign up <NavLink to="/register" className="text-blue-600 font-bold hover:underline">here</NavLink></p>
+        <p className="m-[1rem] text-AshGray">{string} Sign up <NavLink to="/register" className="text-Moonstone font-bold hover:underline">here</NavLink></p>
         </div>
+      </div>
+    </>
   )
 }
 

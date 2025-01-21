@@ -181,8 +181,8 @@ async function postPrediction (e) {
               <img id="teamIcon" className="absolute top-[11%] left-[50%] w-[120px] h-[120px]" src={teamIcon} alt="Team_Icon"></img>
               <h1 id="teamName" className="absolute align-center w-[220px] text-white top-[55%] left-[50%]" style={size}>{teamName}</h1>
             </div>
-            <div id="bottom" className="absolute bottom-[20%] left-[50%] p-[1px] align-center text-white">
-              <button className="relative" onClick={handleClick}>Place Predictions</button>
+            <div id="bottom" className="absolute bottom-[20%] left-[50%] p-[1px] align-center text-SpringGreen">
+              <button className="relative hover:underline" onClick={handleClick}>Place Predictions</button>
             </div>
           </div>
         ) : (
@@ -198,7 +198,7 @@ async function postPrediction (e) {
                   <option>Player2</option>
                   </select></p>
                 <p className="flex flex-col items-center">Clean Sheet? <input className="" type="checkbox" name="cleanSheet"></input></p>
-                <button className="ml-[30%] border-white border-[1px] rounded w-[60px] hover:text-DarkSpring">Submit</button>
+                <button className="ml-[30%] border-white border-[1px] rounded w-[60px] hover:text-SpringGreen">Submit</button>
               </form>
             </div>
           </div>

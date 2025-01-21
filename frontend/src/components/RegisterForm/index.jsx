@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { baseURL } from "../../consts/api";
+import { NavLink } from 'react-router-dom';
 import "./style.css"
 
 const RegisterForm = () => {
@@ -36,6 +37,11 @@ const [formData, setFormData] = useState({
     const responseData = await response.json()
     if(response.status === 201) {
       console.log("User successfully created")
+      setFormData({
+        username: '',
+        email: '',
+        password: '',
+      });
     } else {
       alert(responseData.message || "Failed to create user")
     }
@@ -45,45 +51,47 @@ const [formData, setFormData] = useState({
 
   return (
     <>
-    <section className="registerForm"> 
-      <h1>Register Page!</h1>
-      <form onSubmit={handleSubmit} id="register">
-        <label>
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Email:
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <label>
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </label>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-    </section>
+      <h1 id="registerTitle" className="text-SpringGreen text-center text-4xl underline">Register Page</h1>
+      <div id="content" className="flex flex-col gap-[10px] h-full">
+        <div className="self-center bg-GunMetal p-[2rem] rounded-[10px]">
+          <form onSubmit={handleSubmit} id="register">
+            <section className="top flex flex-col gap-[10px]">
+              <label className="text-AshGray">Username:</label>
+              <input className="emailbox p-[10px] rounded-[5px] border border-gray-300" 
+                  placeholder="JaneDoe1"
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  required>
+              </input>
+            </section>
+            <section className="middle flex flex-col gap-[10px]">
+              <label className="text-AshGray">Email:</label>
+              <input className="emailbox p-[10px] rounded-[5px] border border-gray-300" 
+                  placeholder="JaneDoe@email.com" 
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required>
+              </input>
+            </section>
+            <section className="bottom flex flex-col gap-[10px]">
+              <label className="text-AshGray">Password:</label>
+              <input className="passbox p-[10px] rounded-[5px] border border-gray-300"
+                  placeholder="1234" 
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required>
+              </input>
+            </section>
+            <button type="submit" className="m-[1rem] p-[2px] text-SpringGreen border-[2px] border-gray-300 rounded w-[33%] self-center hover:font-bold">Submit</button>
+          </form>
+        </div>
+      </div>
     </>
   );
 }
