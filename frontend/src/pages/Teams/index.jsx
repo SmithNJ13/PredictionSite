@@ -14,7 +14,7 @@ const Teams = () => {
           <div
             id="teamBox"
             key={index}
-            className="bg-gray-800 text-white py-2 px-4 rounded-lg text-lg text-center border-[1px] border-transparent hover:border-[1px] hover:border-white box-border">
+            className="bg-GunMetal text-white py-2 px-4 rounded-lg text-lg text-center border-[1px] border-transparent hover:border-[1px] hover:border-SpringGreen box-border">
             {t.name}
           </div>
         ))}

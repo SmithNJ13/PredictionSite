@@ -54,8 +54,8 @@ const LoginForm = () => {
   return (
     <>
       <h1 id="title" className="text-SpringGreen text-center text-4xl underline">Login Page</h1>
-      <div id="content" className="flex flex-col gap-[10px] h-full">
-        <div className="self-center bg-GunMetal p-[2rem] rounded-[10px]">
+      <div id="content" className="flex flex-col gap-[10px] h-full w-full">
+        <div className="self-center bg-GunMetal p-[2rem] rounded-[10px] w-[30rem]">
           <form onSubmit={login} className="loginform">
             <section className="top flex flex-col gap-[10px]">
               <label className="text-AshGray">Email / Username:</label>

@@ -1,11 +1,11 @@
 const express = require("express")
 const cors = require("cors")
-const cron = require("node-cron")
-
 const app = express()
 const MatchRoutes = require("./routers/MatchRoutes")
 const UserRoutes = require("./routers/UserRoutes") 
 const PredictionRoutes = require("./routers/PredictionRoutes")
+
+require("./schedulers/cronjob.js")
 
 // Cron schedule that runs every minute
 // cron.schedule("* * * * *", async () => {

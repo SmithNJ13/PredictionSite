@@ -52,8 +52,8 @@ const [formData, setFormData] = useState({
   return (
     <>
       <h1 id="title" className="text-SpringGreen text-center text-4xl underline">Register Page</h1>
-      <div id="content" className="flex flex-col gap-[10px] h-full">
-        <div className="self-center bg-GunMetal p-[1rem] rounded-[10px]">
+      <div id="content" className="flex flex-col gap-[10px] h-full w-full">
+        <div className="self-center bg-GunMetal p-[1rem] rounded-[10px] w-[30rem]">
           <form onSubmit={handleSubmit} id="register" className="flex flex-col gap-[20px] px-[1rem]">
             <section className="top flex flex-col">
               <label className="text-AshGray self-start">Username:</label>

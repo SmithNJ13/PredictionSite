@@ -9,7 +9,7 @@ const NavBar = () => {
     nav("/")
   }
     return (
-        <header id="header" className="sticky top-0 mx-auto text-SpringGreen bg-GunMetal z-10 py-[10px] border-y-[2px] my-[1.5rem] border-DarkSpring">
+        <header id="header" className="absolute w-full mx-auto text-SpringGreen bg-GunMetal z-10 py-[10px] border-y-[2px] mt-[1.5rem] border-DarkSpring">
           <div className="container mx-auto">
             <div id="nav" className="flex justify-between">
               <a className="logo pb-4 flex items-center p-[33px] items-center relative">

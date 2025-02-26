@@ -2,21 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    overflow-y: scroll;
-}
 html {
     background-color: #161925;
-    top: 0;
-    left: 0;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
+    overflow-y: scroll;
 }
 /* For WebKit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {

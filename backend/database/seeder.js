@@ -39,99 +39,99 @@ axios(url)
         console.error('Error fetching data:', error);
     });
 
-    const seedUsers = async () => {
-        try{
-            await client.connect()
-            await client.db("database").collection("users").drop()
-            await client.db("database").collection("users").insertOne({
-                _id: 0,
-                username: "Admin",
-                email: "Admin@Admin.com",
-                password: "yP96XKfPLR"
-                
-            })
-            console.log("USERS SEEDED!")
-            seedPredictions()
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const seedPredictions = async () => {
-        try{
-            await client.connect()
-            await client.db("database").collection("predictions").drop()
-            await client.db("database").collection("predictions").insertOne({
-                    userID: 1,
-                    matchID: 3,
-                    side: {
-                        home: {
-                            predicted_xG: 1.5,
-                            corners: 11,
-                            playerToScore: "Player2",
-                            cleanSheet: true
-                        },
-                        away: {
-                            predicted_xG: null,
-                            corners: null,
-                            playerToScore: null,
-                            cleanSheet: false
-                        }
-                    }
-            })
-
-            console.log("PREDICTIONS SEEDED!")
-            seedDB(premierLeagueMatches);
-            // deleteDB()
+const seedUsers = async () => {
+    try{
+        await client.connect()
+        await client.db("database").collection("users").drop()
+        await client.db("database").collection("users").insertOne({
+            _id: 0,
+            username: "Admin",
+            email: "Admin@Admin.com",
+            password: "yP96XKfPLR"
             
-        } catch (error) {
-            console.log(error)
-        }
+        })
+        console.log("USERS SEEDED!")
+        seedPredictions()
+    } catch (error) {
+        console.log(error)
     }
+}
 
-    const deleteDB = async () => {
-        try {
-            await client.db("database").collection("matches").deleteMany({})
-            await client.close()
-            console.log("Matches deleted!")
-        } catch (error) {
-            console.log(`Error deleting matches: ${error}`)
-        }
-    }
-
-    const seedDB = async (matchesArray) => {
-        try {
-            await client.connect();
-            await client.db("database").collection("matches").drop();
-
-            let ID = 1;
-            for (const match of matchesArray) {
-                try {
-                    await client.db("database").collection("matches").insertOne({
-                        _id: ID,
-                        date: match.date,
-                        time: match.time,
-                        home: match.home,
-                        homeXG: match.homeXG,
-                        away: match.away,
-                        awayXG: match.awayXG
-                    });
-                    // console.log(`Inserted match for ${match.date} - ${match.opponent}`);
-                    ID++;
-                } catch (insertError) {
-                    if (insertError.code !== 11000) {
-                        console.error('Error inserting match:', insertError);
-                    } else {
+const seedPredictions = async () => {
+    try{
+        await client.connect()
+        await client.db("database").collection("predictions").drop()
+        await client.db("database").collection("predictions").insertOne({
+                userID: 1,
+                matchID: 3,
+                side: {
+                    home: {
+                        predicted_xG: 1.5,
+                        corners: 11,
+                        playerToScore: "Player2",
+                        cleanSheet: true
+                    },
+                    away: {
+                        predicted_xG: null,
+                        corners: null,
+                        playerToScore: null,
+                        cleanSheet: false
                     }
                 }
+        })
+
+        console.log("PREDICTIONS SEEDED!")
+        seedDB(premierLeagueMatches);
+        // deleteDB()
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const deleteDB = async () => {
+    try {
+        await client.db("database").collection("matches").deleteMany({})
+        await client.close()
+        console.log("Matches deleted!")
+    } catch (error) {
+        console.log(`Error deleting matches: ${error}`)
+    }
+}
+
+const seedDB = async (matchesArray) => {
+    try {
+        await client.connect();
+        await client.db("database").collection("matches").drop();
+
+        let ID = 1;
+        for (const match of matchesArray) {
+            try {
+                await client.db("database").collection("matches").insertOne({
+                    _id: ID,
+                    date: match.date,
+                    time: match.time,
+                    home: match.home,
+                    homeXG: match.homeXG,
+                    away: match.away,
+                    awayXG: match.awayXG
+                });
+                // console.log(`Inserted match for ${match.date} - ${match.opponent}`);
+                ID++;
+            } catch (insertError) {
+                if (insertError.code !== 11000) {
+                    console.error('Error inserting match:', insertError);
+                } else {
+                }
             }
-            console.log("MATCHES SEEDED!")
-            await client.close();
-        } catch (error) {
-            console.error('Error connecting to the database:', error);
         }
-    };
-    seedUsers()
+        console.log("MATCHES SEEDED!")
+        await client.close();
+    } catch (error) {
+        console.error('Error connecting to the database:', error);
+    }
+};
+seedUsers()
 
 
     /*

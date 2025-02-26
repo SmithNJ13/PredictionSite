@@ -14,7 +14,7 @@ const HomePage = () => {
     <main id="mainBody" className="text-AshGray flex flex-col overflow-hidden my-[2rem] mx-[2rem]">
         <div id="content" className="bg-GunMetal rounded-2xl border-none">
           <h1 id="title" className="text-SpringGreen text-4xl border-b-[2px] border-DarkSpring bold my-[2rem]">WELCOME TO PREMIER LEAGUE PREDICTIONS!</h1>
-          <section className="text-center self-start p-[1rem] w-[50%]">
+          <section className="text-center self-start p-[1rem] w-[50%] flex flex-col items-center self-center">
             <p className="mx-[5rem] text-2xl underline">MAKE PREDICTIONS</p>
             <p>Test your intuition by making predictions on upcoming games. Choose match outcomes, scorelines, or even more specific events. 
               Whether you play for fun or aim to showcase your expertise, every prediction counts toward building your reputation as a top predictor. 
