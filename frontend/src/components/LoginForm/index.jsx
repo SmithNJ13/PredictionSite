@@ -10,7 +10,7 @@ const LoginForm = () => {
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
     const { setUser } = useAuth()
-  
+   
     const currentName = (event) => {
       setName(event.target.value) 
     }
@@ -30,7 +30,7 @@ const LoginForm = () => {
       }
       try {
         const response = await axios.post(
-          "localhost:8080/users/login", data
+          "localhost:8080/users", data
         )
         if(response.status === 200) {
           localStorage.setItem("token", response.data.token)

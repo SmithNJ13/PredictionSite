@@ -47,6 +47,7 @@ const [formData, setFormData] = useState({
     }
     console.log('Form Data Submitted:', formData);
     document.getElementById("register").reset()
+    window.location.href = "/login"
   };
 
   return (

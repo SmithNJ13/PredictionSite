@@ -46,8 +46,23 @@ const register = async(req, res) => {
 }
 
 const login = async(req, res) => {
+    const data = req.body
     try {
-        const data = req.body
+        const user = await User.getUser(data.username, data.email)
+        if(!user) {
+            return res.status(400).json({
+                error: "Incorrect username or email."
+            })
+        } else {
+            const password = await bcrypt.compare(data.password, user.password)
+            if (!password) {
+                return res.status(400).json({
+                    error: "Incorrect password."
+                })
+            } else {
+                res.status(200).json({message: "Matched username/email and password."})
+            }
+        }
     } catch (error) {
         res.status(500).json({
             error: error.message

@@ -62,6 +62,17 @@ class User {
     user["id"] = id
     return user
   }
+
+  static async getUser(username, email) {
+    await client.connect()
+    const response = await client.db("database").collection("users").findOne({
+      $or: [
+        {username: username},
+        {email: email}
+      ]
+    })
+    return response
+  }
 }
 
 module.exports = User;
