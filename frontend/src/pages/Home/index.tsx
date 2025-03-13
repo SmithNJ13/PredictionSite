@@ -1,6 +1,3 @@
-import { useState, useEffect } from "react";
-import { TeamBanner, NewsFeed} from "../../components/export";
-import axios from "axios";
 import "./style.css";
 
 

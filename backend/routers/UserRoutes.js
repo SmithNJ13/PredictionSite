@@ -7,6 +7,6 @@ userRouter.get("/", userController.index)
 userRouter.get("/auth", userController.getUserToken)
 userRouter.post("/register", userController.register)
 userRouter.post("/login", userController.login)
-// userRouter.delete("/logout", userController.logout)
+userRouter.delete("/logout", userController.logout)
 
 module.exports = userRouter

@@ -10,7 +10,7 @@ class Token {
 
     static async create(userID) {
         const token = uuidv4()
-        const response = await client("database").collection("tokens").insertOne({
+        const response = await client.db("database").collection("tokens").insertOne({
             userID: userID,
             token: token
         })
@@ -29,7 +29,7 @@ class Token {
 
     static async destroy(data) {
         await client.connect()
-        const token = data.token
+        const token = data.token 
         const response = await client.db("database").collection("tokens").deleteOne({
             token: token
         })

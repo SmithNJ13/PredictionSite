@@ -30,7 +30,7 @@ const LoginForm = () => {
       }
       try {
         const response = await axios.post(
-          "localhost:8080/users", data
+          "localhost:8080/users/login", data
         )
         if(response.status === 200) {
           localStorage.setItem("token", response.data.token)
@@ -39,7 +39,7 @@ const LoginForm = () => {
             headers: {
               Authorization: token,
             }
-          }
+          } 
           const response2 = await axios.get(
             "localhost:8080/users/auth", options
           )

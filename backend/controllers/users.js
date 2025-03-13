@@ -21,7 +21,7 @@ const index = async(req, res) => {
 
 const getUserToken = async(req, res) => {
     try {
-        const token = req.headers["autherization"]
+        const token = req.headers["authorization"]
         const tokenObject = await Token.getToken(token)
         const userID = tokenObject.userID
         const user = await User.getById(userID)
@@ -60,7 +60,8 @@ const login = async(req, res) => {
                     error: "Incorrect password."
                 })
             } else {
-                res.status(200).json({message: "Matched username/email and password."})
+                const token = await Token.create(user._id)
+                res.status(200).json({authenticated: true, token: token, userID: user._id})
             }
         }
     } catch (error) {
@@ -70,4 +71,14 @@ const login = async(req, res) => {
     }
 }
 
-module.exports = {index, register, getUserToken, login}
+const logout = async(req, res) => {
+    try {
+        const token = await Token.getToken(req.headers["authorization"])
+        await token.destroy()
+        res.send({authenticated: false})
+    } catch (error) {
+        res.status(500).json({error: error})
+    }
+}
+
+module.exports = {index, register, getUserToken, login, logout}
