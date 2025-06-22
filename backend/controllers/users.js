@@ -22,12 +22,18 @@ const index = async(req, res) => {
 const getUserToken = async(req, res) => {
     try {
         const token = req.headers["authorization"]
+        if(!token) {
+            return res.status(401).json({error: "No token provided."})
+        }
         const tokenObject = await Token.getToken(token)
+        if(!tokenObject) {
+            return res.status(401).json({error: "Invalid token."})
+        }
         const userID = tokenObject.userID
         const user = await User.getById(userID)
         res.status(200).json(user)
     } catch (error) {
-        res.status(404).json({error: error})
+        res.status(500).json({error: error.message})
     }
 }
 
@@ -48,10 +54,11 @@ const register = async(req, res) => {
 const login = async(req, res) => {
     const data = req.body
     try {
-        const user = await User.getUser(data.username, data.email)
+        const user = await User.getUser(data.name)
         if(!user) {
             return res.status(400).json({
-                error: "Incorrect username or email."
+                error: "Incorrect username or email.",
+                data: data
             })
         } else {
             const password = await bcrypt.compare(data.password, user.password)

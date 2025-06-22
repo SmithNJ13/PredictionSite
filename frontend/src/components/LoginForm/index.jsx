@@ -28,26 +28,29 @@ const LoginForm = () => {
         name: form.get("name"),
         password: form.get("password")
       }
+      // console.log(data)
       try {
         const response = await axios.post(
-          "localhost:8080/users/login", data
+          "http://localhost:8080/users/login", data
         )
+        console.log(response)
         if(response.status === 200) {
-          localStorage.setItem("token", response.data.token)
+          localStorage.setItem("token", response.data.token.token)
           const token = localStorage.getItem("token")
           const options = {
             headers: {
               Authorization: token,
             }
-          } 
+          }
+          console.log(options) 
           const response2 = await axios.get(
-            "localhost:8080/users/auth", options
+            "http://localhost:8080/users/auth", options
           )
           setUser(response2.data)
           navigate("/")
         }
       } catch (error) {
-        alert(error.message)
+        console.log(error)
       }
     }
 

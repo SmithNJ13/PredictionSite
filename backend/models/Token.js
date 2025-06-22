@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require("uuid")
 const client = require("../database/setup")
+const { ObjectId } = require("mongodb")
 
 class Token {
     constructor({_id, userID, token}) {
@@ -19,10 +20,16 @@ class Token {
     }
 
     static async getToken(token) {
+        if (token.startsWith("Bearer ")) {
+            token = token.slice(7);
+        }
         const response = await client.db("database").collection("tokens").find({
             token: token
         })
         const value = await response.toArray()
+        if(value.length === 0) {
+            return null
+        }
         const tokenObject = new Token(value[0])
         return tokenObject
     }

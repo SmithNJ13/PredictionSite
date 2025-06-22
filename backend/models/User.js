@@ -1,4 +1,4 @@
-const { ObjectID } = require("mongodb");
+const { ObjectId } = require("mongodb");
 const client = require("../database/setup");
 
 class User {
@@ -53,7 +53,7 @@ class User {
 
   static async getById(idx) {
     await client.connect()
-    const id = new ObjectID(idx)
+    const id = idx
     const response = await client.db("database").collection("users").find({
       _id: id
     })
@@ -63,12 +63,12 @@ class User {
     return user
   }
 
-  static async getUser(username, email) {
+  static async getUser(name) {
     await client.connect()
     const response = await client.db("database").collection("users").findOne({
       $or: [
-        {username: username},
-        {email: email}
+        {username: name},
+        {email: name}
       ]
     })
     return response
