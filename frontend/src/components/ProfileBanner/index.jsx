@@ -14,9 +14,8 @@ const ProfileBanner = () => {
     <div id="ProfileBox">
         <div id="UserInfo">
             <img className="UserIcon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Football_%28soccer_ball%29.svg/964px-Football_%28soccer_ball%29.svg.png"></img>
-            <h1 className="UserTag">{userName} |
-            <h6>|</h6>
-            <h6 className="rating">{totalNetXG.toFixed(3)}</h6></h1>
+            <h1 className="UserTag">{userName} | </h1>
+            <h2 className="rating">{totalNetXG.toFixed(3)}</h2>
         </div>
         <div id="UserDescription">
           <div className="descriptionBox">

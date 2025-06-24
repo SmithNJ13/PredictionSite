@@ -81,7 +81,6 @@ const login = async(req, res) => {
 const logout = async(req, res) => {
     try {
         const token = req.headers["authorization"]
-        console.log(`Current Token:`, token)
         await Token.destroy(token)
         res.send({authenticated: false})
     } catch (error) {
