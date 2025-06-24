@@ -80,8 +80,9 @@ const login = async(req, res) => {
 
 const logout = async(req, res) => {
     try {
-        const token = await Token.getToken(req.headers["authorization"])
-        await token.destroy()
+        const token = req.headers["authorization"]
+        console.log(`Current Token:`, token)
+        await Token.destroy(token)
         res.send({authenticated: false})
     } catch (error) {
         res.status(500).json({error: error})

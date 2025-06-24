@@ -1,9 +1,25 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import logo from "../../assets/PLPLogo.png"
+import {useAuth} from "../../Auth/index.jsx"
+import axios from "axios"
 import "./style.css"
 
 const NavBar = () => {
   const nav = useNavigate()
+  const {user, setUser} = useAuth()
+
+  function logout(event) {
+    event.preventDefault()
+    const token = localStorage.getItem("token")
+    if(token) {
+      axios.delete("http://localhost:8080/users/logout", {
+        headers: {Authorization: token}
+      })
+      localStorage.removeItem("token")
+    }
+    setUser(null)
+    nav("/")
+  }
 
   function home() {
     nav("/")
@@ -21,22 +37,28 @@ const NavBar = () => {
                 <div className="border-l-2 border-DarkSpring h-8 mx-4"></div>
                 <nav className="flex space-x-6 text-[20px]" id="nav_items">
                   <li className="list-none">
-                    <a href="/" className="hover:text-Aquamarine hover:underline">Home</a>
+                    <Link to="/" className="hover:text-Aquamarine hover:underline">Home</Link>
                   </li>
                   <li className="list-none">
-                    <a href="/live" className="hover:text-Aquamarine hover:underline">Live Matches</a>
+                    <Link to="/live" className="hover:text-Aquamarine hover:underline">Live Matches</Link>
                   </li>
                   <li className="list-none">
-                    <a href="/teams" className="hover:text-Aquamarine hover:underline">Teams</a>
+                    <Link to="/teams" className="hover:text-Aquamarine hover:underline">Teams</Link>
                   </li>
                   <li className="list-none">
-                    <a href="/profile" className="hover:text-Aquamarine hover:underline">Profile</a>
+                    <Link to="/profile" className="hover:text-Aquamarine hover:underline">Profile</Link>
                   </li>
-                  <li className="list-none">
-                    <a href="/login" className="hover:text-Aquamarine hover:underline">Login</a>
-                  </li>
+                  {user ? (
+                    <li className="list-none">
+                      <button className="hover:text-Aquamarine hover:underline" onClick={logout}>Logout</button>
+                    </li>
+                  ) : (
+                    <li className="list-none">
+                      <Link to="/login" className="hover:text-Aquamarine hover:underline">Login</Link>
+                    </li>
+                  )}
                 </nav>
-              </div>
+              </div> 
             </div>
           </div>
         </header>

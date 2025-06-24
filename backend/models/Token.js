@@ -21,7 +21,7 @@ class Token {
 
     static async getToken(token) {
         if (token.startsWith("Bearer ")) {
-            token = token.slice(7);
+            token = token.slice(7)
         }
         const response = await client.db("database").collection("tokens").find({
             token: token
@@ -34,13 +34,12 @@ class Token {
         return tokenObject
     }
 
-    static async destroy(data) {
+    static async destroy(token) {
         await client.connect()
-        const token = data.token 
         const response = await client.db("database").collection("tokens").deleteOne({
             token: token
         })
-        return res.send(200)
+        return response
     }
 }
 
