@@ -1,39 +1,72 @@
-import { useState } from "react"
-import { useAuth } from "../../Auth"
-import profileIcon from "../../assets/profileIcon.png"
-import PredictionTable from "../PredictionTable"
+import { useState } from "react";
+import profileIcon from "../../assets/profileIcon.png";
+import {UserPen} from 'lucide-react';
 
-const ProfileBanner = () => {
-  const {user, setUser} = useAuth()
-  const [totalNetXG, setTotalNetXG] = useState(0)
-  console.log(user)
+const ProfileBanner = ({ user, totalNetXG }) => {
+  const [editMode, setEditMode] = useState(false);
+  const [description, setDescription] = useState(user.description || "");
+  const [charLimit] = useState(50);
+  const [showToast, setShowToast] = useState(false);
 
-  const AddNetXG = (netXG) => {
-    setTotalNetXG(prevNetXG => prevNetXG + netXG)
+
+  function changeEdit() {
+    setEditMode(prev => !prev);
   }
+
   return (
-    <>
-    <div className="relative flex flex-col justify-center align-center text-center p-[1rem] m-[1rem] bg-transparent border-[1px] border-green-700 rounded h-auto max-w-[1000px] w-[100%] text-white">
-        <div className="flex flex-row justify-left p-[1rem] gap-[4px]">
-            <img className="relative border-[2px] border-green-400 rounded-[50%] w-[120px] h-[120px] object-cover" src={user.id == 1 ? profileIcon : null}></img>
-            <div className="flex flex-row w-[200px] items-center gap-[4px]">
-              <h1 className="font-bold">{user.username}</h1>
-              <p>|</p>
-              <h1 className="text-green-400">{totalNetXG.toFixed(2)}</h1>
+    <div className="p-8 mb-8 relative overflow-hidden">
+      <div className="absolute inset-0"></div>
+      <div className="relative z-10">
+        <div className="flex flex-row items-center gap-6 mb-4">
+          <img 
+            className="border-2 border-green-400 rounded-full w-28 h-28 object-cover hover:bg-black/60 hover:cursor-pointer" 
+            src={user.id === 1 ? profileIcon : null}
+            alt="Profile"
+          />
+          <div className="flex flex-col">
+            <h1 className="text-4xl font-bold text-white tracking-tight">{user.username}</h1>
+            <div className="flex items-center gap-2 mx-6">
+              <span className="text-white text-lg">Net xG:</span>
+              <span className={"text-red-400 text-lg font-bold"}>
+                {totalNetXG >= 0 ? '+' : ''}{totalNetXG.toFixed(2)}
+              </span>
             </div>
-        </div>
-        <div className="relative w-full px-[2rem]">
-          <div className="border-b-[2px] border-green-700 rounded-[6px] p-[1rem]">
-            <p className="mx-[2rem] text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime tempora voluptatibus corrupti explicabo, facilis voluptas qui dicta animi mollitia tenetur voluptatem exercitationem. Recusandae, natus laborum.</p>
           </div>
         </div>
-        <div className="relative m-[1rem]">
-            <div className="text-center font-bold">Prediction History</div>
-            <PredictionTable updateNetXG={AddNetXG}/>
-        </div>
+      <div className="flex flex-col border-t border-green-400/30 pt-4 relative">
+        <UserPen size={22} className="self-end hover:cursor-pointer" onClick={changeEdit} />
+
+        {!editMode ? (
+          <p className="mx-6 text-white text-lg select-none">{description}</p>
+        ) : (
+          <>
+            <textarea
+              value={description}
+              onChange={(e) => {
+                if (e.target.value.length <= charLimit) {
+                  setDescription(e.target.value);
+                  setShowToast(false);
+                } else {
+                  setShowToast(true);
+                }
+              }}
+              className="mx-6 text-white bg-slate-700 text-lg p-2 rounded resize-none relative"
+              rows={4}/>
+            <div className="text-sm text-gray-400 text-right px-6">{description.length}/{charLimit}</div>
+            <button
+              className="self-end mt-1 mx-2 font-bold w-20 bg-green-600/50 rounded text-center p-1 hover:bg-green-600"
+              onClick={() => setEditMode(false)}> Save </button>
+            {showToast && (
+              <div className="absolute bottom-0 right-0 m-4 bg-red-600 text-white text-sm px-3 py-2 rounded shadow-lg z-50">
+                Character limit reached!
+              </div>
+            )}
+          </>
+        )}
+      </div>
+      </div>
     </div>
-    </>
-  )
-}
+  );
+};
 
 export default ProfileBanner
