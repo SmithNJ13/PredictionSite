@@ -1,6 +1,7 @@
 import { baseURL } from "../../consts/api";
 import { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
+import { useAuth } from "../../Auth";
 import axios from "axios";
 import "./style.css";
 import MatchCard from "../../assets/matchcard.svg?react";
@@ -10,6 +11,7 @@ const TeamBanner = ({id, matchID, teamIcon, teamName, teamColour, side, buttonCl
   const [pxG, setpxG] = useState(0.0)
   const [size, setSize] = useState({fontSize: 34})
   const [flipped, setFlipped] = useState(false)
+  const { user } = useAuth();
 
   const sizeHandler = (teamName) => {
       if(teamName.length > 15) {
@@ -33,7 +35,7 @@ const handleClick = () => {
 }
 
 async function postPrediction (e) {
-  const userID = 1
+  const userID = user.id
   e.preventDefault()
   const Form = new FormData(e.target)
   const xG = parseFloat(Form.get("xG"))
@@ -56,7 +58,7 @@ async function postPrediction (e) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userID: 1,
+            userID: userID,
             matchID: matchID,
             side: {
               home: {
@@ -80,7 +82,7 @@ async function postPrediction (e) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userID: 1,
+            userID: userID,
             matchID: matchID,
             side: {
               away: {
@@ -105,7 +107,7 @@ async function postPrediction (e) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          userID: 1,
+          userID: userID,
           matchID: matchID,
           side: {
             home: side === "home" ? {

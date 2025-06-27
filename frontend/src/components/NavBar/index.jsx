@@ -45,13 +45,15 @@ const NavBar = () => {
                 <li className="list-none">
                   <Link to="/teams" className="hover:text-Aquamarine hover:underline">Teams</Link>
                 </li>
-                <li className="list-none">
-                  <Link to="/profile" className="hover:text-Aquamarine hover:underline">Profile</Link>
-                </li>
                 {user ? (
+                  <>
+                  <li className="list-none">
+                    <Link to="/profile" className="hover:text-Aquamarine hover:underline">Profile</Link>
+                  </li>
                   <li className="list-none">
                     <button className="hover:text-Aquamarine hover:underline" onClick={logout}>Logout</button>
                   </li>
+                  </>
                 ) : (
                   <li className="list-none">
                     <Link to="/login" className="hover:text-Aquamarine hover:underline">Login</Link>

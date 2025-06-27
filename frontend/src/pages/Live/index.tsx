@@ -50,11 +50,7 @@ const Live = () => {
     }
   }
 
-  async function postPrediction(
-    matchID: string,
-    pxGHome: number,
-    pxGAway: number
-  ): Promise<void> {
+  async function postPrediction(matchID: string, pxGHome: number, pxGAway: number): Promise<void> {
     try {
       const response = await fetch(`${baseURL}/`, {
         method: "POST",

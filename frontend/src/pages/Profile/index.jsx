@@ -16,6 +16,8 @@ const ProfilePage = () => {
   const [stats, setStats] = useState({
     totalPredictions: 0
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const entriesPerPage = 19;
 
   const dateFormat = (string) => {
     if (string) {
@@ -111,6 +113,26 @@ const ProfilePage = () => {
     if (sortOrder === "desc") return netXGB - netXGA;
     return 0;
   });
+  const indexOfLastEntry = currentPage * entriesPerPage;
+  const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
+  const currentEntries = sortedEntries.slice(indexOfFirstEntry, indexOfLastEntry);
+
+  const getVisiblePages = (current, total, range = 5) => {
+    const half = Math.floor(range / 2);
+    let start = Math.max(1, current - half);
+    let end = Math.min(total, current + half);
+
+    if (end - start < range - 1) {
+      if (start === 1) end = Math.min(total, start + range - 1);
+      else if (end === total) start = Math.max(1, total - range + 1);
+    }
+
+    const pages = [];
+    for (let i = start; i <= end; i++) pages.push(i);
+    return pages;
+};
+
+  if (!user) return null
 
   return (
     <div className="min-h-screen text-white m-[1rem]">
@@ -136,12 +158,12 @@ const ProfilePage = () => {
         {/* Predictions Table */}
         <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-2xl overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-700">
-            <h2 className="text-xl font-semibold text-white">Prediction History</h2>
+            <h2 className="text-xl font-semibold text-white text-center underline">Prediction History</h2>
           </div>
           
           {loading ? (
             <div className="flex items-center justify-center py-20">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-500"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
             </div>
           ) : (
             <div className="overflow-x-auto">
@@ -161,7 +183,7 @@ const ProfilePage = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-700/50">
-                  {sortedEntries.map((entry, index) => {
+                  {currentEntries.map((entry, index) => {
                     const netXGValue = calculateNetXG(entry);
                     return (
                       <tr key={index} className="hover:bg-slate-700/30 transition-colors cursor-pointer group">
@@ -237,6 +259,37 @@ const ProfilePage = () => {
                   })}
                 </tbody>
               </table>
+              <div className="flex justify-center items-center gap-2 py-4 sticky bottom-0 bg-slate-900 z-10">
+                <button
+                  onClick={() => setCurrentPage(1)}
+                  className="px-3 py-1 bg-slate-600/50 text-white rounded hover:bg-slate-600 disabled:opacity-30"
+                  disabled={currentPage === 1}
+                >
+                  «
+                </button>
+
+                {getVisiblePages(currentPage, Math.ceil(sortedEntries.length / entriesPerPage)).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`px-3 py-1 rounded transition-colors ${
+                      currentPage === page
+                        ? 'bg-white text-black font-bold'
+                        : 'bg-slate-600/40 text-slate-300 hover:bg-slate-600/70'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() => setCurrentPage(Math.ceil(sortedEntries.length / entriesPerPage))}
+                  className="px-3 py-1 bg-slate-600/50 text-white rounded hover:bg-slate-600 disabled:opacity-30"
+                  disabled={currentPage === Math.ceil(sortedEntries.length / entriesPerPage)}
+                >
+                  »
+                </button>
+              </div>
             </div>
           )}
         </div>
