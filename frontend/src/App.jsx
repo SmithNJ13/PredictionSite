@@ -4,6 +4,7 @@ import { NavBar } from "./components/export"
 import {useAuth} from "./Auth/index"
 import "./style.css"
 import { useEffect, useState } from "react"
+import { baseURL } from "./consts/api"
 import axios from "axios"
 
 
@@ -15,7 +16,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("token")
     if(token) {
-      axios.get("http://localhost:8080/users/auth", {
+      axios.get(`${baseURL}/users/auth`, {
         headers: { Authorization: `Bearer ${token}`}
       })
       .then(response => {

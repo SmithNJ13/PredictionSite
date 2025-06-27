@@ -17,7 +17,7 @@ const ProfileBanner = ({ user, totalNetXG }) => {
     <div className="p-8 mb-8 relative overflow-hidden">
       <div className="absolute inset-0"></div>
       <div className="relative z-10">
-        <div className="flex flex-row items-center gap-6 mb-4">
+        <div className="flex flex-row items-center gap-6 mb-4 ml-4">
           <img 
             className="border-2 border-green-400 rounded-full w-28 h-28 object-cover hover:bg-black/60 hover:cursor-pointer" 
             src={user.id === 1 ? profileIcon : "https://files.softicons.com/download/application-icons/msn-icons-by-chris-scholten/ico/offline.ico"}

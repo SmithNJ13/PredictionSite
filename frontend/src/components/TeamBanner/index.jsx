@@ -165,48 +165,64 @@ async function postPrediction (e) {
   }, [teamName]);
   
   return (
-    <>
-    <motion.div id={`matchcard${id}`} className="relative w-[300px] h-[440px]" 
-    animate={{
-      rotateY: flipped ? 180 : 0,
-      scale: flipped ? [1, 1.1, 1] : 1
-    }}
-    transition={{
-      duration: 1.5, 
-      ease: "easeInOut",
-      scale: {duration: 1.5}
+    <motion.div 
+      id={`matchcard${id}`} 
+      className="relative w-[300px] h-[440px]"
+      style={{ 
+        perspective: "1000px",
+        transformStyle: "preserve-3d"
+      }}
+      animate={{
+        rotateY: flipped ? 180 : 0,
+        scale: flipped ? [1, 1.1, 1] : 1
+      }}
+      transition={{
+        duration: 1.5,
+        ease: "easeInOut",
+        scale: {duration: 1.5}
       }}>
-        {!flipped ? (
-          <div id="front">
-            <MatchCard className="cardBody"/>
-            <div id="top">
-              <img id="teamIcon" className="absolute top-[11%] left-[50%] w-[120px] h-[120px]" src={teamIcon} alt="Team_Icon"></img>
-              <h1 id="teamName" className="absolute align-center w-[220px] text-white top-[55%] left-[50%]" style={size}>{teamName}</h1>
-            </div>
-            <div id="bottom" className="absolute bottom-[20%] left-[50%] p-[1px] align-center text-SpringGreen">
-              <button className="relative hover:underline" onClick={handleClick}>Place Predictions</button>
-            </div>
-          </div>
-        ) : (
-          <div id="back"> 
-            <MatchCard className="cardBody"/>
-            <div id="predictionSheet" className="absolute top-[10%] left-[20%] align-center justify-center text-white">
-              <form className="flex flex-col gap-[20px]" onSubmit={postPrediction}>
-                <p className="flex flex-col">xG: <input className="text-black" name="xG"></input></p>
-                <p className="flex flex-col">Total Corners: <input className="text-black" name="corners"></input></p>
-                <p className="flex flex-col">First Player to Score: 
-                  <select className="text-black" name="playerToScore">
-                  <option>Player1</option>
-                  <option>Player2</option>
-                  </select></p>
-                <p className="flex flex-col items-center">Clean Sheet? <input className="" type="checkbox" name="cleanSheet"></input></p>
-                <button className="ml-[30%] border-white border-[1px] rounded w-[60px] hover:text-SpringGreen">Submit</button>
-              </form>
-            </div>
-          </div>
-        )}
+      
+      <div 
+        id="front" 
+        className="absolute inset-0"
+        style={{ 
+          backfaceVisibility: "hidden",
+          WebkitBackfaceVisibility: "hidden"
+        }}>
+        <MatchCard className="cardBody"/>
+        <div id="top">
+          <img id="teamIcon" className="absolute top-[11%] left-[50%] w-[120px] h-[120px]" src={teamIcon} alt="Team_Icon"></img>
+          <h1 id="teamName" className="absolute align-center w-[220px] text-white top-[55%] left-[50%]" style={size}>{teamName}</h1>
+        </div>
+        <div id="bottom" className="absolute bottom-[20%] left-[50%] p-[1px] align-center text-SpringGreen">
+          <button className="relative hover:underline" onClick={handleClick}>Place Predictions</button>
+        </div>
+      </div>
+
+      <div 
+        id="back" 
+        className="absolute inset-0"
+        style={{ 
+          backfaceVisibility: "hidden",
+          WebkitBackfaceVisibility: "hidden",
+          transform: "rotateY(180deg)"
+        }}>
+        <MatchCard className="cardBody"/>
+        <div id="predictionSheet" className="absolute top-[10%] left-[20%] align-center justify-center text-white">
+          <form className="flex flex-col gap-[20px]" onSubmit={postPrediction}>
+            <p className="flex flex-col">xG: <input className="text-black" name="xG"></input></p>
+            <p className="flex flex-col">Total Corners: <input className="text-black" name="corners"></input></p>
+            <p className="flex flex-col">First Player to Score:
+              <select className="text-black" name="playerToScore">
+              <option>Player1</option>
+              <option>Player2</option>
+              </select></p>
+            <p className="flex flex-col items-center">Clean Sheet? <input className="" type="checkbox" name="cleanSheet"></input></p>
+            <button className="ml-[30%] border-white border-[1px] rounded w-[60px] hover:text-SpringGreen">Submit</button>
+          </form>
+        </div>
+      </div>
     </motion.div>
-    </>
   );
 };
 

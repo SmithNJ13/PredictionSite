@@ -2,6 +2,7 @@ import {NavLink, useNavigate}from "react-router-dom"
 import React, { useState } from "react"
 import axios from "axios"
 import {useAuth} from "../../Auth/index.jsx"
+import { baseURL } from "../../consts/api.ts"
 import "./style.css"
 
 const LoginForm = () => {
@@ -31,7 +32,7 @@ const LoginForm = () => {
       // console.log(data)
       try {
         const response = await axios.post(
-          "http://localhost:8080/users/login", data
+          `${baseURL}/users/login`, data
         )
         if(response.status === 200) {
           localStorage.setItem("token", response.data.token.token)
@@ -42,7 +43,7 @@ const LoginForm = () => {
             }
           }
           const response2 = await axios.get(
-            "http://localhost:8080/users/auth", options
+            `${baseURL}/users/auth`, options
           )
           setUser(response2.data)
           navigate("/")
@@ -54,8 +55,8 @@ const LoginForm = () => {
 
   return (
     <>
-      <h1 id="title" className="text-SpringGreen text-center text-4xl underline">Login Page</h1>
-      <div id="content" className="flex flex-col gap-[10px] h-full w-full">
+      <h1 id="title" className="text-SpringGreen text-center text-4xl underline mt-8">Login Page</h1>
+      <div id="content" className="flex flex-col gap-[10px] h-full w-full mt-4">
         <div className="self-center bg-GunMetal p-[2rem] rounded-[10px] w-[30rem]">
           <form onSubmit={login} className="loginform">
             <section className="top flex flex-col gap-[10px]">
