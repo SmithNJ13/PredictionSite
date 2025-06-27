@@ -1,6 +1,5 @@
 const User = require("../models/User")
 const Token = require("../models/Token")
-
 const bcrypt = require("bcryptjs") 
 
 const index = async(req, res) => {

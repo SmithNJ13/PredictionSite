@@ -2,6 +2,7 @@ const client = require("./setup")
 const url = "https://fbref.com/en/comps/9/schedule/Premier-League-Scores-and-Fixtures"
 const axios = require("axios")
 const cheerio = require("cheerio")
+const bcrypt = require("bcryptjs") 
 
 const premierLeagueMatches = [];
 
@@ -42,12 +43,14 @@ axios(url)
 const seedUsers = async () => {
     try{
         await client.connect()
+        const rounds = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS))
+        const password = await bcrypt.hash("yxnyy0q854Random", rounds)
         await client.db("database").collection("users").drop()
         await client.db("database").collection("users").insertOne({
             _id: 0,
-            username: "Admin",
-            email: "Admin@Admin.com",
-            password: "yP96XKfPLR"
+            username: "RandomBot",
+            email: "Random@Email.com",
+            password: password
             
         })
         console.log("USERS SEEDED!")
@@ -61,25 +64,28 @@ const seedPredictions = async () => {
     try{
         await client.connect()
         await client.db("database").collection("predictions").drop()
-        await client.db("database").collection("predictions").insertOne({
-                userID: 1,
-                matchID: 3,
-                side: {
-                    home: {
-                        predicted_xG: 1.5,
-                        corners: 11,
-                        playerToScore: "Player2",
-                        cleanSheet: true
-                    },
-                    away: {
-                        predicted_xG: null,
-                        corners: null,
-                        playerToScore: null,
-                        cleanSheet: false
+        for(let i = 1; i <= 380; i++) {
+            const homeXG = +(Math.random() * 5.6).toFixed(2);
+            const awayXG = +(Math.random() * 5.6).toFixed(2);
+            await client.db("database").collection("predictions").insertOne({
+                    userID: 0,
+                    matchID: i,
+                    side: {
+                        home: {
+                            predicted_xG: homeXG,
+                            corners: null,
+                            playerToScore: null,
+                            cleanSheet: false
+                        },
+                        away: {
+                            predicted_xG: awayXG,
+                            corners: null,
+                            playerToScore: null,
+                            cleanSheet: false
+                        }
                     }
-                }
-        })
-
+            })
+        }
         console.log("PREDICTIONS SEEDED!")
         seedDB(premierLeagueMatches);
         // deleteDB()
