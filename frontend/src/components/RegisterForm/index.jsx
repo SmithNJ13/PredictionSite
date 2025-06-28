@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import { baseURL } from "../../consts/api";
 import "./style.css"
 
 const RegisterForm = () => {
+  const nav = useNavigate()
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
   });
-
+  const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({});
   const [toast, setToast] = useState('');
 
@@ -28,7 +30,8 @@ const RegisterForm = () => {
   };
 
   const validateEmail = (email) => {
-    const validDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com','gmail.co.uk', 'yahoo.co.uk', 'hotmail.co.uk', 'outlook.co.uk', 'test.com'];
+    const validDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com','gmail.co.uk', 'yahoo.co.uk', 'hotmail.co.uk', 'outlook.co.uk',
+      'live.com', 'live.co.uk', 'test.com'];
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
     if (!emailRegex.test(email)) {
@@ -81,23 +84,20 @@ const RegisterForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     // Validate all fields
     const usernameError = validateUsername(formData.username);
     const emailError = validateEmail(formData.email);
-    
     const newErrors = {
       username: usernameError,
       email: emailError
     };
-
     setErrors(newErrors);
 
     // If there are any errors, don't submit
     if (usernameError || emailError) {
       return;
     }
-
+    setLoading(true)
     const options = {
       method: "POST",
       body: JSON.stringify({
@@ -122,12 +122,14 @@ const RegisterForm = () => {
           email: '',
           password: '',
         });
-        window.location.href = "/login";
+        nav("/login")
       } else {
         alert(responseData.message || "Failed to create user");
       }
     } catch (error) {
       alert("Network error. Please try again.");
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -185,8 +187,12 @@ const RegisterForm = () => {
               />
             </section>
             
-            <button type="submit" className="m-[1rem] p-[2px] text-SpringGreen border-[2px] border-gray-300 rounded w-[33%] self-center hover:font-bold">
-              Submit
+            <button type="submit" disabled={loading} className="m-[1rem] p-[2px] text-SpringGreen border-[2px] border-gray-300 rounded w-[33%] self-center hover:font-bold">
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-500"></div>
+                </div>
+              ) : ( "Submit" )}
             </button>
           </form>
         </div>

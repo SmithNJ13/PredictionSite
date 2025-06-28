@@ -8,6 +8,7 @@ import "./style.css"
 const LoginForm = () => {
     const string = "Don't have an account?"
     const [name, setName] = useState("")
+    const [loading, setLoading] = useState(false)
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
     const { setUser } = useAuth()
@@ -29,6 +30,7 @@ const LoginForm = () => {
         name: form.get("name"),
         password: form.get("password")
       }
+      setLoading(true)
       // console.log(data)
       try {
         const response = await axios.post(
@@ -50,6 +52,8 @@ const LoginForm = () => {
         }
       } catch (error) {
         console.log(error)
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -67,7 +71,13 @@ const LoginForm = () => {
               <label className="text-AshGray">Password:</label>
               <input className="passbox p-[10px] rounded-[5px] border border-gray-300" name="password" role="input" type="password" value={password} onChange={currentPassword}></input>
             </section>
-            <button type="submit" className="m-[1rem] p-[2px] text-SpringGreen border-[2px] border-gray-300 rounded w-[25%] self-center hover:font-bold">Submit</button>
+            <button type="submit" disabled={loading} className="m-[1rem] p-[2px] text-SpringGreen border-[2px] border-gray-300 rounded w-[33%] self-center hover:font-bold">
+              {loading ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-500"></div>
+                </div>
+              ) : ( "Submit" )}
+            </button>
           </form>
         <p className="m-[1rem] text-AshGray">{string} Sign up <NavLink to="/register" className="text-Moonstone font-bold italic hover:underline">here</NavLink></p>
         </div>
