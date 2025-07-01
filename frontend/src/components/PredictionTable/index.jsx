@@ -14,7 +14,7 @@ const awayStyle = {
 // This is creating the actual table of user Predictions, as well as calculating the netXG
 const PredictionTable = ({ updateNetXG }) => {
   const {user, setUser} = useAuth()
-  const userID = user.id
+  const uid = user.id
   const [userPredictions, setUserPredictions] = useState([])
   const [userEntries, setUserEntries] = useState([])
 
@@ -28,7 +28,7 @@ const PredictionTable = ({ updateNetXG }) => {
   useEffect(() => {
     async function getPredictions() {
       try {
-        const response = await axios.get(`${baseURL}/predictions/${userID}`)
+        const response = await axios.get(`${baseURL}/predictions/user/${uid}`)
         const predictions = response.data
         setUserPredictions(predictions)
         console.log(predictions)
@@ -70,7 +70,7 @@ const PredictionTable = ({ updateNetXG }) => {
       }
   }
   getPredictions()
-}, [userID])
+}, [uid])
 
 const matchPage= () => {
   console.log(userEntries)

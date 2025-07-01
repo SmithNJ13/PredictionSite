@@ -30,6 +30,32 @@ class User {
     return response
   }
 
+  static async updateStats(uid, data) {
+    const id = new ObjectId(uid)
+    try {
+      await client.connect()
+      const updateFields = {}
+
+      if (data.ranking !== undefined) {
+        updateFields["stats.ranking"] = data.ranking
+      }
+      if (data.total_predictions !== undefined) {
+        updateFields["stats.total_predictions"] = data.total_predictions
+      }
+      if (data.average_netXG !== undefined) {
+        updateFields["stats.average_netXG"] = data.average_netXG
+      }
+
+      const response = await client.db("database").collection("users").updateOne(
+        { _id: id },
+        { $set: updateFields }
+      )
+      return response
+    } catch (error) {
+      return error
+    }
+  }
+
   static async getDescription(uid) {
         const id = new ObjectId(uid)
     await client.connect()

@@ -1,4 +1,5 @@
 const Prediction = require("../models/Prediction")
+const Match = require("../models/Match")
 
 const index = async(req, res) => {
     try{
@@ -19,6 +20,16 @@ const create = async(req, res) => {
     }
 }
 
+const check = async(req, res) => {
+    try {
+        const {uid, mid} = req.params
+        const prediction = await Prediction.check(uid, mid)
+        res.status(200).send(prediction)
+    } catch(error) {
+        res.status(400).send(error)
+    }
+}
+
 const update = async(req, res) => {
     try {
         const {uid, mid} = req.params
@@ -32,13 +43,24 @@ const update = async(req, res) => {
 
 const getByUserID = async(req, res) => {
     try {
-        const id = parseInt(req.params.uid)
-        const userPredictions = await Prediction.getByUserID(id)
+        const uid = req.params.uid
+        const userPredictions = await Prediction.getByUserID(uid)
         res.status(200).send(userPredictions)
     } catch (error) {
         res.status(400).send(error)
     }
 }
+
+const getUserTable = async(req, res) => {
+    try {
+        const uid = req.params.uid
+        const userPredictions = await Prediction.getByUserID(uid)
+        const userMatches = await Match.getByID
+    } catch (error) {
+
+    }
+}
+
 
 const getByMatchID = async(req, res) => {
     try {
@@ -50,4 +72,4 @@ const getByMatchID = async(req, res) => {
     }
 }
 
-module.exports = {index, create, update, getByUserID, getByMatchID}
+module.exports = {index, create, check, update, getByUserID, getUserTable, getByMatchID}

@@ -27,7 +27,6 @@ interface TeamBannerInfo {
 }
 
 const Live = () => {
-  const [inactive, setInactive] = useState<TeamBannerInfo[]>([]);
   const [liveGames, setLiveGames] = useState<Game[]>([]);
   const [date, setDate] = useState<string>("");
 
@@ -38,7 +37,7 @@ const Live = () => {
 
   async function getGames(): Promise<void> {
     try {
-      const response = await axios.get(`${baseURL}/`);
+      const response = await axios.get(`${baseURL}/matches/live`);
       const data = response.data;
       if (data) {
         setLiveGames(data);
@@ -50,48 +49,9 @@ const Live = () => {
     }
   }
 
-  async function postPrediction(matchID: string, pxGHome: number, pxGAway: number): Promise<void> {
-    try {
-      const response = await fetch(`${baseURL}/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userID: 1,
-          matchID,
-          pxGHome,
-          pxGAway,
-        }),
-      });
-      if (!response.ok) {
-        console.log("Failed to create prediction", response.status);
-      }
-    } catch (error) {
-      console.log("Error making API call: ", error);
-    }
-  }
-
-  const handleBanners = (info: TeamBannerInfo) => {
-    setInactive((prevInactive) => [...prevInactive, info]);
-  };
-
   useEffect(() => {
     getGames();
   }, []);
-
-  useEffect(() => {
-    inactive.forEach((info) => {
-      const matchedBanners = inactive.filter(
-        (banner) => banner.matchID === info.matchID
-      );
-      if (matchedBanners.length === 2) {
-        const pxGHome = matchedBanners.find((b) => b.side === "home")?.pxG ?? 0;
-        const pxGAway = matchedBanners.find((b) => b.side === "away")?.pxG ?? 0;
-        postPrediction(info.matchID, pxGHome, pxGAway);
-      }
-    });
-  }, [inactive]);
 
   const currentDate = new Date();
   const year = currentDate.getFullYear();
@@ -118,7 +78,6 @@ const Live = () => {
                 teamIcon={game.home_icon}
                 teamColour={game.home_colour}
                 side={"home"}
-                buttonClick={handleBanners}
               />
               <div className="text text-white">
                 <h2>VS</h2>
@@ -130,7 +89,6 @@ const Live = () => {
                 teamIcon={game.away_icon}
                 teamColour={game.away_colour}
                 side={"away"}
-                buttonClick={handleBanners}
               />
             </div>
           </div>

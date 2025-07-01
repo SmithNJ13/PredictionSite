@@ -46,6 +46,19 @@ class Prediction {
             return error
         }
     }
+
+    static async check(uid, mid) {
+        try{
+            await client.connect()
+            const response = client.db("database").collection("predictions").findOne({
+                userID: parseInt(uid),
+                matchID: parseInt(mid)
+            })
+            return response
+        } catch (error) {
+            return error
+        }
+    }
     
     static async update(uid, mid, data) {
         /* Yaaaaay! I got it working, so NOW lets break down what we did, so we DON'T forget this!!!
@@ -56,7 +69,6 @@ class Prediction {
         try {
             await client.connect()
             const sideName = Object.keys(data)[0]
-            console.log(sideName)
             const response = await client.db("database").collection("predictions").updateOne(
                 {
                     userID: parseInt(uid),
@@ -80,8 +92,9 @@ class Prediction {
     }
 
     static async getByUserID(uid) {
+        const _id = new ObjectId(uid)
         await client.connect()
-        const response = client.db("database").collection("predictions").find({userID: uid})
+        const response = client.db("database").collection("predictions").find({userID: _id})
         const predictions = await response.toArray()
         if(predictions.length >= 1) {
             return predictions

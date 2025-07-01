@@ -5,6 +5,7 @@ const userRouter = Router()
 
 userRouter.get("/", userController.index)
 userRouter.get("/:id/stats", userController.getUserStats)
+userRouter.patch("/:id/stats", userController.updateUserStats)
 userRouter.get("/:id/desc", userController.getUserDescription)
 userRouter.get("/auth", userController.getUserToken)
 userRouter.post("/register", userController.register)

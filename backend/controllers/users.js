@@ -35,6 +35,20 @@ const getUserStats = async(req, res) => {
     }
 }
 
+const updateUserStats = async(req, res) => {
+    try {
+        const uid = req.params.id
+        const data = req.body
+        if(!ObjectId.isValid(uid)) {
+            return res.status(400).send({error: "Invalid userID"})
+        }
+        const update = await User.updateStats(uid, data)
+        res.status(201).send({updated: update})
+    } catch (error) {
+        return res.status(400).send(error)
+    }
+}
+
 const getUserDescription = async(req, res) => {
         try {
         const uid = req.params.id
@@ -120,4 +134,4 @@ const logout = async(req, res) => {
     }
 }
 
-module.exports = {index, register, getUserToken, getUserStats, getUserDescription, login, logout}
+module.exports = {index, register, getUserToken, getUserStats, updateUserStats, getUserDescription, login, logout}

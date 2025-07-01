@@ -18,7 +18,7 @@ const index = async(req, res) => {
     }
 }
 
-const getOne = async (req, res) => {
+const getLive = async (req, res) => {
     try {
         const liveGames = await Match.getByDate(date);
         const responses = liveGames.map(game => {
@@ -70,4 +70,4 @@ const getByTeam = async (req, res) => {
     }
 }
 
-module.exports = {index, getOne, getByID, getByTeam}
+module.exports = {index, getLive, getByID, getByTeam}

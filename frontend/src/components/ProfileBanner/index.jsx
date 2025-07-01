@@ -1,5 +1,8 @@
 import { useState } from "react";
 import {UserPen} from 'lucide-react';
+import axios from "axios";
+import { baseURL } from "../../consts/api";
+
 
 const ProfileBanner = ({ user, totalNetXG }) => {
   const [editMode, setEditMode] = useState(false);
@@ -9,7 +12,7 @@ const ProfileBanner = ({ user, totalNetXG }) => {
 
   async function updateDescription() {
     try {
-      await axios.patch(`${baseURL}/users/`, description)
+      await axios.patch(`${baseURL}/users/${user._id}/desc`, description)
       setEditMode(false)
     } catch (error) {
       console.log(error)
@@ -26,7 +29,7 @@ const ProfileBanner = ({ user, totalNetXG }) => {
         <div className="flex flex-row items-center gap-6 mb-4 ml-4">
           <img 
             className="border-2 border-green-400 rounded-full w-28 h-28 object-cover hover:bg-black/60 hover:cursor-pointer" 
-            src={"https://files.softicons.com/download/application-icons/msn-icons-by-chris-scholten/ico/offline.ico"}
+            src={user.image}
             alt="Profile"
           />
           <div className="flex flex-col">
@@ -61,7 +64,7 @@ const ProfileBanner = ({ user, totalNetXG }) => {
             <div className="text-sm text-gray-400 text-right px-6">{description.length}/{charLimit}</div>
             <button
               className="self-end mt-1 mx-2 font-bold w-20 bg-green-600/50 rounded text-center p-1 hover:bg-green-600"
-              onClick={() => setEditMode(false)}>Save</button>
+              onClick={updateDescription}>Save</button>
             {showToast && (
               <div className="absolute bottom-0 right-0 m-4 bg-red-600 text-white text-sm px-3 py-2 rounded shadow-lg z-50">
                 Character limit reached!

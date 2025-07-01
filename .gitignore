@@ -28,4 +28,5 @@ dist-ssr
 /frontend/node_modules
 /backend/database/seeder.js
 /backend/database/newUser.js
+/backend/database/statRebuild.js
 /backend/.env

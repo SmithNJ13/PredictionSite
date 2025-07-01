@@ -6,6 +6,7 @@ import axios from "axios";
 import StatsCard from '../../components/ProfileStats';
 import ProfileBanner from '../../components/ProfileBanner';
 
+
 const ProfilePage = () => {
   const [sortOrder, setSortOrder] = useState()
   const { user } = useAuth();
@@ -18,7 +19,6 @@ const ProfilePage = () => {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 19;
-  console.log(user)
 
   const dateFormat = (string) => {
     if (string) {
@@ -46,7 +46,7 @@ const ProfilePage = () => {
   useEffect(() => {
     async function getPredictions() {
       try {
-        const response = await axios.get(`${baseURL}/predictions/${userID}`);
+        const response = await axios.get(`${baseURL}/predictions/user/${userID}`);
         const predictions = response.data;
 
         const entries = [];
