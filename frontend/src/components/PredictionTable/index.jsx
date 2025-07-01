@@ -31,9 +31,8 @@ const PredictionTable = ({ updateNetXG }) => {
         const response = await axios.get(`${baseURL}/predictions/user/${uid}`)
         const predictions = response.data
         setUserPredictions(predictions)
-        console.log(predictions)
-
         const entries = []
+        
         for (const prediction of predictions) {
           const matchID = prediction.matchID
           const matchedInfo = await axios.get(`${baseURL}/matches/${matchID}`)

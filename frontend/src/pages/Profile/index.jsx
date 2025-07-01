@@ -19,6 +19,9 @@ const ProfilePage = () => {
   });
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 19;
+  const [userAXG, setUserAXG] = useState()
+  const [userTP, setUserTP] = useState()
+  const [userRank, setUserRank] = useState()
 
   const dateFormat = (string) => {
     if (string) {
@@ -27,6 +30,22 @@ const ProfilePage = () => {
     }
     return "N/A";
   };
+
+  async function getUserStats() {
+    try {
+      const response = await axios.get(`${baseURL}/users/${userID}/stats`)
+      const userStats = response.data["stats"]
+      const userAvgXG = userStats["average_netXG"]
+      const userTotalPredictions = userStats["total_predictions"]
+      const userRanking = userStats["ranking"]
+      setUserRank(userRanking)
+      setUserTP(userTotalPredictions)
+      setUserAXG(userAvgXG)
+    } catch(error) {
+      console.log(error)
+    }
+  }
+  getUserStats()
 
   const calculateNetXG = (entry) => {
     const homePredicted = entry.side["home"].predicted_xG !== null;
@@ -138,20 +157,20 @@ const ProfilePage = () => {
   return (
     <div className="min-h-screen text-white m-[1rem]">
       <div className="max-w-7xl mx-auto p-6">
-        <ProfileBanner user={user} totalNetXG={totalNetXG} />
+        <ProfileBanner user={user} totalNetXG={userAXG} />
         
         <div className="flex flex-row gap-4 mb-8 justify-evenly">
           <StatsCard 
             icon={Target} 
             label="Total Predictions" 
-            value={stats.totalPredictions} 
+            value={userTP} 
             color="bg-purple-600"
           />
           <StatsCard 
             icon={Trophy} 
             label="Ranking" 
-            value={stats.ladderRanking}
-            totalPredictions={stats.totalPredictions}
+            value={userRank}
+            totalPredictions={userTP}
             color="bg-yellow-500"
             type="Ranking"
           />
