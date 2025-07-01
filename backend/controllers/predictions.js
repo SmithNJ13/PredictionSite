@@ -21,33 +21,33 @@ const create = async(req, res) => {
 
 const update = async(req, res) => {
     try {
+        const {uid, mid} = req.params
         const data = req.body
-        const prediction = await Prediction.update(data)
+        const prediction = await Prediction.update(uid, mid, data)
         res.status(200).send({data: prediction})
     } catch (error) {
-        res.status(400).send({error: error})
+        res.status(400).send({error: error.message || error})
     }
 }
 
-const getAllUserPredictions = async(req, res) => {
+const getByUserID = async(req, res) => {
     try {
-        const id = parseInt(req.params.id)
-        const userPredictions = await Prediction.getAllUserPredictions(id)
+        const id = parseInt(req.params.uid)
+        const userPredictions = await Prediction.getByUserID(id)
         res.status(200).send(userPredictions)
     } catch (error) {
         res.status(400).send(error)
     }
 }
 
-const getAllUserMatchPredictions = async(req, res) => {
+const getByMatchID = async(req, res) => {
     try {
-        const id = parseInt(req.params.id)
         const mid = parseInt(req.params.mid)
-        const userPredictions = await Prediction.getAllUserMatchPredictions(id, mid)
+        const userPredictions = await Prediction.getByMatchID(mid)
         res.status(200).send(userPredictions)
     } catch (error) {
         res.status(400).send(error)
     }
 }
 
-module.exports = {index, create, update, getAllUserPredictions, getAllUserMatchPredictions}
+module.exports = {index, create, update, getByUserID, getByMatchID}

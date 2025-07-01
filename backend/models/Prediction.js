@@ -9,7 +9,6 @@ class Prediction {
         this.side = data.side
         this.predicted_xG = data.predicted_xG
         this.corners = data.corners
-        this.playerToScore = data.playerToScore
         this.cleanSheet = data.cleanSheet
     }
 
@@ -33,13 +32,11 @@ class Prediction {
                     home: {
                         predicted_xG: side.home.predicted_xG,
                         corners: side.home.corners,
-                        playerToScore: side.home.playerToScore,
                         cleanSheet: side.home.cleanSheet
                     },
                     away: {
                         predicted_xG: side.away.predicted_xG,
                         corners: side.away.corners,
-                        playerToScore: side.away.playerToScore,
                         cleanSheet: side.away.cleanSheet
                     }
                 }
@@ -50,51 +47,52 @@ class Prediction {
         }
     }
     
-    static async update({userID, matchID, side}) {
+    static async update(uid, mid, data) {
         /* Yaaaaay! I got it working, so NOW lets break down what we did, so we DON'T forget this!!!
         So since side (from frontend) comes as an object, we need to access the actual "side" name (home/away) and since that's a key, we can use Object.keys to access that
         we then use updateOne (because we want to edit a PART of the data) we then filter (the first part of update within the { } ) by userID and matchID
         I then tell the update what to add in, after filtering, here we are checking side (the object) and the "key" (home or away) and we're setting this as which part
         of the data is getting updated. We then update the elements within that object, predicted_XG, corners etc;*/
-        const side_name = Object.keys(side)
         try {
             await client.connect()
+            const sideName = Object.keys(data)[0]
+            console.log(sideName)
             const response = await client.db("database").collection("predictions").updateOne(
                 {
-                    userID: userID,
-                    matchID: matchID
+                    userID: parseInt(uid),
+                    matchID: parseInt(mid)
                 },
                 {
                     $set: {
-                        [`side.${side_name}`]: {
-                            predicted_xG: parseFloat(side[side_name].predicted_xG),
-                            corners: side[side_name].corners,
-                            playerToScore: side[side_name].playerToScore,
-                            cleanSheet: side[side_name].cleanSheet
+                        [`side.${sideName}`]: {
+                            predicted_xG: parseFloat(data[sideName].predicted_xG),
+                            corners: data[sideName].corners,
+                            cleanSheet: data[sideName].cleanSheet
                         }
                     }
                 }
             );
         return response;
         } catch (error) {
-
+            console.log("Prediction update failed: ", error)
+            throw error
         }
     }
 
-    static async getAllUserPredictions(uID) {
+    static async getByUserID(uid) {
         await client.connect()
-        const response = client.db("database").collection("predictions").find({userID: uID})
+        const response = client.db("database").collection("predictions").find({userID: uid})
         const predictions = await response.toArray()
         if(predictions.length >= 1) {
             return predictions
         } else {
-            return `User ${uID} has made no predictions`
+            return `User ${uid} has made no predictions`
         }
     }
 
-    static async getAllUserMatchPredictions(uID, mID) {
+    static async getByMatchID(mid) {
         await client.connect()
-        const response = client.db("database").collection("predictions").find({userID: uID, matchID: mID})
+        const response = client.db("database").collection("predictions").find({matchID: mid})
         const predictions = await response.toArray()
         if(predictions.length >= 1) {
             return predictions
