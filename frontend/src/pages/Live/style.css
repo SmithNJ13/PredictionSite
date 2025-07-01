@@ -1,0 +1,31 @@
+#header {
+    padding: 1rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 3rem;
+    font-family: "Russo One", sans-serif;
+}
+#content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.matchCards {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+}
+.text {
+    position: relative;
+    text-align: center;
+    top: 10rem;
+}
+.time {
+    border-top: 5px solid #0c7c59;
+    padding: 1rem;
+    font-size: 1.5rem;
+}
