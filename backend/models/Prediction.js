@@ -19,14 +19,14 @@ class Prediction {
         return all;
     }
 
-    static async create({id, userID, matchID, side}) {
+    static async create({userID, matchID, side}) {
+        const uid = new ObjectId(userID)
         try {
             await client.connect()
             // const response = await client.db("database").collection("predictions").deleteMany({})
             await client.db("database").collection("predictions").createIndex({userID: 1, matchID: 1}, {unique: true})
             const response = await client.db("database").collection("predictions").insertOne({
-                _id: id,
-                userID: userID,
+                userID: uid,
                 matchID: matchID,
                 side: {
                     home: {
@@ -48,10 +48,11 @@ class Prediction {
     }
 
     static async check(uid, mid) {
+        const id = new ObjectId(uid)
         try{
             await client.connect()
             const response = client.db("database").collection("predictions").findOne({
-                userID: parseInt(uid),
+                userID: id,
                 matchID: parseInt(mid)
             })
             return response
@@ -60,18 +61,22 @@ class Prediction {
         }
     }
     
+    /* Yaaaaay! I got it working, so NOW lets break down what we did, so we DON'T forget this!!!
+    So since side (from frontend) comes as an object, we need to access the actual "side" name (home/away) and since that's a key, we can use Object.keys to access that
+    we then use updateOne (because we want to edit a PART of the data) we then filter (the first part of update within the { } ) by userID and matchID
+    I then tell the update what to add in, after filtering, here we are checking side (the object) and the "key" (home or away) and we're setting this as which part
+    of the data is getting updated. We then update the elements within that object, predicted_XG, corners etc;*/
     static async update(uid, mid, data) {
-        /* Yaaaaay! I got it working, so NOW lets break down what we did, so we DON'T forget this!!!
-        So since side (from frontend) comes as an object, we need to access the actual "side" name (home/away) and since that's a key, we can use Object.keys to access that
-        we then use updateOne (because we want to edit a PART of the data) we then filter (the first part of update within the { } ) by userID and matchID
-        I then tell the update what to add in, after filtering, here we are checking side (the object) and the "key" (home or away) and we're setting this as which part
-        of the data is getting updated. We then update the elements within that object, predicted_XG, corners etc;*/
+        const userID = new ObjectId(uid)
         try {
+            if(typeof data !== "object" || Array.isArray(data) || Object.keys(data).length !== 1 || !["home", "away"].includes(Object.keys(data)[0])) {
+                throw new Error("Invalid data format.")
+            } 
             await client.connect()
             const sideName = Object.keys(data)[0]
             const response = await client.db("database").collection("predictions").updateOne(
                 {
-                    userID: parseInt(uid),
+                    userID: userID,
                     matchID: parseInt(mid)
                 },
                 {

@@ -33,6 +33,9 @@ class User {
   static async updateStats(uid, data) {
     const id = new ObjectId(uid)
     try {
+      if (typeof data !== "object" || Array.isArray(data) || Object.keys(data).length === 0 || !Object.keys(data).every((key) =>
+        ["ranking", "total_predictions", "average_netXG"].includes(key))) {
+          throw new Error("Invalid data format.")}
       await client.connect()
       const updateFields = {}
 
@@ -52,7 +55,7 @@ class User {
       )
       return response
     } catch (error) {
-      return error
+      throw error
     }
   }
 

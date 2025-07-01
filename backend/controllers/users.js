@@ -43,9 +43,12 @@ const updateUserStats = async(req, res) => {
             return res.status(400).send({error: "Invalid userID"})
         }
         const update = await User.updateStats(uid, data)
-        res.status(201).send({updated: update})
+        if(update.modifiedCount === 0) {
+            return res.status(400).send("No user stats were updated.")
+        }
+        res.status(200).send({updated: update})
     } catch (error) {
-        return res.status(400).send(error)
+        return res.status(400).send(error.message || "Invalid data format.")
     }
 }
 

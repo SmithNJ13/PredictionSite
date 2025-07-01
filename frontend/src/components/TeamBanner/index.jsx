@@ -6,9 +6,7 @@ import axios from "axios";
 import "./style.css";
 import MatchCard from "../../assets/matchcard.svg?react";
 
-const TeamBanner = ({id, matchID, teamIcon, teamName, teamColour, side, buttonClick}) => {
-  const [clicked, setClicked] = useState(false)
-  const [pxG, setpxG] = useState(0.0)
+const TeamBanner = ({id, matchID, teamIcon, teamName, teamColour, side}) => {
   const [size, setSize] = useState({fontSize: 34})
   const [flipped, setFlipped] = useState(false)
   const { user } = useAuth();
@@ -40,14 +38,11 @@ async function postPrediction (e) {
   const Form = new FormData(e.target)
   const xG = parseFloat(Form.get("xG"))
   const corners = parseInt(Form.get("corners"))
-  const playerToScore = Form.get("playerToScore")
   const cleanSheet = Form.get("cleanSheet") === "on"
-  console.log(side, xG, corners, playerToScore, cleanSheet)
+  console.log(side, xG, corners, cleanSheet)
 
   
   try {
-    /* Fetch specific matches that are associated with a given userID and matchID, if none exist - we use POST method to create a new prediction, if one exists we update with PUT
-    TODO: Change to PATCH instead for specific data*/
     const userPredictions = await fetch(`${baseURL}/predictions/${userID}/${matchID}`)
     const body = await userPredictions.json()
     if(body.length > 0) {
@@ -64,7 +59,6 @@ async function postPrediction (e) {
               home: {
                 predicted_xG: xG,
                 corners: corners,
-                playerToScore: playerToScore,
                 cleanSheet: cleanSheet
               }
             }
@@ -88,7 +82,6 @@ async function postPrediction (e) {
               away: {
                 predicted_xG: xG,
                 corners: corners,
-                playerToScore: playerToScore,
                 cleanSheet: cleanSheet
               }
             }
@@ -113,23 +106,19 @@ async function postPrediction (e) {
             home: side === "home" ? {
               predicted_xG: xG,
               corners: corners,
-              playerToScore: playerToScore,
               cleanSheet: cleanSheet
             } : {
               predicted_xG: null,
               corners: null,
-              playerToScore: null,
               cleanSheet: null
             },
             away: side === "away" ? {
               predicted_xG: xG,
               corners: corners,
-              playerToScore: playerToScore,
               cleanSheet: cleanSheet
             } : {
               predicted_xG: null,
               corners: null,
-              playerToScore: null,
               cleanSheet: null
             }
           }
@@ -212,11 +201,6 @@ async function postPrediction (e) {
           <form className="flex flex-col gap-[20px]" onSubmit={postPrediction}>
             <p className="flex flex-col">xG: <input className="text-black" name="xG"></input></p>
             <p className="flex flex-col">Total Corners: <input className="text-black" name="corners"></input></p>
-            <p className="flex flex-col">First Player to Score:
-              <select className="text-black" name="playerToScore">
-              <option>Player1</option>
-              <option>Player2</option>
-              </select></p>
             <p className="flex flex-col items-center">Clean Sheet? <input className="" type="checkbox" name="cleanSheet"></input></p>
             <button className="ml-[30%] border-white border-[1px] rounded w-[60px] hover:text-SpringGreen">Submit</button>
           </form>

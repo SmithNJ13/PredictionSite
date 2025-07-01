@@ -20,12 +20,6 @@ interface Game {
   away_colour: string;
 }
 
-interface TeamBannerInfo {
-  matchID: string;
-  pxG: number;
-  side: "home" | "away";
-}
-
 const Live = () => {
   const [liveGames, setLiveGames] = useState<Game[]>([]);
   const [date, setDate] = useState<string>("");

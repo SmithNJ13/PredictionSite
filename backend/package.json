@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js",
-    "seed": "node database/seeder.js"
+    "seed": "node database/seeder.js",
+    "statUpdate": "node database/statRebuild.js"
   },
   "author": "",
   "license": "ISC",
