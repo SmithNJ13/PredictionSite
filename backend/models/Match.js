@@ -40,6 +40,22 @@ class Match {
             return `No matches with ID: ${id} found!`
         }
     }
+
+    static async getByTeam(team) {
+        await client.connect()
+        const response = client.db("database").collection("matches").find({
+            $or: [
+                {home: team},
+                {away: team}
+            ]
+        })
+        const games = await response.toArray()
+        if(games.length >= 1) {
+            return games
+        } else {
+            return `No teams with ID: ${team} found!`
+        }
+    }
 }
 
 module.exports = Match

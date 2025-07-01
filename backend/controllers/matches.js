@@ -57,4 +57,17 @@ const getByID = async (req, res) => {
     }
 }
 
-module.exports = {index, getOne, getByID}
+const getByTeam = async (req, res) => {
+    try {
+        const team = req.params.team
+        const match = await Match.getByTeam(team)
+        if (!match || match.length === 0) {
+            return res.status(404).send(`No matches with team: ${team} found!`);
+        }
+        res.status(200).send(match)
+    } catch (error) {
+        res.status(500).send("Server error")
+    }
+}
+
+module.exports = {index, getOne, getByID, getByTeam}

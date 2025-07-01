@@ -3,9 +3,10 @@ const MatchController = require("../controllers/matches")
 
 const MatchRouter = Router()
 
-MatchRouter.get("/", MatchController.getOne)
-MatchRouter.get("/matches", MatchController.index)
-MatchRouter.get("/matches/:id", MatchController.getByID)
+MatchRouter.get("/", MatchController.index)
+MatchRouter.get("/live", MatchController.getOne)
+MatchRouter.get("/id/:id", MatchController.getByID)
+MatchRouter.get("/team/:team", MatchController.getByTeam)
 
 module.exports = MatchRouter
 

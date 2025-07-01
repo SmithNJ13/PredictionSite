@@ -1,5 +1,4 @@
 import { useState } from "react";
-import profileIcon from "../../assets/profileIcon.png";
 import {UserPen} from 'lucide-react';
 
 const ProfileBanner = ({ user, totalNetXG }) => {
@@ -8,7 +7,14 @@ const ProfileBanner = ({ user, totalNetXG }) => {
   const [charLimit] = useState(50);
   const [showToast, setShowToast] = useState(false);
 
-
+  async function updateDescription() {
+    try {
+      await axios.patch(`${baseURL}/users/`, description)
+      setEditMode(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   function changeEdit() {
     setEditMode(prev => !prev);
   }
@@ -55,7 +61,7 @@ const ProfileBanner = ({ user, totalNetXG }) => {
             <div className="text-sm text-gray-400 text-right px-6">{description.length}/{charLimit}</div>
             <button
               className="self-end mt-1 mx-2 font-bold w-20 bg-green-600/50 rounded text-center p-1 hover:bg-green-600"
-              onClick={() => setEditMode(false)}> Save </button>
+              onClick={() => setEditMode(false)}>Save</button>
             {showToast && (
               <div className="absolute bottom-0 right-0 m-4 bg-red-600 text-white text-sm px-3 py-2 rounded shadow-lg z-50">
                 Character limit reached!

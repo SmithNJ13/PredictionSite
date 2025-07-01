@@ -4,8 +4,8 @@ const app = express()
 const MatchRoutes = require("./routers/MatchRoutes")
 const UserRoutes = require("./routers/UserRoutes") 
 const PredictionRoutes = require("./routers/PredictionRoutes")
+const leaderboardRoute = require("./routers/LeaderboardRoute")
 require("./schedulers/cronjob.js")
-
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -13,10 +13,9 @@ app.use(cors({
     credentials: true
 }))
 app.use(express.json())
-
-app.use("/", MatchRoutes)
-app.use("/", PredictionRoutes)
+app.use("/matches", MatchRoutes)
+app.use("/predictions", PredictionRoutes)
 app.use("/users", UserRoutes)
-
+app.use("/leaderboards", leaderboardRoute)
 
 module.exports = app

@@ -3,10 +3,10 @@ const predictionController = require("../controllers/predictions")
 
 const predictionRouter = Router()
 
+predictionRouter.get("/", predictionController.index)
+predictionRouter.get("/user/:uid", predictionController.getAllUserPredictions)
+predictionRouter.get("/match/:mid", predictionController.getAllUserMatchPredictions)
 predictionRouter.post("/", predictionController.create)
-predictionRouter.patch("/", predictionController.update)
-predictionRouter.get("/predictions", predictionController.index)
-predictionRouter.get("/predictions/:id", predictionController.getAllUserPredictions)
-predictionRouter.get("/predictions/:id/:mid", predictionController.getAllUserMatchPredictions)
+predictionRouter.patch("/:uid/:mid", predictionController.update)
 
 module.exports = predictionRouter

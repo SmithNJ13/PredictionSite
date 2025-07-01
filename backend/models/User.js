@@ -7,6 +7,9 @@ class User {
     this.username = data.username;
     this.email = data.email;
     this.password = data.password;
+    this.description = data.description;
+    this.image = data.image;
+    this.stats = data.stats;
   }
 
   static async getAll() {
@@ -27,25 +30,18 @@ class User {
     if (existingUser) {
       return ({message: "A user with this email already exists"});
     }
-
-    const maxIdResponse = await client
-      .db("database")
-      .collection("users")
-      .find({})
-      .sort({ _id: -1 })
-      .limit(1)
-      .toArray();
-    let maxId = -1;
-    if (maxIdResponse.length > 0) {
-      maxId = maxIdResponse[0]._id;
-    }
-    const nextId = maxId + 1;
-
+    
     const response = await client.db("database").collection("users").insertOne({
-      _id: nextId,
       username: username,
       email: email,
       password: password,
+      description: "Hello! I am a new user.",
+      image: "https://files.softicons.com/download/application-icons/msn-icons-by-chris-scholten/ico/offline.ico",
+      stats: {
+        ranking: 0,
+        total_predictions: 0,
+        average_netXG: 0
+      }
     });
 
     return {message: "User created successfully", user: response};
