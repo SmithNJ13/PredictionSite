@@ -1,5 +1,6 @@
 const User = require("../models/User")
 const Token = require("../models/Token")
+const { ObjectId } = require("mongodb");
 const bcrypt = require("bcryptjs") 
 
 const index = async(req, res) => {
@@ -15,6 +16,38 @@ const index = async(req, res) => {
             message: "Users unavailable",
             error: error
         })
+    }
+}
+
+const getUserStats = async(req, res) => {
+    try {
+        const uid = req.params.id
+        if(!ObjectId.isValid(uid)) {
+            return res.status(400).send({error: "Invalid userID."})
+        }
+        const userStats = await User.getStats(uid)
+        if(!userStats) {
+            return res.status(400).send({error: "User not found."})
+        }
+        res.status(200).send(userStats)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const getUserDescription = async(req, res) => {
+        try {
+        const uid = req.params.id
+        if(!ObjectId.isValid(uid)) {
+            return res.status(400).send({error: "Invalid userID."})
+        }
+        const userStats = await User.getDescription(uid)
+        if(!userStats) {
+            return res.status(400).send({error: "User not found."})
+        }
+        res.status(200).send(userStats)
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -87,4 +120,4 @@ const logout = async(req, res) => {
     }
 }
 
-module.exports = {index, register, getUserToken, login, logout}
+module.exports = {index, register, getUserToken, getUserStats, getUserDescription, login, logout}

@@ -19,6 +19,29 @@ class User {
     return all;
   }
 
+  static async getStats(uid) {
+    const id = new ObjectId(uid)
+    await client.connect()
+    const response = await client.db("database").collection("users")
+      .findOne(
+        { _id: id },
+        { projection: { stats: 1, _id: 0 } }
+      )
+    return response
+  }
+
+  static async getDescription(uid) {
+        const id = new ObjectId(uid)
+    await client.connect()
+    const response = await client.db("database").collection("users")
+      .findOne(
+        { _id: id },
+        { projection: { description: 1, _id: 0 } }
+      )
+    return response ? response.description : null
+  }
+
+
   static async create({ username, email, password }) {
     await client.connect();
 
