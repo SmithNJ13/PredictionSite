@@ -6,6 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+.env
 
 node_modules
 dist
@@ -27,3 +28,4 @@ dist-ssr
 /frontend/node_modules
 /backend/database/seeder.js
 /backend/database/newUser.js
+/backend/.env
