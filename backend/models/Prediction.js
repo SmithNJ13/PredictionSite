@@ -18,12 +18,30 @@ class Prediction {
         const all = await response.toArray()
         return all;
     }
+    
+    static async check(uid, mid) {
+        const id = new ObjectId(uid)
+        try{
+            await client.connect()
+            const response = client.db("database").collection("predictions").findOne({
+                userID: id,
+                matchID: parseInt(mid)
+            })
+            return response
+        } catch (error) {
+            throw error
+        }
+    }
 
     static async create({userID, matchID, side}) {
         const uid = new ObjectId(userID)
         try {
             await client.connect()
             // const response = await client.db("database").collection("predictions").deleteMany({})
+            const matched_Entry = await client.db("database").collection("matches").findOne({
+                _id: matchID
+            })
+
             await client.db("database").collection("predictions").createIndex({userID: 1, matchID: 1}, {unique: true})
             const response = await client.db("database").collection("predictions").insertOne({
                 userID: uid,
@@ -47,19 +65,6 @@ class Prediction {
         }
     }
 
-    static async check(uid, mid) {
-        const id = new ObjectId(uid)
-        try{
-            await client.connect()
-            const response = client.db("database").collection("predictions").findOne({
-                userID: id,
-                matchID: parseInt(mid)
-            })
-            return response
-        } catch (error) {
-            return error
-        }
-    }
     
     /* Yaaaaay! I got it working, so NOW lets break down what we did, so we DON'T forget this!!!
     So since side (from frontend) comes as an object, we need to access the actual "side" name (home/away) and since that's a key, we can use Object.keys to access that

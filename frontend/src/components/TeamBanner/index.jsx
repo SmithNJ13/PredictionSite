@@ -32,76 +32,60 @@ const handleClick = () => {
     }
 }
 
-async function postPrediction (e) {
-  const userID = user.id
+async function handleSubmit (e) {
   e.preventDefault()
+  const uid = user.id
+  const mid = matchID
   const Form = new FormData(e.target)
   const xG = parseFloat(Form.get("xG"))
   const corners = parseInt(Form.get("corners"))
   const cleanSheet = Form.get("cleanSheet") === "on"
-  console.log(side, xG, corners, cleanSheet)
 
-  
-  try {
-    const userPredictions = await fetch(`${baseURL}/predictions/${userID}/${matchID}`)
-    const body = await userPredictions.json()
-    if(body.length > 0) {
-      if(side == "home") {
-        const update = await fetch(`${baseURL}/`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userID: userID,
-            matchID: matchID,
-            side: {
-              home: {
-                predicted_xG: xG,
-                corners: corners,
-                cleanSheet: cleanSheet
-              }
-            }
-          })
-        })
-        if(!update.ok) {
-          console.log("Failed to update prediction", update.status)
-        } else {
-          console.log("Prediction updated successfully")
-        }
+  async function checkExisting() {
+    console.log("VERIFYING PREDICTION STATUS")
+    try {
+      const response = await axios.get(`${baseURL}/predictions/${uid}/${mid}`)
+      if(!response.data.existing) {
+        return false
       } else {
-        const update = await fetch(`${baseURL}/`, {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userID: userID,
-            matchID: matchID,
-            side: {
-              away: {
-                predicted_xG: xG,
-                corners: corners,
-                cleanSheet: cleanSheet
-              }
-            }
-          })
-        })
-        if(!update.ok) {
-          console.log("Failed to update prediction", update.status)
-        } else {
-          console.log("Prediction updated successfully")
-        }
+        return true
       }
-    } else {
-      const response = await fetch(`${baseURL}/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userID: userID,
-          matchID: matchID,
+    } catch (error) {
+      console.log("Failed to evaluate prediction status", error)
+    }
+  }
+
+  async function checkActualXG() {
+    function isValid(value) {
+      if(value === null|| value === undefined) return false
+      if(typeof value === "string" && value.trim() === "") return false
+      if(typeof value === "object" && Object.keys(value).length === 0) return false
+      return true
+    }
+    console.log("VERIFYING ACTUAL XG SCORES")
+    try {
+      const response = await axios.get(`${baseURL}/matches/${mid}`)
+      const homeXG = response.data[0].homeXG
+      const awayXG = response.data[0].awayXG 
+      if(isValid(homeXG) && isValid(awayXG)) {
+        return true
+      } else {
+        console.log("There are no actual XG values for this match.")
+        return false
+      }
+    } catch (error) {
+      console.log("Failed to verify actual XG scores")
+    }
+  }
+
+  async function postPrediction() {
+    console.log("CREATING PREDICTION")
+    if(await checkActualXG() === true) {
+      
+    }
+     const createdPrediction = await axios.post(`${baseURL}/predictions`, {
+          userID: uid,
+          matchID: mid,
           side: {
             home: side === "home" ? {
               predicted_xG: xG,
@@ -120,18 +104,27 @@ async function postPrediction (e) {
               predicted_xG: null,
               corners: null,
               cleanSheet: null
-            }
-          }
-        })
-      })
-      if(!response.ok) {
-        console.log("Failed to create prediction", response.status)
-      } else {
-        console.log("Prediction created successfully")
-      }
-    }
-  } catch (error) {
-    console.log("Error making API call: ", error)
+            }}}, 
+            {headers: {"Content-Type": "application/json"}
+          });
+          console.log("PREDICTION CREATED")
+  }
+  
+  async function updateUserStats() {
+    console.log("UPDATING USER STATS")
+    const response = await axios.get(`${baseURL}/users/${uid}/stats`)
+    const currentTotal = parseInt(response.data.stats["total_predictions"])
+    const updateStat = await axios.patch(`${baseURL}/users/${uid}/stats`, {
+      total_predictions: currentTotal + 1
+    })
+  }
+
+  const verification = await checkExisting()
+  if(verification === false) {
+    // await postPrediction()
+    // await updateUserStats()
+  } else {
+    console.log("The prediction must be updated.")
   }
 }
 
@@ -198,7 +191,7 @@ async function postPrediction (e) {
         }}>
         <MatchCard className="cardBody"/>
         <div id="predictionSheet" className="absolute top-[10%] left-[20%] align-center justify-center text-white">
-          <form className="flex flex-col gap-[20px]" onSubmit={postPrediction}>
+          <form className="flex flex-col gap-[20px]" onSubmit={handleSubmit}>
             <p className="flex flex-col">xG: <input className="text-black" name="xG"></input></p>
             <p className="flex flex-col">Total Corners: <input className="text-black" name="corners"></input></p>
             <p className="flex flex-col items-center">Clean Sheet? <input className="" type="checkbox" name="cleanSheet"></input></p>

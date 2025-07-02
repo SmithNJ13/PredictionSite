@@ -68,6 +68,33 @@ const getUserDescription = async(req, res) => {
     }
 }
 
+const updateUserDescription = async (req, res) => {
+  try {
+    const uid = req.params.id
+    const data = req.body
+
+    if (!ObjectId.isValid(uid)) {
+      return res.status(400).send({ error: "Invalid userID" })
+    }
+
+    if (typeof data !== "string") {
+      return res.status(400).send({ error: "Invalid data format, expected plain string." })
+    }
+
+    const update = await User.updateDescription(uid, data)
+
+    if (update.modifiedCount === 0) {
+      return res.status(400).send("Description was not updated.")
+    }
+
+    res.status(200).send({ updated: update })
+  } catch (error) {
+    console.error(error)
+    res.status(500).send("Server error.")
+  }
+}
+
+
 const getUserToken = async(req, res) => {
     try {
         const token = req.headers["authorization"]
@@ -137,4 +164,5 @@ const logout = async(req, res) => {
     }
 }
 
-module.exports = {index, register, getUserToken, getUserStats, updateUserStats, getUserDescription, login, logout}
+module.exports = {index, register, getUserToken, getUserStats, updateUserStats,
+    updateUserDescription, getUserDescription, login, logout}

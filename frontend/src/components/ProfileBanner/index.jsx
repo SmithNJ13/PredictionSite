@@ -1,18 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {UserPen} from 'lucide-react';
 import axios from "axios";
 import { baseURL } from "../../consts/api";
 
 
 const ProfileBanner = ({ user, totalNetXG }) => {
-  const [editMode, setEditMode] = useState(false);
-  const [description, setDescription] = useState(user.description || "");
-  const [charLimit] = useState(50);
-  const [showToast, setShowToast] = useState(false);
+  const [editMode, setEditMode] = useState(false)
+  const [description, setDescription] = useState("")
+  const [loading, setLoading] = useState(true)
+  const [charLimit] = useState(50)
+  const [showToast, setShowToast] = useState(false)
 
   async function updateDescription() {
     try {
-      await axios.patch(`${baseURL}/users/${user._id}/desc`, description)
+      await axios.patch(`${baseURL}/users/${user.id}/desc`, description,
+        {headers: {"Content-Type": "text/plain"}}
+      )
       setEditMode(false)
     } catch (error) {
       console.log(error)
@@ -21,6 +24,20 @@ const ProfileBanner = ({ user, totalNetXG }) => {
   function changeEdit() {
     setEditMode(prev => !prev);
   }
+
+  useEffect(() => {
+    async function fetchDescription() {
+      try {
+        const response = await axios.get(`${baseURL}/users/${user.id}/desc`)
+        setDescription(response.data)
+      } catch (error) {
+        console.error("Failed to fetch description")
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchDescription()
+  }, [user.id])
 
   return (
     <div className="p-8 mb-8 relative overflow-hidden">
@@ -46,7 +63,7 @@ const ProfileBanner = ({ user, totalNetXG }) => {
         <UserPen size={22} className="self-end hover:cursor-pointer" onClick={changeEdit} />
 
         {!editMode ? (
-          <p className="mx-6 text-white text-lg select-none">{description}</p>
+          <p className="mx-6 text-white text-lg select-none">{!loading ? description : ""}</p>
         ) : (
           <>
             <textarea

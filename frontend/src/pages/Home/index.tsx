@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import "./style.css";
 
 const HomePage = () => {
@@ -95,15 +96,11 @@ const HomePage = () => {
                   by making accurate predictions and building your reputation. Track your progress from rookie to 
                   expert as you compete with the best football minds in the community.
                 </p>
-                <button 
-                  onClick={() => console.log('leaderboard')}
-                  className="inline-flex items-center text-SpringGreen hover:text-white font-semibold transition-colors duration-300"
-                >
-                  View Rankings
+                <Link to="/leaderboards" className="inline-flex items-center text-SpringGreen hover:text-white font-semibold transition-colors duration-300">View Rankings
                   <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                </button>
+                </Link>
               </div>
             </div>
           </div>

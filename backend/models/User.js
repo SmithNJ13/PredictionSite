@@ -60,7 +60,7 @@ class User {
   }
 
   static async getDescription(uid) {
-        const id = new ObjectId(uid)
+    const id = new ObjectId(uid)
     await client.connect()
     const response = await client.db("database").collection("users")
       .findOne(
@@ -68,6 +68,16 @@ class User {
         { projection: { description: 1, _id: 0 } }
       )
     return response ? response.description : null
+  }
+  
+  static async updateDescription(uid, data) {
+    const id = new ObjectId(uid);
+    await client.connect();
+    const response = await client.db("database").collection("users").updateOne(
+      { _id: id },
+      { $set: { description: data } }
+    );
+    return response;
   }
 
 

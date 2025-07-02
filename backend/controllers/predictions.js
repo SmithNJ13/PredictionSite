@@ -24,9 +24,12 @@ const check = async(req, res) => {
     try {
         const {uid, mid} = req.params
         const prediction = await Prediction.check(uid, mid)
-        res.status(200).send(prediction)
+        res.status(200).send({
+            existing: !!prediction,
+            prediction: prediction || null
+        })
     } catch(error) {
-        res.status(400).send(error)
+        res.status(400).send({error: error.message || "Something went wrong."})
     }
 }
 
