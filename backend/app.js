@@ -8,7 +8,7 @@ const leaderboardRoute = require("./routers/LeaderboardRoute")
 require("./schedulers/cronjob.js")
 
 app.use(cors({
-    origin: "*",
+    origin: "https://ps-frontend-tfdz.onrender.com",
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true
 }))
