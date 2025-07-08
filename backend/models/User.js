@@ -21,6 +21,9 @@ class User {
 
   static async getStats(uid) {
     const id = new ObjectId(uid)
+    const responseOne = client.db("database").collection("predictions").find({userID: id})
+    const predictions = await responseOne.toArray()
+
     await client.connect()
     const response = await client.db("database").collection("users")
       .findOne(
@@ -30,32 +33,36 @@ class User {
     return response
   }
 
-  static async updateStats(uid, data) {
-    const id = new ObjectId(uid)
+  static async updateStats(uid, mode) {
+    const _id = new ObjectId(uid) 
     try {
-      if (typeof data !== "object" || Array.isArray(data) || Object.keys(data).length === 0 || !Object.keys(data).every((key) =>
-        ["ranking", "total_predictions", "average_netXG"].includes(key))) {
-          throw new Error("Invalid data format.")}
-      await client.connect()
-      const updateFields = {}
-
-      if (data.ranking !== undefined) {
-        updateFields["stats.ranking"] = data.ranking
+      const response = client.db("database").collection("predictions").find({userID: _id})
+      const predictions = await response.toArray()
+      let average_netXG = 0
+      predictions.forEach((element) => {
+          if(element.netXG !== null && element.netXG !== undefined) {
+              average_netXG += element.netXG
+          }
+      })
+      if(mode === "create") {
+        const update = await client.db("database").collection("users").updateOne(
+          {_id: _id},
+          {$set: {
+            "stats.total_predictions": predictions.length,
+            "stats.average_netXG": -parseFloat((Math.abs(average_netXG) / predictions.length).toFixed(3))
+          }})
+        return update
       }
-      if (data.total_predictions !== undefined) {
-        updateFields["stats.total_predictions"] = data.total_predictions
+      if(mode === "update") {
+        const update = await client.db("database").collection("users").updateOne(
+          {_id: _id},
+          {$set: {
+            "stats.average_netXG": -parseFloat((Math.abs(average_netXG) / predictions.length).toFixed(3))
+          }})
+        return update
       }
-      if (data.average_netXG !== undefined) {
-        updateFields["stats.average_netXG"] = data.average_netXG
-      }
-
-      const response = await client.db("database").collection("users").updateOne(
-        { _id: id },
-        { $set: updateFields }
-      )
-      return response
     } catch (error) {
-      throw error
+      return error
     }
   }
 

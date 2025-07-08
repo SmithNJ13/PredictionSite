@@ -1,7 +1,6 @@
 export {default as TeamBanner} from "./TeamBanner/index.jsx"
 export {default as NavBar} from "./NavBar/index.jsx"
 export {default as ProfileBanner} from "./ProfileBanner/index.jsx"
-export {default as PredictionTable} from "./PredictionTable/index.jsx"
 export {default as AttackMomentum} from "./AttackMomentum/index.jsx"
 export {default as NewsFeed} from "./NewsFeed/index.jsx"
 export {default as LoginForm} from "./LoginForm/index.jsx"

@@ -42,7 +42,6 @@ async function handleSubmit (e) {
   const cleanSheet = Form.get("cleanSheet") === "on"
 
   async function checkExisting() {
-    console.log("VERIFYING PREDICTION STATUS")
     try {
       const response = await axios.get(`${baseURL}/predictions/${uid}/${mid}`)
       if(!response.data.existing) {
@@ -62,7 +61,6 @@ async function handleSubmit (e) {
       if(typeof value === "object" && Object.keys(value).length === 0) return false
       return true
     }
-    console.log("VERIFYING ACTUAL XG SCORES")
     try {
       const response = await axios.get(`${baseURL}/matches/${mid}`)
       const homeXG = response.data[0].homeXG
@@ -79,10 +77,6 @@ async function handleSubmit (e) {
   }
 
   async function postPrediction() {
-    console.log("CREATING PREDICTION")
-    if(await checkActualXG() === true) {
-      
-    }
      const createdPrediction = await axios.post(`${baseURL}/predictions`, {
           userID: uid,
           matchID: mid,
@@ -107,24 +101,38 @@ async function handleSubmit (e) {
             }}}, 
             {headers: {"Content-Type": "application/json"}
           });
-          console.log("PREDICTION CREATED")
+  }
+
+  async function updatePrediction() {
+    try {
+      const updatedPrediction = await axios.patch(`${baseURL}/predictions/${uid}/${mid}`, {
+        [side]: {
+          predicted_xG: xG,
+          corners: corners,
+          cleanSheet: cleanSheet
+        }
+      })
+    } catch (error) {
+      console.log("Failed to update prediction", error)
+    }
   }
   
-  async function updateUserStats() {
-    console.log("UPDATING USER STATS")
-    const response = await axios.get(`${baseURL}/users/${uid}/stats`)
-    const currentTotal = parseInt(response.data.stats["total_predictions"])
-    const updateStat = await axios.patch(`${baseURL}/users/${uid}/stats`, {
-      total_predictions: currentTotal + 1
-    })
+  async function updateUserStats(mode) {
+    try {
+      const update = await axios.patch(`${baseURL}/users/${uid}/stats`, { mode })
+      return update.data
+    } catch (error) {
+      console.log("Failed to update user stats: ", error)
+    }
   }
 
   const verification = await checkExisting()
   if(verification === false) {
-    // await postPrediction()
-    // await updateUserStats()
+    await postPrediction()
+    await updateUserStats("create")
   } else {
-    console.log("The prediction must be updated.")
+    await updatePrediction()
+    await updateUserStats("update")
   }
 }
 

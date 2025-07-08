@@ -6,6 +6,7 @@ class Prediction {
         this.id = data.id
         this.userID = data.userID
         this.matchID = data.matchID
+        this.netXG = data.netXG
         this.side = data.side
         this.predicted_xG = data.predicted_xG
         this.corners = data.corners
@@ -37,15 +38,27 @@ class Prediction {
         const uid = new ObjectId(userID)
         try {
             await client.connect()
-            // const response = await client.db("database").collection("predictions").deleteMany({})
-            const matched_Entry = await client.db("database").collection("matches").findOne({
+            async function calculateNetXG() {
+                const matched_Entry = await client.db("database").collection("matches").findOne({
                 _id: matchID
             })
-
+            if(matched_Entry) {
+                if(matched_Entry.homeXG !== null || matched_Entry.awayXG !== null) {
+                    const homeDiff = side.home.predicted_xG === undefined || side.home.predicted_xG === null ? 0 : -Math.abs(side.home.predicted_xG - matched_Entry.homeXG) 
+                    const awayDiff = side.away.predicted_xG === undefined || side.away.predicted_xG === null ? 0 : -Math.abs(side.away.predicted_xG - matched_Entry.awayXG)
+                    const netValue = homeDiff + awayDiff;
+                    return Math.floor(netValue * 100) / 100
+                }
+                } else {
+                    throw new Error("matchID lost")
+                }
+            }
+            const netXG = await calculateNetXG()
             await client.db("database").collection("predictions").createIndex({userID: 1, matchID: 1}, {unique: true})
             const response = await client.db("database").collection("predictions").insertOne({
                 userID: uid,
                 matchID: matchID,
+                netXG: netXG,
                 side: {
                     home: {
                         predicted_xG: side.home.predicted_xG,
@@ -73,19 +86,60 @@ class Prediction {
     of the data is getting updated. We then update the elements within that object, predicted_XG, corners etc;*/
     static async update(uid, mid, data) {
         const userID = new ObjectId(uid)
+        const sideName = Object.keys(data)[0]
         try {
-            if(typeof data !== "object" || Array.isArray(data) || Object.keys(data).length !== 1 || !["home", "away"].includes(Object.keys(data)[0])) {
+            if(typeof data !== "object" || Array.isArray(data) || Object.keys(data).length !== 1 || !["home", "away"].includes(sideName)) {
                 throw new Error("Invalid data format.")
             } 
             await client.connect()
-            const sideName = Object.keys(data)[0]
+            async function updateNetXG() {
+                const matched_Entry = await client.db("database").collection("matches").findOne({
+                    _id: parseInt(mid)
+                })
+
+                if (!matched_Entry) {
+                    throw new Error("matchID lost")
+                }
+
+                const existingPrediction = await client.db("database").collection("predictions").findOne({
+                    userID: userID,
+                    matchID: parseInt(mid)
+                })
+
+                if (!existingPrediction) {
+                    throw new Error("Prediction not found")
+                }
+
+                const updatedPrediction = data[sideName]
+
+                const currentHomePredicted = sideName === "home"
+                    ? updatedPrediction.predicted_xG
+                    : existingPrediction.side?.home?.predicted_xG
+
+                const currentAwayPredicted = sideName === "away"
+                    ? updatedPrediction.predicted_xG
+                    : existingPrediction.side?.away?.predicted_xG
+
+                const homeDiff = currentHomePredicted == null || matched_Entry.homeXG == null
+                    ? 0
+                    : -Math.abs(currentHomePredicted - matched_Entry.homeXG)
+
+                const awayDiff = currentAwayPredicted == null || matched_Entry.awayXG == null
+                    ? 0
+                    : -Math.abs(currentAwayPredicted - matched_Entry.awayXG)
+
+                const netValue = homeDiff + awayDiff
+                return Math.floor(netValue * 100) / 100
+            }
+            const netXG = await updateNetXG()
             const response = await client.db("database").collection("predictions").updateOne(
                 {
                     userID: userID,
-                    matchID: parseInt(mid)
+                    matchID: parseInt(mid),
                 },
                 {
                     $set: {
+                        netXG: netXG,
                         [`side.${sideName}`]: {
                             predicted_xG: parseFloat(data[sideName].predicted_xG),
                             corners: data[sideName].corners,

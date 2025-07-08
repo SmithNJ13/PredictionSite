@@ -38,17 +38,20 @@ const getUserStats = async(req, res) => {
 const updateUserStats = async(req, res) => {
     try {
         const uid = req.params.id
-        const data = req.body
+        const { mode } = req.body
         if(!ObjectId.isValid(uid)) {
             return res.status(400).send({error: "Invalid userID"})
         }
-        const update = await User.updateStats(uid, data)
+        if (!["create", "update"].includes(mode)) {
+            return res.status(400).send({ error: "Invalid mode" })
+        }
+        const update = await User.updateStats(uid, mode)
         if(update.modifiedCount === 0) {
             return res.status(400).send("No user stats were updated.")
         }
         res.status(200).send({updated: update})
     } catch (error) {
-        return res.status(400).send(error.message || "Invalid data format.")
+        return res.status(500).send(error.message || "Something went wrong.")
     }
 }
 
