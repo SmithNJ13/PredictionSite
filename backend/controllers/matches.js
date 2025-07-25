@@ -1,10 +1,11 @@
 const Match = require("../models/Match")
-const teams = require("../database/teams.json")
+const teams = require("../database/teams.js")
 
 const currentDate = new Date()
 const year = currentDate.getFullYear()
 const month = String(currentDate.getMonth() + 1).padStart(2, "0")
 const day = String(currentDate.getDate()).padStart(2, "0")  
+const Teams = teams()
 // const date = `${year}-${month}-${day}`
 const date = `2025-05-25`
 
@@ -22,20 +23,20 @@ const getLive = async (req, res) => {
     try {
         const liveGames = await Match.getByDate(date);
         const responses = liveGames.map(game => {
-            const findHome = teams.find((team) => team.name === game.home)
-            const findAway = teams.find((team) => team.name === game.away)
-            if(!findHome) {
+            const homeTeam = Teams[game.home]
+            const awayTeam = Teams[game.away]
+            if(!homeTeam) {
                 throw new Error(`Could not find ${game.home}`)
             }
-            if(!findAway) {
+            if(!awayTeam) {
                 throw new Error(`Could not find ${game.away}`)
             }
             const response = {
                 match: game,
-                home_icon: findHome.icon,
-                home_colour: findHome.primary,
-                away_icon: findAway.icon,
-                away_colour: findAway.primary
+                home_icon: homeTeam["information"].icon,
+                home_colour: homeTeam["colours"].primary,
+                away_icon: awayTeam["information"].icon,
+                away_colour: awayTeam["colours"].primary
             }
             return response
         });

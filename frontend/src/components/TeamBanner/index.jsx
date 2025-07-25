@@ -24,7 +24,6 @@ const TeamBanner = ({id, matchID, teamIcon, teamName, teamColour, side}) => {
 
 const handleClick = () => {
   const card = document.querySelector(`#matchcard${id}`)
-  // console.log(card)
   setFlipped(true)
   const flair2 = card.querySelector('#flair2');
     if (flair2) {
@@ -51,28 +50,6 @@ async function handleSubmit (e) {
       }
     } catch (error) {
       console.log("Failed to evaluate prediction status", error)
-    }
-  }
-
-  async function checkActualXG() {
-    function isValid(value) {
-      if(value === null|| value === undefined) return false
-      if(typeof value === "string" && value.trim() === "") return false
-      if(typeof value === "object" && Object.keys(value).length === 0) return false
-      return true
-    }
-    try {
-      const response = await axios.get(`${baseURL}/matches/${mid}`)
-      const homeXG = response.data[0].homeXG
-      const awayXG = response.data[0].awayXG 
-      if(isValid(homeXG) && isValid(awayXG)) {
-        return true
-      } else {
-        console.log("There are no actual XG values for this match.")
-        return false
-      }
-    } catch (error) {
-      console.log("Failed to verify actual XG scores")
     }
   }
 

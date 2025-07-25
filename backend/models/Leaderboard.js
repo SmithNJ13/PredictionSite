@@ -14,9 +14,22 @@ class Leaderboard {
 
     static async getAll() {
         await client.connect()
-        const response = client.db("database").collection("leaderboard").find({})
-        const all = await response.toArray()
-        return all;
+        const response = client.db("database").collection("users").find({})
+        const items = await response.toArray()
+        const userInfo = []
+        items.forEach((item) => {
+            if(item.stats.total_predictions >= 18) {
+                userInfo.push({
+                    username: item.username,
+                    total_predictions: item.stats.total_predictions,
+                    average_netXG: item.stats.average_netXG
+                })
+            }
+        })
+        const leaderboard = [...userInfo].sort((a, b) => {
+           return b.average_netXG - a.average_netXG
+        })
+        return leaderboard
     }
 }
 
