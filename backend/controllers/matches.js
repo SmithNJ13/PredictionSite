@@ -1,13 +1,13 @@
 const Match = require("../models/Match")
-const teams = require("../database/teams.js")
+const seasons = require("../database/teams.js")
 
 const currentDate = new Date()
 const year = currentDate.getFullYear()
 const month = String(currentDate.getMonth() + 1).padStart(2, "0")
 const day = String(currentDate.getDate()).padStart(2, "0")  
-const Teams = teams()
+const currentSeason = seasons.getSeason(year)
 // const date = `${year}-${month}-${day}`
-const date = `2025-05-25`
+const date = `2025-08-16`
 
 const index = async(req, res) => {
     try{
@@ -23,8 +23,8 @@ const getLive = async (req, res) => {
     try {
         const liveGames = await Match.getByDate(date);
         const responses = liveGames.map(game => {
-            const homeTeam = Teams[game.home]
-            const awayTeam = Teams[game.away]
+            const homeTeam = currentSeason.teams[game.home]
+            const awayTeam = currentSeason.teams[game.away]
             if(!homeTeam) {
                 throw new Error(`Could not find ${game.home}`)
             }

@@ -1,5 +1,6 @@
 const client = require("../database/setup.js")
 const cron = require("node-cron")
+// const url = "https://fbref.com/en/comps/9/2024-2025/schedule/2024-2025-Premier-League-Scores-and-Fixtures"
 const url = "https://fbref.com/en/comps/9/schedule/Premier-League-Scores-and-Fixtures"
 const axios = require("axios")
 const cheerio = require("cheerio")
@@ -65,7 +66,7 @@ const fetchMatches = () => {
     const seedDB = async (matchesArray) => {
         try {
             await client.connect();
-            await client.db("database").collection("matches").drop();
+            // await client.db("database").collection("matches").drop();
     
             let ID = 1;
             for (const match of matchesArray) {
@@ -93,7 +94,7 @@ const fetchMatches = () => {
             console.error('Error connecting to the database:', error);
         }
     };
-}  
+} 
 cron.schedule("0 * * * *", () => {
     console.log("Cron job triggered at: ", new Date())
     fetchMatches()

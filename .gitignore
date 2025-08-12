@@ -29,5 +29,7 @@ dist-ssr
 /backend/database/seeder.js
 /backend/database/newUser.js
 /backend/database/statRebuild.js
+/backend/database/test.js
+/backend/database/words.json
 /frontend/src/components/TeamBanner/oldPrediction
 /backend/.env
