@@ -1,11 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 #teamName {
-  font-family: 'Protest Riot', sans-serif;
   font-weight: 100;
   transform: translate(-50%, -50%);
 }

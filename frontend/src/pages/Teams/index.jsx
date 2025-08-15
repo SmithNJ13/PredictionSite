@@ -1,6 +1,5 @@
 import React from 'react'
 // import TeamData from "../../../../backend/database/teams.json"
-import "./style.css"
 
 const Teams = () => {
   // const Data = TeamData;

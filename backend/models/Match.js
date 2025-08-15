@@ -41,6 +41,17 @@ class Match {
         }
     }
 
+    static async getBySeason(sid) {
+        await client.connect()
+        const response = client.db("database").collection("matches").find({season: sid})
+        const matches = await response.toArray()
+        if(matches.length >= 1) {
+            return matches
+        } else {
+            return `No matches for the season of: ${sid} found.`
+        }
+    }
+
     static async getByTeam(team) {
         await client.connect()
         const response = client.db("database").collection("matches").find({

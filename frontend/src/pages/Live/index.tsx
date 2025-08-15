@@ -8,6 +8,7 @@ interface MatchData {
   _id: string;
   date: string;
   time: string;
+  season: number;
   home: string;
   away: string;
 }
@@ -68,6 +69,7 @@ const Live = () => {
               <TeamBanner
                 id={genCards++}
                 matchID={game.match._id}
+                season={game.match.season}
                 teamName={game.match.home}
                 teamIcon={game.home_icon}
                 teamColour={game.home_colour}
@@ -79,6 +81,7 @@ const Live = () => {
               <TeamBanner
                 id={genCards++}
                 matchID={game.match._id}
+                season={game.match.season}
                 teamName={game.match.away}
                 teamIcon={game.away_icon}
                 teamColour={game.away_colour}

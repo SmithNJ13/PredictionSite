@@ -6,6 +6,7 @@ const MatchRouter = Router()
 MatchRouter.get("/", MatchController.index)
 MatchRouter.get("/live", MatchController.getLive)
 MatchRouter.get("/:id", MatchController.getByID)
+MatchRouter.get("/season/:id", MatchController.getBySeason)
 MatchRouter.get("/team/:team", MatchController.getByTeam)
 
 module.exports = MatchRouter

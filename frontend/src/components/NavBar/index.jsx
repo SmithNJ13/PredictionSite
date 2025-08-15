@@ -3,7 +3,6 @@ import logo from "../../assets/PLPLogo.png"
 import {useAuth} from "../../Auth/index.jsx"
 import { baseURL } from "../../consts/api.ts"
 import axios from "axios"
-import "./style.css"
 
 const NavBar = () => {
   const nav = useNavigate()
@@ -26,7 +25,7 @@ const NavBar = () => {
     nav("/")
   }
     return (
-      <header id="header" className="absolute w-full mx-auto text-SpringGreen bg-GunMetal z-10 py-4 border-y-[2px] mt-6 border-DarkSpring">
+      <header id="header" className="absolute w-full mx-auto font-mainInfo font-bold text-primaryText bg-mainForeground z-10 py-4 mt-6">
         <div className="container mx-auto">
           <div id="nav" className="flex justify-between">
             <a className="logo pb-4 flex items-center lg:p-[34px] p-[28px] items-center relative">
@@ -35,32 +34,32 @@ const NavBar = () => {
             <div className="flex items-center space-x-8">
               <div className="hidden xl:flex items-center space-x-4">
               </div>
-              <div className="border-l-2 border-DarkSpring h-8 mx-4"></div>
+              <div className="border-l-2 border-primaryAccent h-16 mx-4"></div>
               <nav className="flex lg:flex-row flex-col space-x-6 text-[20px]" id="nav_items">
                 <li className="list-none">
-                  <Link to="/" className="hover:text-Aquamarine hover:underline">Home</Link>
+                  <Link to="/" className="hover:text-primaryAccent border-b-[1px] border-transparent hover:border-primaryAccent">Home</Link>
                 </li>
                 <li className="list-none">
-                  <Link to="/live" className="hover:text-Aquamarine hover:underline">Live Matches</Link>
+                  <Link to="/live" className="hover:text-primaryAccent border-b-[1px] border-transparent hover:border-primaryAccent">Live Matches</Link>
                 </li>
                 <li className="list-none">
-                  <Link to="/teams" className="hover:text-Aquamarine hover:underline">Teams</Link>
+                  <Link to="/teams" className="hover:text-primaryAccent border-b-[1px] border-transparent hover:border-primaryAccent">Teams</Link>
                 </li>
                 <li className="list-none">
-                  <Link to="/leaderboards" className="hover:text-Aquamarine hover:underline">Leaderboards</Link>
+                  <Link to="/leaderboards" className="hover:text-primaryAccent border-b-[1px] border-transparent hover:border-primaryAccent">Leaderboards</Link>
                 </li>
                 {user ? (
                   <>
                   <li className="list-none">
-                    <Link to="/profile" className="hover:text-Aquamarine hover:underline">Profile</Link>
+                    <Link to="/profile" className="hover:text-primaryAccent border-b-[1px] border-transparent hover:border-primaryAccent">Profile</Link>
                   </li>
                   <li className="list-none">
-                    <button className="hover:text-Aquamarine hover:underline" onClick={logout}>Logout</button>
+                    <button className="hover:text-primaryAccent border-b-[1px] border-transparent hover:border-primaryAccent" onClick={logout}>Logout</button>
                   </li>
                   </>
                 ) : (
                   <li className="list-none">
-                    <Link to="/login" className="hover:text-Aquamarine hover:underline">Login</Link>
+                    <Link to="/login" className="hover:text-primaryAccent border-b-[1px] border-transparent hover:border-primaryAccent">Login</Link>
                   </li>
                 )}
               </nav>

@@ -6,6 +6,7 @@ class Prediction {
         this.id = data.id
         this.userID = data.userID
         this.matchID = data.matchID
+        this.season = data.season
         this.netXG = data.netXG
         this.side = data.side
         this.predicted_xG = data.predicted_xG
@@ -34,7 +35,7 @@ class Prediction {
         }
     }
 
-    static async create({userID, matchID, side}) {
+    static async create({userID, matchID, season, side}) {
         const uid = new ObjectId(userID)
         try {
             await client.connect()
@@ -58,6 +59,7 @@ class Prediction {
             const response = await client.db("database").collection("predictions").insertOne({
                 userID: uid,
                 matchID: matchID,
+                season: season,
                 netXG: netXG,
                 side: {
                     home: {

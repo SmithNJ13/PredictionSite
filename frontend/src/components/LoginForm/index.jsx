@@ -3,7 +3,6 @@ import React, { useState } from "react"
 import axios from "axios"
 import {useAuth} from "../../Auth/index.jsx"
 import { baseURL } from "../../consts/api.ts"
-import "./style.css"
 
 const LoginForm = () => {
     const string = "Don't have an account?"

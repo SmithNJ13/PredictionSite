@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
 html {
-    background-color: #161925;
+    background-color: #121212;
     overflow-y: scroll;
 }
 /* For WebKit browsers (Chrome, Safari, Edge) */
@@ -16,7 +18,7 @@ html {
 }
   
 ::-webkit-scrollbar-thumb {
-    background-color: #0c7c59;
+    background-color: #4CAF50;
     border-radius: 6px; 
     border: 3px solid transparent;
     background-clip: padding-box;
@@ -25,7 +27,7 @@ html {
   /* For Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: #0c7c59 transparent;
+    scrollbar-color: #4CAF50 transparent;
 }
   
   

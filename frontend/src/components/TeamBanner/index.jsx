@@ -6,7 +6,7 @@ import axios from "axios";
 import "./style.css";
 import MatchCard from "../../assets/matchcard.svg?react";
 
-const TeamBanner = ({id, matchID, teamIcon, teamName, teamColour, side}) => {
+const TeamBanner = ({id, matchID, season, teamIcon, teamName, teamColour, side}) => {
   const [size, setSize] = useState({fontSize: 34})
   const [flipped, setFlipped] = useState(false)
   const { user } = useAuth();
@@ -35,6 +35,7 @@ async function handleSubmit (e) {
   e.preventDefault()
   const uid = user.id
   const mid = matchID
+  const sid = season
   const Form = new FormData(e.target)
   const xG = parseFloat(Form.get("xG"))
   const corners = parseInt(Form.get("corners"))
@@ -57,6 +58,7 @@ async function handleSubmit (e) {
      const createdPrediction = await axios.post(`${baseURL}/predictions`, {
           userID: uid,
           matchID: mid,
+          season: sid,
           side: {
             home: side === "home" ? {
               predicted_xG: xG,

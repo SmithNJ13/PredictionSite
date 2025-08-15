@@ -58,6 +58,16 @@ const getByID = async (req, res) => {
     }
 }
 
+const getBySeason = async (req, res) => {
+    try {
+        const sid = parseInt(req.params.id)
+        const matches = await Match.getBySeason(sid)
+        res.status(200).send(matches)
+    } catch (error) {
+        res.status(404).send("No applicable season")
+    }
+}
+
 const getByTeam = async (req, res) => {
     try {
         const team = req.params.team
@@ -71,4 +81,4 @@ const getByTeam = async (req, res) => {
     }
 }
 
-module.exports = {index, getLive, getByID, getByTeam}
+module.exports = {index, getLive, getByID, getBySeason, getByTeam}

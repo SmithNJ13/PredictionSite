@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.16",
     "axios": "^1.6.2",
     "flowbite": "^2.5.2",
     "flowbite-react": "^0.10.2",
