@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <main className="text-primaryText flex justify-center my-16">
-      {/* Main Content Container */}
       <div
         className="relative max-w-7xl w-full grid gap-6"
         style={{
@@ -14,7 +13,6 @@ const HomePage = () => {
           borderRadius: "1.5rem",
         }}
       >
-        {/* Hero Section */}
         <section className="relative z-10 p-12">
           <h1
             id="title"
@@ -42,12 +40,9 @@ const HomePage = () => {
           </Link>
         </section>
 
-        {/* Features Section */}
         <section className="relative z-10 grid gap-6 lg:grid-cols-[2fr_1fr] lg:grid-rows-[repeat(2,auto)] p-8">
-          {/* Left Column (Top + Bottom Rows) */}
           <div className="grid gap-6">
             <div className="grid grid-cols-2 gap-6">
-              {/* Make Predictions */}
               <div className="relative group p-8 bg-mainForeground rounded-2xl border border-primaryAccent shadow-md hover:shadow-xl transition-shadow duration-300">
                 <div className="flex items-center mb-4">
                   <div className="w-14 h-14 bg-primaryAccent/50 rounded-lg flex items-center justify-center mr-4 transition-colors duration-300 group-hover:bg-primaryAccent/70">
@@ -71,7 +66,6 @@ const HomePage = () => {
                 </p>
               </div>
 
-              {/* View Live Games */}
               <div className="relative group p-8 bg-mainForeground rounded-2xl border border-primaryAccent shadow-md hover:shadow-xl transition-shadow duration-300">
                 <div className="flex items-center mb-4">
                   <div className="w-14 h-14 bg-primaryAccent/50 rounded-lg flex items-center justify-center mr-4 transition-colors duration-300 group-hover:bg-primaryAccent/70">
@@ -95,7 +89,6 @@ const HomePage = () => {
               </div>
             </div>
 
-            {/* Ranked Leaderboards */}
             <div className="relative group p-8 bg-mainForeground rounded-2xl border border-primaryAccent shadow-md hover:shadow-xl transition-shadow duration-300">
               <div className="flex items-center mb-4">
                 <div className="w-14 h-14 bg-primaryAccent/50 rounded-lg flex items-center justify-center mr-4 transition-colors duration-300 group-hover:bg-primaryAccent/70">
@@ -138,7 +131,6 @@ const HomePage = () => {
             </div>
           </div>
 
-          {/* Right Column: Track Your Progress */}
           <div className="relative group p-8 bg-mainForeground rounded-2xl border border-primaryAccent shadow-md hover:shadow-xl transition-shadow duration-300 self-start h-full">
             <div className="flex items-center mb-4">
               <div className="w-14 h-14 bg-primaryAccent/50 rounded-lg flex items-center justify-center mr-4 transition-colors duration-300 group-hover:bg-primaryAccent/70">

@@ -16,24 +16,24 @@ export default {
         subText: ["Roboto Mono", "monospace"],
       },
       colors: {
-        primaryAccent: "#4CAF50",       // main green
-        primaryText: "#E0E0E0",         // main body text
-        secondaryText: "#B4B4B4",       // subheadings / muted text
-        mainBackground: "#121212",      // dark page background
-        mainForeground: "#1E1E1E",      // cards / panels
-        dividers: "#2C2C2C",            // subtle section dividers
-        borders: "#3A3A3A",             // additional borders
-        error: "#E53935",
-        success: "#43A047",
-        inactive: "#757575",
-        linkDefault: "#64B5F6",
+        primaryAccent: "#4CAF50",       // Main accent, buttons, highlights
+        primaryText: "#E0E0E0",         // Main body text
+        secondaryText: "#B4B4B4",       // Subheadings, muted descriptions
+        mainBackground: "#121212",      // Main background
+        mainForeground: "#1E1E1E",      // Foreground (Live games, profile, components)
+        dividers: "#2C2C2C",            // Dividers for UI
+        borders: "#3A3A3A",             // Subtle borders
+        error: "#E53935",               // Error messages / delete buttons
+        success: "#43A047",             // Success messages / submit buttons?
+        inactive: "#757575",            // Inactive states
+        linkDefault: "#64B5F6",         // Links...
         linkHover: "#42A5F5",
         linkActive: "#1E88E5",
-        subtleGlow: "#2E7D32",          // for soft glows / highlights
-        shadowOverlay: "rgba(0,0,0,0.6)"// semi-transparent overlays
+        subtleGlow: "#2E7D32",          // Glows and highlights
+        shadowOverlay: "rgba(0,0,0,0.6)"// Shadows for overlays and components
       },
       boxShadow: {
-        card: '0 4px 12px rgba(0,0,0,0.4)', // soft, professional shadow
+        card: '0 4px 12px rgba(0,0,0,0.4)',
         heading: '0 2px 6px rgba(0,0,0,0.6)'
       },
       borderRadius: {
