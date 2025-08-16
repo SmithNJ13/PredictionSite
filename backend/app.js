@@ -5,6 +5,7 @@ const MatchRoutes = require("./routers/MatchRoutes")
 const UserRoutes = require("./routers/UserRoutes") 
 const PredictionRoutes = require("./routers/PredictionRoutes")
 const leaderboardRoute = require("./routers/LeaderboardRoute")
+const seasons = require("./database/teams.js")
 require("./schedulers/cronjob.js")
 
 app.use(cors({
@@ -33,6 +34,12 @@ app.get("/", (req, res) => {
         } catch (error) {
             res.status(500).send(error)
         }
+})
+app.get("/teams", (req, res) => {
+  const currentDate = new Date()
+  const year = currentDate.getFullYear()
+  const currentSeason = seasons.getSeason(year)
+  return res.status(200).send(currentSeason)
 })
 
 module.exports = app

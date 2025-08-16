@@ -50,9 +50,9 @@ const ProfileBanner = ({ user, totalNetXG }) => {
             alt="Profile"
           />
           <div className="flex flex-col">
-            <h1 className="text-4xl font-bold text-white tracking-tight">{user.username}</h1>
+            <h1 className="text-4xl font-bold text-white tracking-tight font-subheading">{user.username}</h1>
             <div className="flex items-center gap-2 mx-6">
-              <span className="text-white text-lg">Net xG:</span>
+              <span className="text-white text-lg font-mainInfo">Net xG:</span>
               <span className={"text-red-400 text-lg font-bold"}>
                 {totalNetXG >= 0 ? '+' : ''}{totalNetXG}
               </span>
@@ -63,7 +63,7 @@ const ProfileBanner = ({ user, totalNetXG }) => {
         <UserPen size={22} className="self-end hover:cursor-pointer" onClick={changeEdit} />
 
         {!editMode ? (
-          <p className="mx-6 text-white text-lg select-none">{!loading ? description : ""}</p>
+          <p className="mx-6 text-white text-lg select-none font-mainText">{!loading ? description : ""}</p>
         ) : (
           <>
             <textarea
@@ -80,10 +80,10 @@ const ProfileBanner = ({ user, totalNetXG }) => {
               rows={4}/>
             <div className="text-sm text-gray-400 text-right px-6">{description.length}/{charLimit}</div>
             <button
-              className="self-end mt-1 mx-2 font-bold w-20 bg-green-600/50 rounded text-center p-1 hover:bg-green-600"
+              className="self-end mt-1 mx-2 font-bold w-20 bg-green-600/50 rounded text-center p-1 hover:bg-green-600 font-mainInfo"
               onClick={updateDescription}>Save</button>
             {showToast && (
-              <div className="absolute bottom-0 right-0 m-4 bg-red-600 text-white text-sm px-3 py-2 rounded shadow-lg z-50">
+              <div className="absolute bottom-0 right-0 m-4 bg-red-600 text-white text-sm px-3 py-2 rounded shadow-lg z-50 font-subText">
                 Character limit reached!
               </div>
             )}

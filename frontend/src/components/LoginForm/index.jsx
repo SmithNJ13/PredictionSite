@@ -58,30 +58,30 @@ const LoginForm = () => {
 
   return (
     <>
-      <h1 id="title" className="text-SpringGreen text-center text-4xl underline mt-8">Login Page</h1>
-      <div id="content" className="flex flex-col gap-[10px] h-full w-full mt-4">
-        <div className="self-center bg-GunMetal p-[2rem] rounded-[10px] w-[30rem]">
+      <h1 id="title" className="text-primaryText text-center text-4xl mt-8 font-heading">Login Page</h1>
+      <div id="content" className="flex flex-col gap-[10px] h-full w-full mt-4 font-mainText text-primaryText">
+        <div className="self-center bg-GunMetal p-[2rem] rounded-[10px] w-[30rem] border border-secondaryText">
           <form onSubmit={login} className="loginform" autoComplete="off">
             <section className="top flex flex-col gap-[10px]">
               <label className="text-AshGray">Email / Username:</label>
-              <input className="emailbox p-[10px] rounded-[5px] border border-gray-300" placeholder="example@email.com" name="name" role="input" type="text" value={name} onChange={currentName}></input>
+              <input className="emailbox p-[10px] rounded-[5px] border border-gray-300 font-mainInfo text-black" placeholder="example@email.com" name="name" role="input" type="text" value={name} onChange={currentName}></input>
             </section>
             <section className="bottom flex flex-col gap-[10px]">
               <label className="text-AshGray">Password:</label>
-              <input className="passbox p-[10px] rounded-[5px] border border-gray-300" name="password" role="input" type="password" value={password} onChange={currentPassword}></input>
+              <input className="passbox p-[10px] rounded-[5px] border border-gray-300 font-mainInfo text-black" name="password" role="input" type="password" value={password} onChange={currentPassword}></input>
             </section>
-            <button type="submit" disabled={loading} className="m-[1rem] p-[2px] text-SpringGreen border-[2px] border-gray-300 rounded w-[33%] self-center hover:font-bold">
+            <button type="submit" disabled={loading} className="m-[1rem] p-[2px] text-primaryAccent border-[2px] border-primaryAccent rounded w-[33%] self-center hover:bg-slate-900">
               {loading ? (
                 <div className="flex items-center justify-center">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-500"></div>
                 </div>
               ) : ( "Submit" )}
             </button>
-              <p className={`relative self-center ${errorType ? "text-red-400" : "text-transparent display-none"}`}>
+              <p className={`relative self-center ${errorType ? "text-error" : "text-transparent display-none"}`}>
                 {errorType ? errorType : "_"}
               </p>
           </form>
-        <p className="m-[1rem] text-AshGray">{string} Sign up <NavLink to="/register" className="text-Moonstone font-bold italic hover:underline">here</NavLink></p>
+        <p className="m-[1rem] text-AshGray">{string} Sign up <NavLink to="/register" className="text-linkDefault font-bold italic hover:underline hover:text-linkHover">here</NavLink></p>
         </div>
       </div>
     </>

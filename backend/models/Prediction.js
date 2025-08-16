@@ -41,18 +41,27 @@ class Prediction {
             await client.connect()
             async function calculateNetXG() {
                 const matched_Entry = await client.db("database").collection("matches").findOne({
-                _id: matchID
-            })
-            if(matched_Entry) {
-                if(matched_Entry.homeXG !== null || matched_Entry.awayXG !== null) {
-                    const homeDiff = side.home.predicted_xG === undefined || side.home.predicted_xG === null ? 0 : -Math.abs(side.home.predicted_xG - matched_Entry.homeXG) 
-                    const awayDiff = side.away.predicted_xG === undefined || side.away.predicted_xG === null ? 0 : -Math.abs(side.away.predicted_xG - matched_Entry.awayXG)
-                    const netValue = homeDiff + awayDiff;
-                    return Math.floor(netValue * 100) / 100
-                }
-                } else {
-                    throw new Error("matchID lost")
-                }
+                    _id: matchID
+                });
+
+                if (!matched_Entry) throw new Error("matchID lost");
+
+                const homeXGValid = typeof matched_Entry.homeXG === "number"
+                const awayXGValid = typeof matched_Entry.awayXG === "number"
+
+                if (!homeXGValid && !awayXGValid) return null
+
+                const homeDiff = homeXGValid && side.home.predicted_xG != null
+                    ? -Math.abs(side.home.predicted_xG - matched_Entry.homeXG)
+                    : 0;
+
+                const awayDiff = awayXGValid && side.away.predicted_xG != null
+                    ? -Math.abs(side.away.predicted_xG - matched_Entry.awayXG)
+                    : 0;
+
+                const netValue = homeDiff + awayDiff;
+
+                return isNaN(netValue) ? null : Math.floor(netValue * 100) / 100;
             }
             const netXG = await calculateNetXG()
             await client.db("database").collection("predictions").createIndex({userID: 1, matchID: 1}, {unique: true})
@@ -138,21 +147,24 @@ static async update(uid, mid, data) {
                     : data?.away?.cleanSheet
         };
 
-        // Helper to recalc netXG
-        const currentHomePredicted = mergedHome.predicted_xG;
-        const currentAwayPredicted = mergedAway.predicted_xG;
+        // Helper to recalc netXG safely
+        const homeXGValid = typeof matched_Entry.homeXG === "number" && !isNaN(matched_Entry.homeXG);
+        const awayXGValid = typeof matched_Entry.awayXG === "number" && !isNaN(matched_Entry.awayXG);
+
+        const currentHomePredictedValid = typeof mergedHome.predicted_xG === "number" && !isNaN(mergedHome.predicted_xG);
+        const currentAwayPredictedValid = typeof mergedAway.predicted_xG === "number" && !isNaN(mergedAway.predicted_xG);
 
         const homeDiff =
-            currentHomePredicted == null || matched_Entry.homeXG == null
-                ? 0
-                : -Math.abs(currentHomePredicted - matched_Entry.homeXG);
+        homeXGValid && currentHomePredictedValid
+            ? -Math.abs(mergedHome.predicted_xG - matched_Entry.homeXG)
+            : 0;
 
         const awayDiff =
-            currentAwayPredicted == null || matched_Entry.awayXG == null
-                ? 0
-                : -Math.abs(currentAwayPredicted - matched_Entry.awayXG);
+        awayXGValid && currentAwayPredictedValid
+            ? -Math.abs(mergedAway.predicted_xG - matched_Entry.awayXG)
+            : 0;
 
-        const netXG = Math.floor((homeDiff + awayDiff) * 100) / 100;
+        const netXG = homeDiff === 0 && awayDiff === 0 ? null : Math.floor((homeDiff + awayDiff) * 100) / 100;
 
         // Perform update
         const response = await client.db("database").collection("predictions").updateOne(

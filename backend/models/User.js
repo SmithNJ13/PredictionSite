@@ -34,36 +34,39 @@ class User {
   }
 
   static async updateStats(uid, mode) {
-    const _id = new ObjectId(uid) 
-    try {
-      const response = client.db("database").collection("predictions").find({userID: _id})
-      const predictions = await response.toArray()
-      let average_netXG = 0
-      predictions.forEach((element) => {
-          if(element.netXG !== null && element.netXG !== undefined) {
-              average_netXG += element.netXG
+      const _id = new ObjectId(uid);
+      try {
+          const predictions = await client.db("database").collection("predictions").find({ userID: _id }).toArray();
+
+          let totalNetXG = 0;
+          let count = 0;
+
+          predictions.forEach(p => {
+            if (typeof p.netXG === "number" && !isNaN(p.netXG)) {
+              totalNetXG += p.netXG;
+              count++;
+            }
+          });
+
+          const average_netXG = count > 0 ? -parseFloat((Math.abs(totalNetXG) / count).toFixed(3)) : null;
+
+          const updateData = {
+              "stats.average_netXG": average_netXG
           }
-      })
-      if(mode === "create") {
-        const update = await client.db("database").collection("users").updateOne(
-          {_id: _id},
-          {$set: {
-            "stats.total_predictions": predictions.length,
-            "stats.average_netXG": -parseFloat((Math.abs(average_netXG) / predictions.length).toFixed(3))
-          }})
-        return update
+
+          if (mode === "create") {
+              updateData["stats.total_predictions"] = predictions.length;
+          }
+          const update = await client.db("database").collection("users").updateOne(
+              { _id },
+              { $set: updateData }
+          );
+
+          return update;
+
+      } catch (error) {
+          return error;
       }
-      if(mode === "update") {
-        const update = await client.db("database").collection("users").updateOne(
-          {_id: _id},
-          {$set: {
-            "stats.average_netXG": -parseFloat((Math.abs(average_netXG) / predictions.length).toFixed(3))
-          }})
-        return update
-      }
-    } catch (error) {
-      return error
-    }
   }
 
   static async getDescription(uid) {

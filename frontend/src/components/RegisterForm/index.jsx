@@ -141,14 +141,14 @@ const RegisterForm = () => {
         </div>
       )}
       
-      <h1 id="title" className="text-SpringGreen text-center text-4xl underline mt-8">Register Page</h1>
+      <h1 id="title" className="text-SpringGreen text-center text-4xl mt-8 font-heading text-primaryText">Register Page</h1>
       <div id="content" className="flex flex-col gap-[10px] h-full w-full mt-4">
-        <div className="self-center bg-GunMetal p-[1rem] rounded-[10px] w-[30rem]">
+        <div className="self-center bg-GunMetal p-[1rem] rounded-[10px] w-[30rem] border border-white text-primaryText font-mainText">
           <form onSubmit={handleSubmit} id="register" className="flex flex-col gap-[20px] px-[1rem]" autoComplete="off">
             <section className="top flex flex-col">
               <label className="text-AshGray self-start">Username:</label>
               <input 
-                className={`emailbox p-[10px] rounded-[5px] border ${errors.username ? 'border-red-500' : 'border-gray-300'}`}
+                className={`emailbox p-[10px] rounded-[5px] border font-mainInfo text-black ${errors.username ? 'border-error' : 'border-inactive'}`}
                 placeholder="JaneDoe1"
                 type="text"
                 name="username"
@@ -162,7 +162,7 @@ const RegisterForm = () => {
             <section className="middle flex flex-col">
               <label className="text-AshGray self-start">Email:</label>
               <input 
-                className={`emailbox p-[10px] rounded-[5px] border ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+                className={`emailbox p-[10px] rounded-[5px] border font-mainInfo text-black ${errors.username ? 'border-error' : 'border-inactive'}`}
                 placeholder="JaneDoe@gmail.com"
                 type="email"
                 name="email"
@@ -176,7 +176,7 @@ const RegisterForm = () => {
             <section className="bottom flex flex-col">
               <label className="text-AshGray self-start">Password:</label>
               <input 
-                className="passbox p-[10px] rounded-[5px] border border-gray-300"
+                className="passbox p-[10px] rounded-[5px] border border-inactive font-mainInfo text-black"
                 placeholder="Enter password"
                 type="password"
                 name="password"
@@ -186,7 +186,7 @@ const RegisterForm = () => {
               />
             </section>
             
-            <button type="submit" disabled={loading} className="m-[1rem] p-[2px] text-SpringGreen border-[2px] border-gray-300 rounded w-[33%] self-center hover:font-bold">
+            <button type="submit" disabled={loading} className="m-[1rem] p-[2px] text-primaryAccent border-[2px] border-primaryAccent rounded w-[33%] self-center hover:bg-slate-900">
               {loading ? (
                 <div className="flex items-center justify-center">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-500"></div>

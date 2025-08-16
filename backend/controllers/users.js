@@ -47,7 +47,7 @@ const updateUserStats = async(req, res) => {
         }
         const update = await User.updateStats(uid, mode)
         if(update.modifiedCount === 0) {
-            return res.status(400).send("No user stats were updated.")
+            return res.status(200).send("Recalculated stats with no modifications made.")
         }
         res.status(200).send({updated: update})
     } catch (error) {

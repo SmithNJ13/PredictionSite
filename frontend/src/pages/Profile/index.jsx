@@ -142,14 +142,14 @@ const ProfilePage = () => {
             label="Ranking" 
             value={userRank}
             totalPredictions={userTP}
-            color="bg-yellow-500"
+            color="bg-yellow-400"
             type="Ranking"
           />
         </div>
 
         <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-2xl overflow-hidden">
           <div className="px-6 py-4 border-b border-slate-700">
-            <h2 className="text-xl font-semibold text-white text-center underline">Prediction History</h2>
+            <h2 className="text-xl font-semibold font-subheading text-white text-center underline">Prediction History</h2>
           </div>
           
           {loading ? (
@@ -157,13 +157,13 @@ const ProfilePage = () => {
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
             </div>
           ) : (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto font-mainInfo">
               <table className="w-full">
                 <thead>
                   <tr className="text-sm text-slate-400 border-b border-slate-700 select-none">
                     <th className="text-left px-6 py-4 font-medium">Date</th>
                     <th className="text-left px-6 py-4 font-medium">Match</th>
-                    <th className="text-center px-6 py-4 font-medium">Corners</th>
+                    <th className="text-center px-6 py-4 font-medium"></th>
                     <th className="text-center px-6 py-4 font-medium">Predicted xG</th>
                     <th className="text-center px-6 py-4 font-medium">Actual xG</th>
                     <th onClick={handleSort} className="text-center px-6 py-4 font-medium hover:cursor-pointer hover:text-red-400">
@@ -201,10 +201,6 @@ const ProfilePage = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4">
-                            <div className="flex flex-col items-center space-y-1">
-                              <span className="text-red-400">{entry.side?.home?.corners || "—"}</span>
-                              <span className="text-blue-400">{entry.side?.away?.corners || "—"}</span>
-                            </div>
                           </td>
                           <td className="px-6 py-4">
                             <div className="flex flex-col items-center space-y-1">

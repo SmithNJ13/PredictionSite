@@ -17,7 +17,7 @@ const StatsCard = ({ icon: Icon, label, value, color, type, totalPredictions }) 
   }
 
   return (
-    <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6 hover:border-green-500/50 transition-all duration-300 w-[250px] space-y-4">
+    <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6 hover:border-green-500/50 transition-all duration-300 w-[250px] space-y-4 font-mainInfo">
 
       <div className="flex items-start justify-between">
         <div className={`p-3 rounded-lg ${color}`}>
@@ -47,14 +47,14 @@ const StatsCard = ({ icon: Icon, label, value, color, type, totalPredictions }) 
           ) : (
             <div className="flex flex-col items-end">
               <p className="text-slate-400 text-sm">Ranking</p>
-              <p className="text-2xl font-bold text-yellow-500">{value}</p>
+              <p className="text-2xl font-bold text-yellow-400">{value}</p>
             </div>
           )}
         </>
       ) : (
         <div className="flex flex-col">
           <p className="text-slate-400 text-sm">{label}</p>
-          <p className="text-2xl font-bold text-white">{value}</p>
+          <p className="text-2xl font-bold text-purple-600">{value}</p>
         </div>
       )}
     </div>

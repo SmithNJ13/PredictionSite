@@ -9,11 +9,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        heading: ["Montserrat", "sans-serif"],
-        subheading: ["Poppins", "sans-serif"],
-        mainText: ["Roboto", "sans-serif"],
-        mainInfo: ["Inter", "sans-serif"],
-        subText: ["Roboto Mono", "monospace"],
+        heading: ["Montserrat", "sans-serif"], // titles and page names
+        subheading: ["Poppins", "sans-serif"], // sub-sections on pages, 'features' etc;
+        mainText: ["Roboto", "sans-serif"], // main descriptions on big things
+        mainInfo: ["Inter", "sans-serif"], // info text for statistics and other numerical or informational things
+        subText: ["Roboto Mono", "monospace"], // error / success messages, minor tooltips
       },
       colors: {
         primaryAccent: "#4CAF50",       // Main accent, buttons, highlights
