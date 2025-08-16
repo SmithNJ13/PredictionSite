@@ -1,1 +1,1 @@
-export const baseURL = "http://localhost:8080"
+export const baseURL = "https://ps-backend-yw57.onrender.com/"
