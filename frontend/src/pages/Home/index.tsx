@@ -8,8 +8,8 @@ const HomePage = () => {
         style={{
           background:
             "linear-gradient(135deg, rgba(76,175,80,0.05), transparent 70%)",
-          borderLeft: "2px solid #4CAF50",
-          borderTop: "2px solid #4CAF50",
+          borderLeft: "2px solid #B4B4B4",
+          borderTop: "2px solid #B4B4B4",
           borderRadius: "1.5rem",
         }}
       >
@@ -27,7 +27,7 @@ const HomePage = () => {
               Premier League Predictions
             </span>
           </h1>
-          <p className="text-lg font-mainText mb-6 max-w-3xl">
+          <p className="text-lg text-secondaryText font-mainText mb-6 max-w-3xl">
             Join thousands of football fans making predictions on Premier League
             matches. Track your accuracy, compete with others, and prove your
             football knowledge.
@@ -43,7 +43,7 @@ const HomePage = () => {
         <section className="relative z-10 grid gap-6 lg:grid-cols-[2fr_1fr] lg:grid-rows-[repeat(2,auto)] p-8">
           <div className="grid gap-6">
             <div className="grid grid-cols-2 gap-6">
-              <div className="relative group p-8 bg-mainForeground rounded-2xl border border-primaryAccent shadow-md hover:shadow-xl transition-shadow duration-300">
+              <div className="relative group p-8 bg-mainForeground rounded-2xl border-2 border-borders shadow-md hover:shadow-xl transition-shadow duration-300">
                 <div className="flex items-center mb-4">
                   <div className="w-14 h-14 bg-primaryAccent/50 rounded-lg flex items-center justify-center mr-4 transition-colors duration-300 group-hover:bg-primaryAccent/70">
                     <svg
@@ -66,7 +66,7 @@ const HomePage = () => {
                 </p>
               </div>
 
-              <div className="relative group p-8 bg-mainForeground rounded-2xl border border-primaryAccent shadow-md hover:shadow-xl transition-shadow duration-300">
+              <div className="relative group p-8 bg-mainForeground rounded-2xl border-2 border-borders shadow-md hover:shadow-xl transition-shadow duration-300">
                 <div className="flex items-center mb-4">
                   <div className="w-14 h-14 bg-primaryAccent/50 rounded-lg flex items-center justify-center mr-4 transition-colors duration-300 group-hover:bg-primaryAccent/70">
                     <svg
@@ -89,7 +89,7 @@ const HomePage = () => {
               </div>
             </div>
 
-            <div className="relative group p-8 bg-mainForeground rounded-2xl border border-primaryAccent shadow-md hover:shadow-xl transition-shadow duration-300">
+            <div className="relative group p-8 bg-mainForeground rounded-2xl border-2 border-borders shadow-md hover:shadow-xl transition-shadow duration-300">
               <div className="flex items-center mb-4">
                 <div className="w-14 h-14 bg-primaryAccent/50 rounded-lg flex items-center justify-center mr-4 transition-colors duration-300 group-hover:bg-primaryAccent/70">
                   <svg
@@ -131,7 +131,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="relative group p-8 bg-mainForeground rounded-2xl border border-primaryAccent shadow-md hover:shadow-xl transition-shadow duration-300 self-start h-full">
+          <div className="relative group p-8 bg-mainForeground rounded-2xl border-2 border-borders shadow-md hover:shadow-xl transition-shadow duration-300 self-start h-full">
             <div className="flex items-center mb-4">
               <div className="w-14 h-14 bg-primaryAccent/50 rounded-lg flex items-center justify-center mr-4 transition-colors duration-300 group-hover:bg-primaryAccent/70">
                 <svg

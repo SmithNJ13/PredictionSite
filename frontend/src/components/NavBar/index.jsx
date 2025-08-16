@@ -29,7 +29,7 @@ const NavBar = () => {
         <div className="container mx-auto">
           <div id="nav" className="flex justify-between">
             <a className="logo pb-4 flex items-center lg:p-[34px] p-[28px] items-center relative">
-              <img src={logo} id="icon" className="lg:scale-[340%] scale-[220%] absolute lg:top-2 lg:left-32 bg-none" onClick={home}></img>
+              <img src={logo} id="icon" className="lg:scale-[340%] scale-[220%] absolute lg:top-2 lg:left-32 bg-none hover:cursor-pointer" onClick={home}></img>
             </a>
             <div className="flex items-center space-x-8">
               <div className="hidden xl:flex items-center space-x-4">

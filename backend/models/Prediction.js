@@ -86,76 +86,93 @@ class Prediction {
     we then use updateOne (because we want to edit a PART of the data) we then filter (the first part of update within the { } ) by userID and matchID
     I then tell the update what to add in, after filtering, here we are checking side (the object) and the "key" (home or away) and we're setting this as which part
     of the data is getting updated. We then update the elements within that object, predicted_XG, corners etc;*/
-    static async update(uid, mid, data) {
-        const userID = new ObjectId(uid)
-        const sideName = Object.keys(data)[0]
-        try {
-            if(typeof data !== "object" || Array.isArray(data) || Object.keys(data).length !== 1 || !["home", "away"].includes(sideName)) {
-                throw new Error("Invalid data format.")
-            } 
-            await client.connect()
-            async function updateNetXG() {
-                const matched_Entry = await client.db("database").collection("matches").findOne({
-                    _id: parseInt(mid)
-                })
-
-                if (!matched_Entry) {
-                    throw new Error("matchID lost")
-                }
-
-                const existingPrediction = await client.db("database").collection("predictions").findOne({
-                    userID: userID,
-                    matchID: parseInt(mid)
-                })
-
-                if (!existingPrediction) {
-                    throw new Error("Prediction not found")
-                }
-
-                const updatedPrediction = data[sideName]
-
-                const currentHomePredicted = sideName === "home"
-                    ? updatedPrediction.predicted_xG
-                    : existingPrediction.side?.home?.predicted_xG
-
-                const currentAwayPredicted = sideName === "away"
-                    ? updatedPrediction.predicted_xG
-                    : existingPrediction.side?.away?.predicted_xG
-
-                const homeDiff = currentHomePredicted == null || matched_Entry.homeXG == null
-                    ? 0
-                    : -Math.abs(currentHomePredicted - matched_Entry.homeXG)
-
-                const awayDiff = currentAwayPredicted == null || matched_Entry.awayXG == null
-                    ? 0
-                    : -Math.abs(currentAwayPredicted - matched_Entry.awayXG)
-
-                const netValue = homeDiff + awayDiff
-                return Math.floor(netValue * 100) / 100
-            }
-            const netXG = await updateNetXG()
-            const response = await client.db("database").collection("predictions").updateOne(
-                {
-                    userID: userID,
-                    matchID: parseInt(mid),
-                },
-                {
-                    $set: {
-                        netXG: netXG,
-                        [`side.${sideName}`]: {
-                            predicted_xG: parseFloat(data[sideName].predicted_xG),
-                            corners: data[sideName].corners,
-                            cleanSheet: data[sideName].cleanSheet
-                        }
-                    }
-                }
-            );
-        return response;
-        } catch (error) {
-            console.log("Prediction update failed: ", error)
-            throw error
+static async update(uid, mid, data) {
+    const userID = new ObjectId(uid);
+    try {
+        if (typeof data !== "object" || Array.isArray(data)) {
+            throw new Error("Invalid data format.");
         }
+
+        await client.connect();
+
+        // Fetch match + existing prediction
+        const matched_Entry = await client.db("database").collection("matches").findOne({
+            _id: parseInt(mid)
+        });
+        if (!matched_Entry) throw new Error("Match not found");
+
+        const existingPrediction = await client.db("database").collection("predictions").findOne({
+            userID: userID,
+            matchID: parseInt(mid)
+        });
+        if (!existingPrediction) throw new Error("Prediction not found");
+
+        // Merge incoming + existing values for BOTH sides
+        const mergedHome = {
+            predicted_xG:
+                data?.home?.predicted_xG === null
+                    ? existingPrediction.side?.home?.predicted_xG
+                    : data?.home?.predicted_xG,
+            corners:
+                data?.home?.corners === null
+                    ? existingPrediction.side?.home?.corners
+                    : data?.home?.corners,
+            cleanSheet:
+                data?.home?.cleanSheet === null
+                    ? existingPrediction.side?.home?.cleanSheet
+                    : data?.home?.cleanSheet
+        };
+
+        const mergedAway = {
+            predicted_xG:
+                data?.away?.predicted_xG === null
+                    ? existingPrediction.side?.away?.predicted_xG
+                    : data?.away?.predicted_xG,
+            corners:
+                data?.away?.corners === null
+                    ? existingPrediction.side?.away?.corners
+                    : data?.away?.corners,
+            cleanSheet:
+                data?.away?.cleanSheet === null
+                    ? existingPrediction.side?.away?.cleanSheet
+                    : data?.away?.cleanSheet
+        };
+
+        // Helper to recalc netXG
+        const currentHomePredicted = mergedHome.predicted_xG;
+        const currentAwayPredicted = mergedAway.predicted_xG;
+
+        const homeDiff =
+            currentHomePredicted == null || matched_Entry.homeXG == null
+                ? 0
+                : -Math.abs(currentHomePredicted - matched_Entry.homeXG);
+
+        const awayDiff =
+            currentAwayPredicted == null || matched_Entry.awayXG == null
+                ? 0
+                : -Math.abs(currentAwayPredicted - matched_Entry.awayXG);
+
+        const netXG = Math.floor((homeDiff + awayDiff) * 100) / 100;
+
+        // Perform update
+        const response = await client.db("database").collection("predictions").updateOne(
+            { userID: userID, matchID: parseInt(mid) },
+            {
+                $set: {
+                    netXG,
+                    "side.home": mergedHome,
+                    "side.away": mergedAway
+                }
+            }
+        );
+
+        return response;
+    } catch (error) {
+        console.log("Prediction update failed: ", error);
+        throw error;
     }
+}
+
 
     static async getByUserID(uid) {
         const _id = new ObjectId(uid)

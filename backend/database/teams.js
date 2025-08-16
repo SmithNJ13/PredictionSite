@@ -61,83 +61,83 @@ const factory = new SeasonFactory()
 const teams24 = {
 "Liverpool": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/14.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Arsenal": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/3.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Manchester City": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/43.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Chelsea": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/8.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Newcastle United": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/4.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Aston Villa": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/7.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Nottingham Forest": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/17.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Brighton": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/36.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Bournemouth": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/91.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Brentford": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/94.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Fulham": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/54.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Crystal Palace": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/31.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Everton": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/11.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "West Ham": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/21.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Manchester United": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/1.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Wolves": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/39.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Tottenham": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/6.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Leicester City": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/13.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Ipswich Town": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/40.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}},
 "Southampton": {
     "colours": {primary: "Red", secondary: "White", tertiary: "Gold"},
-    "information": {icon: "arsenal.icon", injuries: "None", suspensions: "None"},
+    "information": {icon: "https://resources.premierleague.com/premierleague25/badges/20.svg", injuries: "None", suspensions: "None"},
     "statistics": {wins: 0, draws: 0, losses: 0}}
 }
 factory.addSeason(2024, teams24)
@@ -146,17 +146,17 @@ factory.clone(2024, 2025, {
     add: {
         "Leeds United": {
             colours: {primary: "Black", secondary: "Beige", tertiary: "Silver"},
-            information: {icon: "icon.ico", injuries: "none", suspensions: "none"},
+            information: {icon: "https://resources.premierleague.com/premierleague25/badges/2.svg", injuries: "none", suspensions: "none"},
             statistics: {wins: 0, draws: 10, losses: 5}
         },
         "Burnley": {
             colours: {primary: "Black", secondary: "Beige", tertiary: "Silver"},
-            information: {icon: "icon.ico", injuries: "none", suspensions: "none"},
+            information: {icon: "https://resources.premierleague.com/premierleague25/badges/90.svg", injuries: "none", suspensions: "none"},
             statistics: {wins: 0, draws: 10, losses: 5}
         },
         "Sunderland": {
             colours: {primary: "Black", secondary: "Beige", tertiary: "Silver"},
-            information: {icon: "icon.ico", injuries: "none", suspensions: "none"},
+            information: {icon: "https://resources.premierleague.com/premierleague25/badges/56.svg", injuries: "none", suspensions: "none"},
             statistics: {wins: 0, draws: 10, losses: 5}
         }
     }
