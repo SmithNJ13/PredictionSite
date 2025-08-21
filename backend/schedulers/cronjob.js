@@ -95,7 +95,7 @@ const fetchMatches = () => {
         }
     };
 } 
-cron.schedule("0 * * * *", () => {
-    console.log("Cron job triggered at: ", new Date())
-    fetchMatches()
+cron.schedule("*/5 * * * * *", () => {
+    const now = new Date()
+    console.log(`Cron job triggered at: ${now.getMinutes()}:${now.getSeconds()}`)
 })
