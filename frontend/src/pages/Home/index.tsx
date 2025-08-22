@@ -27,7 +27,8 @@ const HomePage = () => {
               Premier League Predictions
             </span>
           </h1>
-          <p className="text-lg text-secondaryText font-mainText mb-6 max-w-3xl">
+          <h2 className="my-2 text-error font-mainText text-center">NOTICE: The backend is currently on a <span className="underline font-bold hover:text-white hover:cursor-pointer"><a href="https://render.com/docs/free#spinning-down-on-idle">FREE RENDER PLAN</a></span> and as such you might experience delays when logging in or loading the live matches page</h2>
+          <p className="text-lg text-secondaryText font-mainText my-6 max-w-3xl">
             Join me and a couple friends as avid football fans in making predictions on expected
             goals within Premier League matches. You can track your progress and see how you measure up
             against others using an 'average netXG'.
