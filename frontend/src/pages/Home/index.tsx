@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 const HomePage = () => {
   return (
@@ -28,9 +28,10 @@ const HomePage = () => {
             </span>
           </h1>
           <p className="text-lg text-secondaryText font-mainText mb-6 max-w-3xl">
-            Join thousands of football fans making predictions on Premier League
-            matches. Track your accuracy, compete with others, and prove your
-            football knowledge.
+            Join me and a couple friends as avid football fans in making predictions on expected
+            goals within Premier League matches. You can track your progress and see how you measure up
+            against others using an 'average netXG'.
+            The closer your average netXG is to 0 the more accurate you are at predicting XG.
           </p>
           <Link
             to="/profile"
@@ -131,7 +132,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="relative group p-8 bg-mainForeground rounded-2xl border-2 border-borders shadow-md hover:shadow-xl transition-shadow duration-300 self-start h-full">
+          <div className="flex flex-col relative group p-8 bg-mainForeground rounded-2xl border-2 border-borders shadow-md hover:shadow-xl transition-shadow duration-300 self-start h-full">
             <div className="flex items-center mb-4">
               <div className="w-14 h-14 bg-primaryAccent/50 rounded-lg flex items-center justify-center mr-4 transition-colors duration-300 group-hover:bg-primaryAccent/70">
                 <svg
@@ -144,13 +145,18 @@ const HomePage = () => {
                 </svg>
               </div>
               <h3 className="text-2xl font-bold font-subheading">
-                TRACK YOUR PROGRESS
+                FUTURE FEATURES
               </h3>
             </div>
-            <p className="text-secondaryText font-mainText leading-relaxed">
-              Check your prediction history and accuracy. See trends and refine
-              your strategy with insights.
-            </p>
+            <ol className="list-decimal text-secondaryText font-mainText leading-relaxed font-bold flex flex-col gap-4">
+              <li>Leaderboards update with other users average netXG so you can see how you compare to other users.</li>
+              <li>Add a 'lockout' feature for users so you cannot retroactively go back and 'edit' your prediction same day if you know the actual XG of the match.</li>
+              <li>Include more novel and interesting statistics for users to predict on.</li>
+            </ol>
+            <button className="m-2 p-2 text-primaryAccent border-[2px] border-primaryAccent rounded w-36 self-center hover:bg-zinc-800 font-bold"
+            onClick={() => window.location.href = "https://forms.gle/HS2NRjorJGVWqLqdA"}>
+              SUBMIT FEEDBACK
+            </button>
           </div>
         </section>
       </div>
