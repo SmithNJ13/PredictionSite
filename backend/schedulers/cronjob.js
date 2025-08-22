@@ -17,8 +17,6 @@ const headers = {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
 };
 const filePath = path.join(__dirname, "premier_league_scores.html")
-const start = "2025-08-11"
-const end = "2025-08-17"
 
 const correctedName = {}
 for(const [trueName, aliasList] of Object.entries(aliases)) {
@@ -36,17 +34,38 @@ async function fetchAndSavePage() {
     try {
         const response = await axios.get(url, { headers })
         fs.writeFileSync(filePath, response.data)
-        console.log("Page saved locally!")
+        console.log("SAVED PAGE.")
     } catch (err) {
-        console.error("Error fetching page:", err)
+        console.error(err)
     }
 }
 
+function getCurrentWeekDates() {
+  const now = new Date()
+  const day = now.getDay()
+
+  const diffToMonday = day === 0 ? -6 : 1 - day
+  const start = new Date(now)
+  start.setDate(now.getDate() + diffToMonday)
+
+  const diffToSunday = day === 0 ? 0 : 7 - day
+  const end = new Date(now)
+  end.setDate(now.getDate() + diffToSunday)
+
+  const formatDate = (d) => d.toISOString().split("T")[0]
+
+  return {
+    start: formatDate(start),
+    end: formatDate(end),
+  };
+}
+
 async function updateXG() {
+    const {start, end} = getCurrentWeekDates()
     const weeklyMatches = await client.db("database").collection("matches").find({
         date: {
-            $gte: "2025-08-11",
-            $lte: "2025-08-17"
+            $gte: start,
+            $lte: end
         }, $or: [{homeXG: NaN, awayXG: NaN}]
     }).toArray()
     if(weeklyMatches.length > 0) {
@@ -83,14 +102,36 @@ async function updateXG() {
                         }
                     }
                 )
+                const predictedMatches = await client.db("database").collection("predictions").find({
+                    matchID: 386,
+                    $or: [
+                        {netXG: {$exists: false}},
+                        {netXG: null},
+                        {netXG: NaN}
+                    ]
+                }).toArray()
+                for (const p of predictedMatches) {
+                    const homeXGValid = typeof matched.homeXG === "number"
+                    const awayXGValid = typeof matched.awayXG === "number"
+                    if(!homeXGValid && !awayXGValid) continue
+                    const homeDiff = homeXGValid && p.side.home?.predicted_xG != null ? -Math.abs(p.side.home.predicted_xG - matched.homeXG) : 0
+                    const awayDiff = awayXGValid && p.side.away?.predicted_xG != null ? -Math.abs(p.side.away.predicted_xG - matched.awayXG) : 0
+                    const netValue = homeDiff + awayDiff
+                    const netXG = isNaN(netValue) ? null : Math.floor(netValue * 100) / 100
+                    await client.db("database").collection("predictions").updateOne(
+                        {_id: p._id},
+                        {$set: {netXG: netXG}}
+                    )
+                }
             }
         }
+    console.log(". . . TASKS COMPLETE")
     } else {
         console.log("NO MATCHES TO UPDATE")
     }
 }
 
 cron.schedule("0 */30 * * * *", () => {
-    console.log("PERFORMING TASKS")
+    console.log("PERFORMING TASKS . . .")
     updateXG()
 })
