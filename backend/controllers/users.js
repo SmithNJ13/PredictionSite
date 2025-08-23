@@ -3,22 +3,6 @@ const Token = require("../models/Token")
 const { ObjectId } = require("mongodb");
 const bcrypt = require("bcryptjs") 
 
-const index = async(req, res) => {
-    try{
-        const user = await User.getAll()
-        res.status(200).json({
-            success: true,
-            user: user
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Users unavailable",
-            error: error
-        })
-    }
-}
-
 const getUserStats = async(req, res) => {
     try {
         const uid = req.params.id
@@ -167,5 +151,5 @@ const logout = async(req, res) => {
     }
 }
 
-module.exports = {index, register, getUserToken, getUserStats, updateUserStats,
+module.exports = {register, getUserToken, getUserStats, updateUserStats,
     updateUserDescription, getUserDescription, login, logout}
