@@ -103,7 +103,7 @@ async function updateXG() {
                     }
                 )
                 const predictedMatches = await client.db("database").collection("predictions").find({
-                    matchID: 386,
+                    matchID: match._id,
                     $or: [
                         {netXG: {$exists: false}},
                         {netXG: null},
