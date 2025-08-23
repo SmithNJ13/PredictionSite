@@ -9,7 +9,7 @@ const seasons = require("./database/teams.js")
 require("./schedulers/cronjob.js")
 
 app.use(cors({
-    origin: "*",
+    origin: "https://plp.sm-serv.com/",
     methods: ["GET", "POST", "PATCH", "DELETE"],
     credentials: true
 }))
