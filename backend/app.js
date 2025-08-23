@@ -22,11 +22,11 @@ app.use((err, req, res, next) => {
   next();
 });
 
-app.use("/matches", MatchRoutes)
-app.use("/predictions", PredictionRoutes)
-app.use("/users", UserRoutes)
-app.use("/leaderboards", leaderboardRoute)
-app.get("/", (req, res) => {
+app.use("/api/matches", MatchRoutes)
+app.use("/api/predictions", PredictionRoutes)
+app.use("/api/users", UserRoutes)
+app.use("/api/leaderboards", leaderboardRoute)
+app.get("/api", (req, res) => {
     const welcome = `Welcome to the predictions API, 
         the following endpoints are available: /matches, /predictions, /leaderboards`
         try {
@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
             res.status(500).send(error)
         }
 })
-app.get("/teams", (req, res) => {
+app.get("/api/teams", (req, res) => {
   const currentDate = new Date()
   const year = currentDate.getFullYear()
   const currentSeason = seasons.getSeason(year)

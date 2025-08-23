@@ -1,1 +1,1 @@
-export const baseURL = "https://ps-backend-yw57.onrender.com"
+export const baseURL = "https://plp.sm-serv.com:443/api"
