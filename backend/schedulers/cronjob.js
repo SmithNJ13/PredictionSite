@@ -26,6 +26,7 @@ for(const [trueName, aliasList] of Object.entries(aliases)) {
     }
 }
 function formatTeam (teamName) {
+    console.log("UPDATING PAGE!")
     const corrected = teamName.toLowerCase().trim()
     return correctedName[corrected] || teamName.trim()
 }
@@ -34,7 +35,7 @@ async function fetchAndSavePage() {
     try {
         const response = await axios.get(url, { headers })
         fs.writeFileSync(filePath, response.data)
-        console.log("SAVED PAGE.")
+        console.log("SAVED PAGE!")
     } catch (err) {
         console.error(err)
     }
@@ -131,7 +132,7 @@ async function updateXG() {
     }
 }
 
-cron.schedule("0 */30 * * * *", () => {
+cron.schedule("0 0 */3 * * *", () => {
     console.log("PERFORMING TASKS . . .")
     updateXG()
 })
