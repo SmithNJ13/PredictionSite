@@ -1,21 +1,13 @@
 const client = require("../database/setup.js")
 const cron = require("node-cron")
-const url = "https://fbref.com/en/comps/9/schedule/Premierba-League-Scores-and-Fixtures"
 const fs = require("fs")
 const path = require("path")
-const axios = require("axios")
 const cheerio = require("cheerio")
 const aliases = { 
     "Manchester United": ["man united", "man u", "manchester utd"],
     "Newcastle United": ["newcastle", "newcastle utd"],
     "Nottingham Forest": ["nott'ham forest", "nottingham"]
 }
-
-const headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
-};
 const filePath = path.join(__dirname, "premier_league_scores.html")
 
 const correctedName = {}
@@ -28,16 +20,6 @@ for(const [trueName, aliasList] of Object.entries(aliases)) {
 function formatTeam (teamName) {
     const corrected = teamName.toLowerCase().trim()
     return correctedName[corrected] || teamName.trim()
-}
-
-async function fetchAndSavePage() {
-    try {
-        const response = await axios.get(url, { headers })
-        fs.writeFileSync(filePath, response.data)
-        console.log("SAVED PAGE!")
-    } catch (err) {
-        console.error(err)
-    }
 }
 
 function getCurrentWeekDates() {
