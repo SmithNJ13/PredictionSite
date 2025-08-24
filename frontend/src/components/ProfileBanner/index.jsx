@@ -51,9 +51,9 @@ const ProfileBanner = ({ user, totalNetXG }) => {
           />
           <div className="flex flex-col">
             <h1 className="text-4xl font-bold text-white tracking-tight font-subheading">{user.username}</h1>
-            <div className="flex items-center gap-2 mx-6">
-              <span className="text-white text-lg font-mainInfo">Net xG:</span>
-              <span className={"text-red-400 text-lg font-bold"}>
+            <div className="flex items-center gap-2 mx-6 font-mainInfo">
+              <span className="text-white text-lg">Net xG:</span>
+              <span className={"text-primaryAccent text-lg font-bold"}>
                 {totalNetXG >= 0 ? '+' : ''}{totalNetXG}
               </span>
             </div>

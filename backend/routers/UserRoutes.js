@@ -11,6 +11,7 @@ userRouter.patch("/:id/desc", express.text(), userController.updateUserDescripti
 userRouter.get("/auth", userController.getUserToken)
 userRouter.post("/register", userController.register)
 userRouter.post("/login", userController.login)
+userRouter.post("/login/reset", userController.resetPass)
 userRouter.delete("/logout", userController.logout)
 
 module.exports = userRouter

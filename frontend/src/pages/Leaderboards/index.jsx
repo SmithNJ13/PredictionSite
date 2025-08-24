@@ -16,7 +16,7 @@ const Leaderboards = () => {
   }, [])
 
   return (
-    <div className="bg-slate-800/40 backdrop-blur-md rounded-2xl shadow-inner overflow-hidden w-full max-w-3xl mx-auto my-8">
+    <div className="bg-mainForeground backdrop-blur-md rounded-2xl shadow-inner overflow-hidden w-full max-w-3xl mx-auto my-8">
       <div className="py-4">
         <h2 className="text-xl font-semibold text-center text-white tracking-wide">Leaderboard</h2>
       </div>
@@ -33,11 +33,11 @@ const Leaderboards = () => {
           </thead>
           <tbody>
             {leaderboard.map((item, i) => (
-              <tr key={i}>
+              <tr key={i} className="font-mainInfo">
                 <td className="px-6 py-4 text-white font-bold"># {i + 1}</td>
                 <td className="px-6 py-4 text-white hover:underline hover:cursor-pointer">{item.username}</td>
                 <td className="px-6 py-4 text-white text-center">{item.total_predictions}</td>
-                <td className="px-6 py-4 text-white text-center">{item.average_netXG}</td>
+                <td className="px-6 py-4 text-primaryAccent text-center font-bold">{item.average_netXG}</td>
               </tr>
             ))}
           </tbody>

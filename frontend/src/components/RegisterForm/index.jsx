@@ -143,7 +143,7 @@ const RegisterForm = () => {
       
       <h1 id="title" className="text-SpringGreen text-center text-4xl mt-8 font-heading text-primaryText">Register Page</h1>
       <div id="content" className="flex flex-col gap-[10px] h-full w-full mt-4">
-        <div className="self-center bg-GunMetal p-[1rem] rounded-[10px] w-[30rem] border border-white text-primaryText font-mainText">
+        <div className="self-center bg-mainForeground p-[1rem] rounded-[10px] w-full max-w-[30rem] border border-secondaryText text-primaryText font-mainText px-4">
           <form onSubmit={handleSubmit} id="register" className="flex flex-col gap-[20px] px-[1rem]" autoComplete="off">
             <section className="top flex flex-col">
               <label className="text-AshGray self-start">Username:</label>

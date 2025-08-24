@@ -141,6 +141,21 @@ const login = async(req, res) => {
     }
 }
 
+const resetPass = async(req, res) => {
+    try {
+        const user = await User.getUser(data.name)
+        if(user) {
+            console.log("Exists!")
+            res.status(200).json({message: "Exists!"})
+        } else {
+            console.log("No Exists!")
+            res.status(200).json({message: "No Exists!"})
+        }
+    } catch (error) { 
+        res.status(500).json({error: error})
+    }
+}
+
 const logout = async(req, res) => {
     try {
         const token = req.headers["authorization"]
@@ -152,4 +167,4 @@ const logout = async(req, res) => {
 }
 
 module.exports = {register, getUserToken, getUserStats, updateUserStats,
-    updateUserDescription, getUserDescription, login, logout}
+    updateUserDescription, getUserDescription, login, resetPass, logout}

@@ -59,8 +59,8 @@ const LoginForm = () => {
   return (
     <>
       <h1 id="title" className="text-primaryText text-center text-4xl mt-8 font-heading">Login Page</h1>
-      <div id="content" className="flex flex-col gap-[10px] h-full w-full mt-4 font-mainText text-primaryText">
-        <div className="self-center bg-GunMetal p-[2rem] rounded-[10px] w-[30rem] border border-secondaryText">
+      <div id="content" className="flex flex-col gap-[10px] h-full w-full mt-4 font-mainText text-primaryText px-4">
+        <div className="self-center bg-mainForeground p-[2rem] rounded-[10px] w-full max-w-[30rem] border border-secondaryText">
           <form onSubmit={login} className="loginform" autoComplete="off">
             <section className="top flex flex-col gap-[10px]">
               <label className="text-AshGray">Email / Username:</label>
@@ -82,6 +82,7 @@ const LoginForm = () => {
               </p>
           </form>
         <p className="m-[1rem] text-AshGray">{string} Sign up <NavLink to="/register" className="text-linkDefault font-bold italic hover:underline hover:text-linkHover">here</NavLink></p>
+        <p className="mt-[1rem] text-linkDefault hover:text-linkHover hover:cursor-pointer hover:underline"><NavLink to="/login/reset">Forgot password?</NavLink></p>
         </div>
       </div>
     </>

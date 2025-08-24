@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate} from "react-router-dom"
-import { HomePage, ProfilePage, LoginPage, RegisterPage, NotFound, LivePage, TeamPage, LeaderboardPage} from "./pages/export"
+import { HomePage, ProfilePage, LoginPage, RegisterPage, NotFound, LivePage, TeamPage, LeaderboardPage, ResetPage} from "./pages/export"
 import { NavBar } from "./components/export"
 import {useAuth} from "./Auth/index"
 import "./style.css"
@@ -42,6 +42,7 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/profile" element={user ? <ProfilePage /> : <Navigate to="/login" replace />}/>
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/login/reset" element={<ResetPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/live" element={<LivePage />} />
       <Route path="/teams" element={<TeamPage />} />

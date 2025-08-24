@@ -1,6 +1,6 @@
 const client = require("../database/setup.js")
 const cron = require("node-cron")
-const url = "https://fbref.com/en/comps/9/schedule/Premier-League-Scores-and-Fixtures"
+const url = "https://fbref.com/en/comps/9/schedule/Premierba-League-Scores-and-Fixtures"
 const fs = require("fs")
 const path = require("path")
 const axios = require("axios")
@@ -26,7 +26,6 @@ for(const [trueName, aliasList] of Object.entries(aliases)) {
     }
 }
 function formatTeam (teamName) {
-    console.log("UPDATING PAGE!")
     const corrected = teamName.toLowerCase().trim()
     return correctedName[corrected] || teamName.trim()
 }

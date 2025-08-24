@@ -1,14 +1,15 @@
 const Match = require("../models/Match")
 const seasons = require("../database/teams.js")
 
-const currentDate = new Date()
-const year = currentDate.getFullYear()
-const month = String(currentDate.getMonth() + 1).padStart(2, "0")
-const day = String(currentDate.getDate()).padStart(2, "0")  
-const currentSeason = seasons.getSeason(year)
-const date = `${year}-${month}-${day}`
-// const date = `2025-08-15`
-
+function getCurrentDate() {
+    const currentDate = new Date()
+    const year = currentDate.getFullYear()
+    const month = String(currentDate.getMonth() + 1).padStart(2, "0")
+    const day = String(currentDate.getDate()).padStart(2, "0")  
+    const date = `${year}-${month}-${day}`
+    const currentSeason = seasons.getSeason(year)
+    return {date, currentSeason}
+}
 const index = async(req, res) => {
     try{
         const match = await Match.getAll()
@@ -20,6 +21,7 @@ const index = async(req, res) => {
 }
 
 const getLive = async (req, res) => {
+    const {date, currentSeason} = getCurrentDate()
     try {
         const liveGames = await Match.getByDate(date);
         const responses = liveGames.map(game => {
